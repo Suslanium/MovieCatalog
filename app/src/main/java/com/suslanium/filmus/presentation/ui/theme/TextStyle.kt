@@ -18,9 +18,33 @@ val SubTitle = TextStyle(
     lineHeight = 18.15.sp
 )
 
+val SubTitleMedium = TextStyle(
+    fontFamily = Inter,
+    fontSize = 15.sp,
+    fontWeight = FontWeight.Medium
+)
+
+val TextFieldInput = TextStyle(
+    fontFamily = Inter,
+    fontSize = 15.sp,
+    fontWeight = FontWeight.Normal
+)
+
 val ButtonText = TextStyle(
     fontFamily = Inter,
     fontSize = 15.sp,
     fontWeight = FontWeight.SemiBold,
     lineHeight = 18.15.sp
+)
+
+val TopBar = TextStyle(
+    fontFamily = Inter,
+    fontSize = 17.sp,
+    fontWeight = FontWeight.SemiBold
+)
+
+val BottomHint = TextStyle(
+    fontFamily = Inter,
+    fontSize = 14.sp,
+    fontWeight = FontWeight.Medium
 )

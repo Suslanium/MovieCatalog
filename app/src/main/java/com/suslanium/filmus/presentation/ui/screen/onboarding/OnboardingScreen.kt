@@ -2,11 +2,12 @@ package com.suslanium.filmus.presentation.ui.screen.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -29,6 +30,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.SubTitle
 import com.suslanium.filmus.presentation.ui.theme.Title
 import com.suslanium.filmus.presentation.ui.theme.White
+import com.suslanium.filmus.presentation.ui.theme.WidthFraction
 
 @Composable
 fun OnboardingScreen() {
@@ -39,8 +41,7 @@ fun OnboardingScreen() {
             .verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(0.9f),
-            verticalArrangement = Arrangement.spacedBy(OnboardingVerticalSpacing),
+            modifier = Modifier.fillMaxWidth(WidthFraction),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -49,40 +50,34 @@ fun OnboardingScreen() {
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth
             )
-            Column(
-                verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(
-                    text = stringResource(id = R.string.onboarding_title),
-                    textAlign = TextAlign.Center,
-                    style = Title,
-                    color = White,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = stringResource(id = R.string.onboarding_message),
-                    textAlign = TextAlign.Center,
-                    style = SubTitle,
-                    color = White,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(ButtonVerticalSpacing, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                AccentButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ },
-                    text = stringResource(id = R.string.registration)
-                )
-                SecondaryButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ },
-                    text = stringResource(id = R.string.sign_in)
-                )
-            }
+            Spacer(modifier = Modifier.height(OnboardingVerticalSpacing))
+            Text(
+                text = stringResource(id = R.string.onboarding_title),
+                textAlign = TextAlign.Center,
+                style = Title,
+                color = White,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(PaddingSmall))
+            Text(
+                text = stringResource(id = R.string.onboarding_message),
+                textAlign = TextAlign.Center,
+                style = SubTitle,
+                color = White,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(OnboardingVerticalSpacing))
+            AccentButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { /*TODO*/ },
+                text = stringResource(id = R.string.registration)
+            )
+            Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+            SecondaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { /*TODO*/ },
+                text = stringResource(id = R.string.sign_in)
+            )
         }
     }
 }

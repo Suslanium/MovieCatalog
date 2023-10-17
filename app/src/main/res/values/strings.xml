@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">Filmus</string>
+    <string name="app_name">FИЛЬМУС</string>
     <string name="onboarding_title">Погрузись в мир кино</string>
     <string name="onboarding_message">Мы предлагаем удобный и легкий способ насладиться любимыми фильмами прямо с Вашего мобильного устройства.</string>
     <string name="registration">Регистрация</string>
     <string name="sign_in">Войти</string>
+    <string name="log_in_title">Вход</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="dont_have_an_account">Ещё нет аккаунта?</string>
+    <string name="register">Зарегистрируйтесь</string>
 </resources>
