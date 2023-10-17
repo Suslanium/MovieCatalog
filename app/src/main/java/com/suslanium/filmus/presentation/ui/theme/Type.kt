@@ -1,4 +1,4 @@
-package com.suslanium.filmus.ui.theme
+package com.suslanium.filmus.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.suslanium.filmus.ui.theme
+package com.suslanium.filmus.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
