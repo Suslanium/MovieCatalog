@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -39,11 +39,13 @@ fun AuthTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean = false,
     errorMessage: String? = null,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        containerColor = if (isError) SemiTransparentRed else Color.Transparent,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedContainerColor = if (isError) SemiTransparentRed else Color.Transparent,
+        unfocusedContainerColor = if (isError) SemiTransparentRed else Color.Transparent,
         unfocusedBorderColor = AuthFieldOutlineColor,
         focusedBorderColor = Gray400,
-        textColor = White,
+        focusedTextColor = White,
+        unfocusedTextColor = White,
         focusedTrailingIconColor = Gray400,
         unfocusedTrailingIconColor = Gray400,
         errorTrailingIconColor = Gray400,
@@ -75,27 +77,28 @@ fun AuthTextField(
             enabled = true,
             singleLine = true,
         ) { innerTextField ->
-            TextFieldDefaults.OutlinedTextFieldDecorationBox(
+            OutlinedTextFieldDefaults.DecorationBox(
                 value = value,
                 innerTextField = innerTextField,
                 enabled = true,
                 singleLine = true,
                 visualTransformation = visualTransformation,
                 interactionSource = interactionSource,
+                isError = isError,
+                trailingIcon = trailingIcon,
+                colors = colors,
                 contentPadding = TextFieldPadding,
                 container = {
-                    TextFieldDefaults.OutlinedBorderContainerBox(
+                    OutlinedTextFieldDefaults.ContainerBox(
                         enabled = true,
                         isError = isError,
                         interactionSource = interactionSource,
                         colors = colors,
                         shape = RoundedCornerShape(ButtonCornerRadius),
-                        unfocusedBorderThickness = OutlineBorderThickness
+                        focusedBorderThickness = OutlinedTextFieldDefaults.FocusedBorderThickness,
+                        unfocusedBorderThickness = OutlineBorderThickness,
                     )
                 },
-                colors = colors,
-                isError = isError,
-                trailingIcon = trailingIcon
             )
         }
         if (isError && errorMessage != null) {
