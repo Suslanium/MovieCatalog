@@ -37,8 +37,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.state.RegistrationData
 import com.suslanium.filmus.presentation.state.RegistrationState
@@ -47,6 +47,7 @@ import com.suslanium.filmus.presentation.ui.common.AuthTextField
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
 import com.suslanium.filmus.presentation.ui.common.Constants
 import com.suslanium.filmus.presentation.ui.common.Constants.EMPTY_STRING
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.registration.components.SegmentedSelectionButton
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
@@ -77,7 +78,7 @@ private val availableDates = object : SelectableDates {
 
 @Composable
 fun RegistrationScreen(
-    registrationViewModel: RegistrationViewModel = viewModel()
+    registrationViewModel: RegistrationViewModel = viewModel(), navController: NavController
 ) {
     val registrationData by remember { registrationViewModel.registrationData }
     val registrationState by remember { registrationViewModel.registrationState }
@@ -100,12 +101,12 @@ fun RegistrationScreen(
     }
 
     BackHandler {
-        if (registrationState == RegistrationState.Credentials) registrationViewModel.openPersonalInfoPart()
+        if (registrationState == RegistrationState.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
     }
 
     Scaffold(containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = {
-            if (registrationState == RegistrationState.Credentials) registrationViewModel.openPersonalInfoPart()
+            if (registrationState == RegistrationState.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
         })
     }) { paddingValues ->
         Box(
@@ -153,7 +154,9 @@ fun RegistrationScreen(
                 ClickableText(text = bottomHint, style = BottomHint, onClick = { offset ->
                     bottomHint.getStringAnnotations(
                         tag = Constants.AUTH_TAG, start = offset, end = offset
-                    ).firstOrNull()?.let {}
+                    ).firstOrNull()?.let {
+                        navController.navigate(FilmusDestinations.LOGIN)
+                    }
                 })
             }
         }
@@ -301,10 +304,4 @@ private fun RegistrationPersonalInfoContent(
             enabled = continueButtonIsEnabled
         )
     }
-}
-
-@Preview
-@Composable
-fun RegistrationPreview() {
-    RegistrationScreen()
 }

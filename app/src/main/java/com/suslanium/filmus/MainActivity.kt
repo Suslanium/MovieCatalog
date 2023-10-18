@@ -2,15 +2,17 @@ package com.suslanium.filmus
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.suslanium.filmus.presentation.ui.screen.registration.RegistrationScreen
+import androidx.compose.ui.graphics.toArgb
+import androidx.navigation.compose.rememberNavController
+import com.suslanium.filmus.presentation.ui.navigation.FilmusNavigation
+import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.FilmusTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,30 +20,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FilmusTheme {
+                enableEdgeToEdge(SystemBarStyle.dark(Background.toArgb()), SystemBarStyle.dark(Background.toArgb()))
+                val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    RegistrationScreen()
+                    FilmusNavigation(navHostController = navController, onAppExit = {
+                        finish()
+                    })
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FilmusTheme {
-        Greeting("Android")
     }
 }
