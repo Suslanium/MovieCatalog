@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.suslanium.filmus.presentation.ui.theme.AuthFieldOutlineColor
@@ -71,14 +72,16 @@ fun AuthTextField(
             modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = onValueChange,
-            textStyle = TextFieldInput,
+            textStyle = TextFieldInput.copy(color = White),
             visualTransformation = visualTransformation,
             interactionSource = interactionSource,
             enabled = true,
             singleLine = true,
+            cursorBrush = SolidColor(Gray400)
         ) { innerTextField ->
             OutlinedTextFieldDefaults.DecorationBox(
                 value = value,
+                colors = colors,
                 innerTextField = innerTextField,
                 enabled = true,
                 singleLine = true,
@@ -86,7 +89,6 @@ fun AuthTextField(
                 interactionSource = interactionSource,
                 isError = isError,
                 trailingIcon = trailingIcon,
-                colors = colors,
                 contentPadding = TextFieldPadding,
                 container = {
                     OutlinedTextFieldDefaults.ContainerBox(

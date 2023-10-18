@@ -20,4 +20,6 @@
     <string name="register_button">Зарегистрироваться</string>
     <string name="already_have_an_account">Уже есть аккаунт?</string>
     <string name="log_in_bottom_hint">Войдите</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
 </resources>
