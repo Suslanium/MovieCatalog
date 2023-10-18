@@ -6,7 +6,18 @@
     <string name="sign_in">Войти</string>
     <string name="log_in_title">Вход</string>
     <string name="login">Логин</string>
+    <string name="repeat_password">Повторите пароль</string>
     <string name="password">Пароль</string>
     <string name="dont_have_an_account">Ещё нет аккаунта?</string>
     <string name="register">Зарегистрируйтесь</string>
+    <string name="name">Имя</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужчина</string>
+    <string name="female">Женщина</string>
+    <string name="email">Электронная почта</string>
+    <string name="birthdate">Дата рождения</string>
+    <string name="continue_button">Продолжить</string>
+    <string name="register_button">Зарегистрироваться</string>
+    <string name="already_have_an_account">Уже есть аккаунт?</string>
+    <string name="log_in_bottom_hint">Войдите</string>
 </resources>

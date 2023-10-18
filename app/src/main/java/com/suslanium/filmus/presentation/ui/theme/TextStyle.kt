@@ -48,3 +48,9 @@ val BottomHint = TextStyle(
     fontSize = 14.sp,
     fontWeight = FontWeight.Medium
 )
+
+val SegmentedButtonText = TextStyle(
+    fontFamily = Inter,
+    fontSize = 14.sp,
+    fontWeight = FontWeight.Normal
+)

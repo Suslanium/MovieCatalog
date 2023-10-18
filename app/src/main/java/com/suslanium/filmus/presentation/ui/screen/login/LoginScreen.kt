@@ -27,7 +27,7 @@ import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
-import com.suslanium.filmus.presentation.ui.common.Constants.REGISTRATION_TAG
+import com.suslanium.filmus.presentation.ui.common.Constants.AUTH_TAG
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.BottomHint
@@ -47,9 +47,10 @@ fun LoginScreen() {
             style = SpanStyle(color = Gray200)
         ) {
             append(stringResource(id = R.string.dont_have_an_account))
+            append(" ")
         }
 
-        pushStringAnnotation(REGISTRATION_TAG, REGISTRATION_TAG)
+        pushStringAnnotation(AUTH_TAG, AUTH_TAG)
         withStyle(style = SpanStyle(color = Accent)) {
             append(stringResource(id = R.string.register))
         }
@@ -101,7 +102,7 @@ fun LoginScreen() {
                 )
                 Spacer(modifier = Modifier.weight(DefaultWeight))
                 ClickableText(text = bottomHint, style = BottomHint, onClick = { offset ->
-                    bottomHint.getStringAnnotations(tag = REGISTRATION_TAG, start = offset, end = offset).firstOrNull()?.let {}
+                    bottomHint.getStringAnnotations(tag = AUTH_TAG, start = offset, end = offset).firstOrNull()?.let {}
                 })
             }
         }

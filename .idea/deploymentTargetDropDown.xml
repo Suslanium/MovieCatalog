@@ -6,20 +6,10 @@
         <State />
       </entry>
       <entry key="OnboardingPreview">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="adb-RZ8R72FHBBE-Gl2ozL._adb-tls-connect._tcp" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-10-17T11:06:28.635055100Z" />
-        </State>
+        <State />
+      </entry>
+      <entry key="RegistrationPreview">
+        <State />
       </entry>
       <entry key="app">
         <State />
