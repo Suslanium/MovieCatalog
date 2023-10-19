@@ -15,14 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.SecondaryButton
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.OnboardingVerticalSpacing
@@ -33,7 +34,9 @@ import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
 
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -45,10 +48,9 @@ fun OnboardingScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().height(338.dp),
                 imageVector = ImageVector.vectorResource(id = R.drawable.amico),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth
+                contentDescription = null
             )
             Spacer(modifier = Modifier.height(OnboardingVerticalSpacing))
             Text(
@@ -69,21 +71,15 @@ fun OnboardingScreen() {
             Spacer(modifier = Modifier.height(OnboardingVerticalSpacing))
             AccentButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(FilmusDestinations.REGISTRATION) },
                 text = stringResource(id = R.string.registration)
             )
             Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
             SecondaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(FilmusDestinations.LOGIN) },
                 text = stringResource(id = R.string.sign_in)
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun OnboardingPreview() {
-    OnboardingScreen()
 }
