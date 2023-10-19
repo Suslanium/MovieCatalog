@@ -22,4 +22,14 @@
     <string name="log_in_bottom_hint">Войдите</string>
     <string name="ok">OK</string>
     <string name="cancel">Отмена</string>
+    <string name="blank_name">Имя должно быть заполнено</string>
+    <string name="name_too_short">Имя слишком короткое</string>
+    <string name="blank_login">Логин должен быть заполнен</string>
+    <string name="login_too_short">Логин слишком короткий</string>
+    <string name="email_blank">Электронная почта должна быть заполнена</string>
+    <string name="email_incorrect_format">Электронная почта некорректна</string>
+    <string name="password_blank">Пароль должен быть заполнен</string>
+    <string name="password_too_short">Пароль слишком короткий</string>
+    <string name="confirm_password_blank">Повторите пароль</string>
+    <string name="password_dont_match">Пароли не совпадают</string>
 </resources>

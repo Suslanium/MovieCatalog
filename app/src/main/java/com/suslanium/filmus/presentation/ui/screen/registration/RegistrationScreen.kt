@@ -40,6 +40,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
 import com.suslanium.filmus.presentation.state.RegistrationData
 import com.suslanium.filmus.presentation.state.RegistrationState
 import com.suslanium.filmus.presentation.ui.common.AccentButton
@@ -137,7 +138,8 @@ fun RegistrationScreen(
                             setEmail = registrationViewModel::setEmail,
                             setBirthDate = registrationViewModel::setBirthDate,
                             dateTimeFormatter = registrationViewModel.dateFormat,
-                            openCredentialsPart = registrationViewModel::openCredentialsPart
+                            openCredentialsPart = registrationViewModel::openCredentialsPart,
+                            continueButtonIsEnabled = registrationViewModel.personalInfoIsCorrectlyFilled
                         )
 
                         RegistrationState.Credentials -> RegistrationCredentialsContent(
@@ -147,7 +149,9 @@ fun RegistrationScreen(
                             isPasswordVisible = isPasswordVisible,
                             isRepeatPasswordVisible = isRepeatPasswordVisible,
                             setPasswordVisible = { isPasswordVisible = it },
-                            setRepeatPasswordVisible = { isRepeatPasswordVisible = it })
+                            setRepeatPasswordVisible = { isRepeatPasswordVisible = it },
+                            registerButtonIsEnabled = registrationViewModel.credentialsAreCorrectlyFilled
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.weight(DefaultWeight))
@@ -173,14 +177,13 @@ private fun RegistrationCredentialsContent(
     setPasswordVisible: (Boolean) -> Unit,
     setRepeatPasswordVisible: (Boolean) -> Unit,
     register: () -> Unit = {},
-    registerButtonIsEnabled: Boolean = true
+    registerButtonIsEnabled: Boolean
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AuthTextField(
-            title = stringResource(id = R.string.password),
+        AuthTextField(title = stringResource(id = R.string.password),
             value = registrationData.password,
             onValueChange = setPassword,
             trailingIcon = {
@@ -191,11 +194,15 @@ private fun RegistrationCredentialsContent(
                     )
                 }
             },
-            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
-        )
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            isError = registrationData.passwordValidationErrorType != null,
+            errorMessage = if (registrationData.passwordValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.passwordValidationErrorType]?.let {
+                stringResource(
+                    id = it
+                )
+            } else null)
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(
-            title = stringResource(id = R.string.repeat_password),
+        AuthTextField(title = stringResource(id = R.string.repeat_password),
             value = registrationData.repeatPassword,
             onValueChange = setRepeatPassword,
             trailingIcon = {
@@ -206,8 +213,13 @@ private fun RegistrationCredentialsContent(
                     )
                 }
             },
-            visualTransformation = if (isRepeatPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
-        )
+            visualTransformation = if (isRepeatPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            isError = registrationData.repeatPasswordValidationErrorType != null,
+            errorMessage = if (registrationData.repeatPasswordValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.repeatPasswordValidationErrorType]?.let {
+                stringResource(
+                    id = it
+                )
+            } else null)
         Spacer(modifier = Modifier.height(LoginVerticalSpacing))
         AccentButton(
             onClick = register,
@@ -229,7 +241,7 @@ private fun RegistrationPersonalInfoContent(
     setBirthDate: (Long?) -> Unit,
     dateTimeFormatter: DateTimeFormatter,
     openCredentialsPart: () -> Unit,
-    continueButtonIsEnabled: Boolean = true
+    continueButtonIsEnabled: Boolean
 ) {
     var shouldShowDatePickerDialog by remember { mutableStateOf(false) }
     if (shouldShowDatePickerDialog) {
@@ -259,11 +271,15 @@ private fun RegistrationPersonalInfoContent(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AuthTextField(
-            title = stringResource(id = R.string.name),
+        AuthTextField(title = stringResource(id = R.string.name),
             value = registrationData.name,
-            onValueChange = setName
-        )
+            onValueChange = setName,
+            isError = registrationData.nameValidationErrorType != null,
+            errorMessage = if (registrationData.nameValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.nameValidationErrorType]?.let {
+                stringResource(
+                    id = it
+                )
+            } else null)
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
         SegmentedSelectionButton(
             title = stringResource(id = R.string.gender), options = listOf(
@@ -271,17 +287,25 @@ private fun RegistrationPersonalInfoContent(
             ), selectedIndex = registrationData.gender, onItemSelected = setGender
         )
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(
-            title = stringResource(id = R.string.login),
+        AuthTextField(title = stringResource(id = R.string.login),
             value = registrationData.login,
             onValueChange = setLogin,
-        )
+            isError = registrationData.loginValidationErrorType != null,
+            errorMessage = if (registrationData.loginValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.loginValidationErrorType]?.let {
+                stringResource(
+                    id = it
+                )
+            } else null)
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(
-            title = stringResource(id = R.string.email),
+        AuthTextField(title = stringResource(id = R.string.email),
             value = registrationData.email,
-            onValueChange = setEmail
-        )
+            onValueChange = setEmail,
+            isError = registrationData.emailValidationErrorType != null,
+            errorMessage = if (registrationData.emailValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.emailValidationErrorType]?.let {
+                stringResource(
+                    id = it
+                )
+            } else null)
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
         AuthTextField(title = stringResource(id = R.string.birthdate),
             value = if (registrationData.birthDate != null) registrationData.birthDate.format(
