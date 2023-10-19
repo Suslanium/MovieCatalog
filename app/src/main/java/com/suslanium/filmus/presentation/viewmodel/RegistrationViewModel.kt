@@ -27,7 +27,7 @@ class RegistrationViewModel(
     private val validateRepeatPasswordUseCase: ValidateRepeatPasswordUseCase = ValidateRepeatPasswordUseCase(),
 ) : ViewModel() {
 
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     val registrationData: State<RegistrationData>
         get() = _registrationData

@@ -31,6 +31,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
+import com.suslanium.filmus.presentation.state.LoginData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
@@ -51,13 +53,11 @@ import com.suslanium.filmus.presentation.viewmodel.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = viewModel(),
-    navController: NavController
+    loginViewModel: LoginViewModel = viewModel(), navController: NavController
 ) {
     val loginData by remember {
         loginViewModel.loginData
     }
-    var isPasswordVisible by remember { mutableStateOf(false) }
 
     val bottomHint = buildAnnotatedString {
         withStyle(
@@ -95,35 +95,14 @@ fun LoginScreen(
                     style = Title,
                     textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-                AuthTextField(
-                    title = stringResource(id = R.string.login),
-                    value = loginData.login,
-                    onValueChange = loginViewModel::setLogin
-                )
-                Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-
-                AuthTextField(
-                    title = stringResource(id = R.string.password),
-                    value = loginData.password,
-                    onValueChange = loginViewModel::setPassword,
-                    trailingIcon = {
-                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.visibility_icon),
-                                contentDescription = null
-                            )
-                        }
-                    },
-                    visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
-                )
+                LoginContent(loginData, loginViewModel)
 
                 Spacer(modifier = Modifier.height(LoginVerticalSpacing))
                 AccentButton(
                     onClick = { /*TODO*/ },
                     text = stringResource(id = R.string.sign_in),
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = false
+                    enabled = loginViewModel.loginFormIsCorrectlyFilled
                 )
                 Spacer(modifier = Modifier.weight(DefaultWeight))
                 ClickableText(text = bottomHint, style = BottomHint, onClick = { offset ->
@@ -135,4 +114,44 @@ fun LoginScreen(
             }
         }
     }
+}
+
+@Composable
+private fun LoginContent(
+    loginData: LoginData,
+    loginViewModel: LoginViewModel
+) {
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+    AuthTextField(title = stringResource(id = R.string.login),
+        value = loginData.login,
+        onValueChange = loginViewModel::setLogin,
+        isError = loginData.loginValidationErrorType != null,
+        errorMessage = if (loginData.loginValidationErrorType != null) ErrorTypeToStringResource.map[loginData.loginValidationErrorType]?.let { it1 ->
+            stringResource(
+                id = it1
+            )
+        } else null)
+    Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+
+    AuthTextField(
+        title = stringResource(id = R.string.password),
+        value = loginData.password,
+        onValueChange = loginViewModel::setPassword,
+        trailingIcon = {
+            IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.visibility_icon),
+                    contentDescription = null
+                )
+            }
+        },
+        visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        isError = loginData.passwordValidationErrorType != null,
+        errorMessage = if (loginData.passwordValidationErrorType != null) ErrorTypeToStringResource.map[loginData.passwordValidationErrorType]?.let { it1 ->
+            stringResource(
+                id = it1
+            )
+        } else null
+    )
 }
