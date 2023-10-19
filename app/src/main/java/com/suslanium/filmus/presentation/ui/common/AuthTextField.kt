@@ -49,6 +49,7 @@ fun AuthTextField(
         unfocusedTextColor = White,
         focusedTrailingIconColor = Gray400,
         unfocusedTrailingIconColor = Gray400,
+        errorContainerColor = SemiTransparentRed,
         errorTrailingIconColor = Gray400,
         errorBorderColor = Red,
         errorCursorColor = Red,
@@ -77,7 +78,7 @@ fun AuthTextField(
             interactionSource = interactionSource,
             enabled = true,
             singleLine = true,
-            cursorBrush = SolidColor(Gray400)
+            cursorBrush = if (!isError) SolidColor(Gray400) else SolidColor(Red)
         ) { innerTextField ->
             OutlinedTextFieldDefaults.DecorationBox(
                 value = value,
