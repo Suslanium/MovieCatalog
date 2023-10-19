@@ -85,8 +85,14 @@ class RegistrationViewModel(
 
     fun setPassword(password: String) {
         val passwordValidationResult = validatePasswordUseCase(password)
+        val repeatPasswordValidationResult =
+            if (_registrationData.value.repeatPassword.isBlank() && _registrationData.value.repeatPasswordValidationErrorType == null) null else validateRepeatPasswordUseCase(
+                password, _registrationData.value.repeatPassword
+            )
         _registrationData.value = _registrationData.value.copy(
-            password = password, passwordValidationErrorType = passwordValidationResult
+            password = password,
+            passwordValidationErrorType = passwordValidationResult,
+            repeatPasswordValidationErrorType = repeatPasswordValidationResult
         )
     }
 
