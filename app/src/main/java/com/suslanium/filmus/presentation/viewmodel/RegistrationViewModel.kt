@@ -3,14 +3,26 @@ package com.suslanium.filmus.presentation.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.suslanium.filmus.R
+import com.suslanium.filmus.domain.entity.RegistrationRequest
 import com.suslanium.filmus.domain.usecase.RegisterUseCase
 import com.suslanium.filmus.domain.usecase.ValidateEmailUseCase
 import com.suslanium.filmus.domain.usecase.ValidateLoginUseCase
 import com.suslanium.filmus.domain.usecase.ValidateNameUseCase
 import com.suslanium.filmus.domain.usecase.ValidatePasswordUseCase
 import com.suslanium.filmus.domain.usecase.ValidateRepeatPasswordUseCase
+import com.suslanium.filmus.presentation.common.ErrorCodes
+import com.suslanium.filmus.presentation.state.AuthEvent
+import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.state.RegistrationData
-import com.suslanium.filmus.presentation.state.RegistrationState
+import com.suslanium.filmus.presentation.state.RegistrationPage
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -24,16 +36,22 @@ class RegistrationViewModel(
     private val registerUseCase: RegisterUseCase
 ) : ViewModel() {
 
+    private val _registrationEventChannel = Channel<AuthEvent>()
+    val registrationEvents = _registrationEventChannel.receiveAsFlow()
+
+    val registrationState: State<AuthState>
+        get() = _registrationState
+    private val _registrationState = mutableStateOf<AuthState>(AuthState.Content)
+
     val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     val registrationData: State<RegistrationData>
         get() = _registrationData
     private val _registrationData = mutableStateOf(RegistrationData())
 
-    val registrationState: State<RegistrationState>
-        get() = _registrationState
-    private val _registrationState =
-        mutableStateOf<RegistrationState>(RegistrationState.PersonalInfo)
+    val registrationPage: State<RegistrationPage>
+        get() = _registrationPage
+    private val _registrationPage = mutableStateOf<RegistrationPage>(RegistrationPage.PersonalInfo)
 
     val personalInfoIsCorrectlyFilled: Boolean
         get() = _registrationData.value.name.isNotBlank() && _registrationData.value.login.isNotBlank() && _registrationData.value.email.isNotBlank() && _registrationData.value.birthDate != null && personalInfoValidationSuccessful
@@ -46,6 +64,36 @@ class RegistrationViewModel(
 
     private val credentialsValidationSuccessful: Boolean
         get() = _registrationData.value.passwordValidationErrorType == null && _registrationData.value.repeatPasswordValidationErrorType == null
+
+    private val registrationExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        when (exception) {
+            is HttpException -> when (exception.code()) {
+                ErrorCodes.BAD_REQUEST -> _registrationEventChannel.trySend(AuthEvent.Error(R.string.account_already_exists))
+                else -> _registrationEventChannel.trySend(AuthEvent.Error(R.string.unknown_error))
+            }
+
+            else -> _registrationEventChannel.trySend(AuthEvent.Error(R.string.unknown_error))
+        }
+        _registrationState.value = AuthState.Content
+    }
+
+    fun register() {
+        val birthDate = _registrationData.value.birthDate ?: return
+        _registrationState.value = AuthState.Loading
+        viewModelScope.launch(Dispatchers.IO + registrationExceptionHandler) {
+            registerUseCase(
+                RegistrationRequest(
+                    name = _registrationData.value.name,
+                    userName = _registrationData.value.login,
+                    password = _registrationData.value.password,
+                    email = _registrationData.value.email,
+                    gender = _registrationData.value.gender,
+                    birthDate = birthDate
+                )
+            )
+            _registrationEventChannel.send(AuthEvent.Success)
+        }
+    }
 
     fun setName(name: String) {
         val nameValidationResult = validateNameUseCase(name)
@@ -103,11 +151,11 @@ class RegistrationViewModel(
     }
 
     fun openCredentialsPart() {
-        if (personalInfoIsCorrectlyFilled) _registrationState.value = RegistrationState.Credentials
+        if (personalInfoIsCorrectlyFilled) _registrationPage.value = RegistrationPage.Credentials
     }
 
     fun openPersonalInfoPart() {
-        _registrationState.value = RegistrationState.PersonalInfo
+        _registrationPage.value = RegistrationPage.PersonalInfo
     }
 
 }

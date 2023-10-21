@@ -33,6 +33,7 @@ import com.suslanium.filmus.presentation.ui.theme.TextFieldPadding
 @Composable
 fun AuthTextField(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
@@ -43,12 +44,16 @@ fun AuthTextField(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
         focusedContainerColor = if (isError) SemiTransparentRed else Color.Transparent,
         unfocusedContainerColor = if (isError) SemiTransparentRed else Color.Transparent,
+        disabledContainerColor = Color.Transparent,
         unfocusedBorderColor = AuthFieldOutlineColor,
         focusedBorderColor = Gray400,
+        disabledBorderColor = AuthFieldOutlineColor,
         focusedTextColor = White,
         unfocusedTextColor = White,
+        disabledTextColor = White,
         focusedTrailingIconColor = Gray400,
         unfocusedTrailingIconColor = Gray400,
+        disabledTrailingIconColor = Gray400,
         errorContainerColor = SemiTransparentRed,
         errorTrailingIconColor = Gray400,
         errorBorderColor = Red,
@@ -76,7 +81,7 @@ fun AuthTextField(
             textStyle = TextFieldInput.copy(color = White),
             visualTransformation = visualTransformation,
             interactionSource = interactionSource,
-            enabled = true,
+            enabled = enabled,
             singleLine = true,
             cursorBrush = if (!isError) SolidColor(Gray400) else SolidColor(Red)
         ) { innerTextField ->
@@ -84,7 +89,7 @@ fun AuthTextField(
                 value = value,
                 colors = colors,
                 innerTextField = innerTextField,
-                enabled = true,
+                enabled = enabled,
                 singleLine = true,
                 visualTransformation = visualTransformation,
                 interactionSource = interactionSource,
@@ -93,13 +98,13 @@ fun AuthTextField(
                 contentPadding = TextFieldPadding,
                 container = {
                     OutlinedTextFieldDefaults.ContainerBox(
-                        enabled = true,
+                        enabled = enabled,
                         isError = isError,
                         interactionSource = interactionSource,
                         colors = colors,
                         shape = RoundedCornerShape(ButtonCornerRadius),
                         focusedBorderThickness = OutlinedTextFieldDefaults.FocusedBorderThickness,
-                        unfocusedBorderThickness = OutlineBorderThickness,
+                        unfocusedBorderThickness = OutlineBorderThickness
                     )
                 },
             )

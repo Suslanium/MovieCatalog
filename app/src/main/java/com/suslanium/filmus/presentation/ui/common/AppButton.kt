@@ -1,10 +1,14 @@
 package com.suslanium.filmus.presentation.ui.common
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,11 +17,13 @@ import androidx.compose.ui.unit.Dp
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.ButtonCornerRadius
 import com.suslanium.filmus.presentation.ui.theme.ButtonPadding
+import com.suslanium.filmus.presentation.ui.theme.ButtonProgressIndicatorSize
 import com.suslanium.filmus.presentation.ui.theme.ButtonText
 import com.suslanium.filmus.presentation.ui.theme.DisabledAccent
 import com.suslanium.filmus.presentation.ui.theme.DisabledMain
 import com.suslanium.filmus.presentation.ui.theme.DisabledWhite
 import com.suslanium.filmus.presentation.ui.theme.Main
+import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
@@ -28,7 +34,8 @@ fun AppButton(
     buttonColors: ButtonColors,
     paddingValues: PaddingValues = ButtonPadding,
     text: String,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    hasProgressIndicator: Boolean = false
 ) {
     Button(
         modifier = modifier,
@@ -38,6 +45,10 @@ fun AppButton(
         enabled = enabled,
         contentPadding = paddingValues
     ) {
+        if (hasProgressIndicator) {
+            CircularProgressIndicator(modifier = Modifier.size(ButtonProgressIndicatorSize), color = buttonColors.contentColor)
+            Spacer(modifier = Modifier.width(PaddingSmall))
+        }
         Text(text = text, style = ButtonText, textAlign = TextAlign.Center)
     }
 }
@@ -49,7 +60,8 @@ fun AccentButton(
     cornerRadius: Dp = ButtonCornerRadius,
     paddingValues: PaddingValues = ButtonPadding,
     text: String,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    hasProgressIndicator: Boolean = false
 ) {
     AppButton(
         modifier = modifier, onClick = onClick, buttonColors = ButtonDefaults.buttonColors(
@@ -57,7 +69,7 @@ fun AccentButton(
             containerColor = Accent,
             disabledContainerColor = DisabledAccent,
             disabledContentColor = DisabledWhite
-        ), paddingValues = paddingValues, text = text, cornerRadius = cornerRadius, enabled = enabled
+        ), paddingValues = paddingValues, text = text, cornerRadius = cornerRadius, enabled = enabled, hasProgressIndicator = hasProgressIndicator
     )
 }
 
@@ -68,7 +80,8 @@ fun SecondaryButton(
     cornerRadius: Dp = ButtonCornerRadius,
     paddingValues: PaddingValues = ButtonPadding,
     text: String,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    hasProgressIndicator: Boolean = false
 ) {
     AppButton(
         modifier = modifier, onClick = onClick, buttonColors = ButtonDefaults.buttonColors(
@@ -76,6 +89,6 @@ fun SecondaryButton(
             containerColor = Main,
             disabledContentColor = DisabledAccent,
             disabledContainerColor = DisabledMain
-        ), paddingValues = paddingValues, text = text, enabled = enabled, cornerRadius = cornerRadius
+        ), paddingValues = paddingValues, text = text, enabled = enabled, cornerRadius = cornerRadius, hasProgressIndicator = hasProgressIndicator
     )
 }

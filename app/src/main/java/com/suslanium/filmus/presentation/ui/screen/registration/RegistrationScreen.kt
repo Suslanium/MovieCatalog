@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +27,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
-import com.suslanium.filmus.presentation.state.RegistrationState
+import com.suslanium.filmus.presentation.state.AuthEvent
+import com.suslanium.filmus.presentation.state.AuthState
+import com.suslanium.filmus.presentation.state.RegistrationPage
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
 import com.suslanium.filmus.presentation.ui.common.Constants
 import com.suslanium.filmus.presentation.ui.common.Constants.EMPTY_STRING
@@ -52,9 +55,20 @@ fun RegistrationScreen(
 ) {
     val registrationViewModel: RegistrationViewModel = koinViewModel()
     val registrationData by remember { registrationViewModel.registrationData }
+    val registrationPage by remember { registrationViewModel.registrationPage }
     val registrationState by remember { registrationViewModel.registrationState }
+    var registrationErrorMessageId by remember { mutableStateOf<Int?>(null) }
     var isPasswordVisible by remember { mutableStateOf(false) }
     var isRepeatPasswordVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        registrationViewModel.registrationEvents.collect { event ->
+            when(event) {
+                AuthEvent.Success -> Unit //TODO navigate to main
+                is AuthEvent.Error -> registrationErrorMessageId = event.messageId
+            }
+        }
+    }
 
     val bottomHint = buildAnnotatedString {
         withStyle(
@@ -72,12 +86,16 @@ fun RegistrationScreen(
     }
 
     BackHandler {
-        if (registrationState == RegistrationState.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+        if (registrationState != AuthState.Loading) {
+            if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+        }
     }
 
     Scaffold(containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = {
-            if (registrationState == RegistrationState.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+            if (registrationState != AuthState.Loading) {
+                if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+            }
         })
     }) { paddingValues ->
         Box(
@@ -98,9 +116,9 @@ fun RegistrationScreen(
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-                Crossfade(targetState = registrationState, label = EMPTY_STRING) { state ->
+                Crossfade(targetState = registrationPage, label = EMPTY_STRING) { state ->
                     when (state) {
-                        RegistrationState.PersonalInfo -> RegistrationPersonalInfoContent(
+                        RegistrationPage.PersonalInfo -> RegistrationPersonalInfoContent(
                             registrationData = registrationData,
                             setName = registrationViewModel::setName,
                             setGender = registrationViewModel::setGender,
@@ -109,10 +127,12 @@ fun RegistrationScreen(
                             setBirthDate = registrationViewModel::setBirthDate,
                             dateTimeFormatter = registrationViewModel.dateFormat,
                             openCredentialsPart = registrationViewModel::openCredentialsPart,
-                            continueButtonIsEnabled = registrationViewModel.personalInfoIsCorrectlyFilled
+                            continueButtonIsEnabled = registrationViewModel.personalInfoIsCorrectlyFilled,
+                            registrationFailed = registrationErrorMessageId != null,
+                            resetRegistrationError = { registrationErrorMessageId = null }
                         )
 
-                        RegistrationState.Credentials -> RegistrationCredentialsContent(
+                        RegistrationPage.Credentials -> RegistrationCredentialsContent(
                             registrationData = registrationData,
                             setPassword = registrationViewModel::setPassword,
                             setRepeatPassword = registrationViewModel::setRepeatPassword,
@@ -120,7 +140,11 @@ fun RegistrationScreen(
                             isRepeatPasswordVisible = isRepeatPasswordVisible,
                             setPasswordVisible = { isPasswordVisible = it },
                             setRepeatPasswordVisible = { isRepeatPasswordVisible = it },
-                            registerButtonIsEnabled = registrationViewModel.credentialsAreCorrectlyFilled
+                            registerButtonIsEnabled = registrationViewModel.credentialsAreCorrectlyFilled && registrationState != AuthState.Loading,
+                            resetRegistrationError = { registrationErrorMessageId = null },
+                            registrationErrorMessageId = registrationErrorMessageId,
+                            register = registrationViewModel::register,
+                            registrationState = registrationState
                         )
                     }
                 }

@@ -58,7 +58,9 @@ fun RegistrationPersonalInfoContent(
     setBirthDate: (Long?) -> Unit,
     dateTimeFormatter: DateTimeFormatter,
     openCredentialsPart: () -> Unit,
-    continueButtonIsEnabled: Boolean
+    continueButtonIsEnabled: Boolean,
+    registrationFailed: Boolean,
+    resetRegistrationError: () -> Unit
 ) {
     var shouldShowDatePickerDialog by remember { mutableStateOf(false) }
     if (shouldShowDatePickerDialog) {
@@ -90,8 +92,11 @@ fun RegistrationPersonalInfoContent(
     ) {
         AuthTextField(title = stringResource(id = R.string.name),
             value = registrationData.name,
-            onValueChange = setName,
-            isError = registrationData.nameValidationErrorType != null,
+            onValueChange = {
+                setName(it)
+                resetRegistrationError()
+            },
+            isError = registrationData.nameValidationErrorType != null || registrationFailed,
             errorMessage = if (registrationData.nameValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.nameValidationErrorType]?.let {
                 stringResource(
                     id = it
@@ -106,8 +111,11 @@ fun RegistrationPersonalInfoContent(
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
         AuthTextField(title = stringResource(id = R.string.login),
             value = registrationData.login,
-            onValueChange = setLogin,
-            isError = registrationData.loginValidationErrorType != null,
+            onValueChange = {
+                setLogin(it)
+                resetRegistrationError()
+            },
+            isError = registrationData.loginValidationErrorType != null || registrationFailed,
             errorMessage = if (registrationData.loginValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.loginValidationErrorType]?.let {
                 stringResource(
                     id = it
@@ -116,8 +124,11 @@ fun RegistrationPersonalInfoContent(
         Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
         AuthTextField(title = stringResource(id = R.string.email),
             value = registrationData.email,
-            onValueChange = setEmail,
-            isError = registrationData.emailValidationErrorType != null,
+            onValueChange = {
+                setEmail(it)
+                resetRegistrationError()
+            },
+            isError = registrationData.emailValidationErrorType != null || registrationFailed,
             errorMessage = if (registrationData.emailValidationErrorType != null) ErrorTypeToStringResource.map[registrationData.emailValidationErrorType]?.let {
                 stringResource(
                     id = it
@@ -136,7 +147,8 @@ fun RegistrationPersonalInfoContent(
                         contentDescription = null
                     )
                 }
-            })
+            },
+            isError = registrationFailed)
         Spacer(modifier = Modifier.height(LoginVerticalSpacing))
         AccentButton(
             onClick = openCredentialsPart,
