@@ -70,7 +70,7 @@ fun LoginScreen(
     LaunchedEffect(true) {
         loginViewModel.loginEvents.collect { event ->
             when (event) {
-                AuthEvent.Success -> Unit //TODO navigate to main
+                AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
                 is AuthEvent.Error -> loginErrorMessageId = event.messageId
             }
         }

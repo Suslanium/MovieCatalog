@@ -1,5 +1,6 @@
 package com.suslanium.filmus.di
 
+import com.suslanium.filmus.presentation.viewmodel.LaunchViewModel
 import com.suslanium.filmus.presentation.viewmodel.LoginViewModel
 import com.suslanium.filmus.presentation.viewmodel.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -13,6 +14,10 @@ fun providePresentationModule() = module {
 
     viewModel {
         RegistrationViewModel(get(), get(), get(), get(), get(), get())
+    }
+
+    viewModel {
+        LaunchViewModel(get())
     }
 
 }
