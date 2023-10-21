@@ -3,13 +3,15 @@ package com.suslanium.filmus.presentation.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.suslanium.filmus.domain.usecase.LoginUseCase
 import com.suslanium.filmus.domain.usecase.ValidateLoginUseCase
 import com.suslanium.filmus.domain.usecase.ValidatePasswordUseCase
 import com.suslanium.filmus.presentation.state.LoginData
 
 class LoginViewModel(
-    private val validateLoginUseCase: ValidateLoginUseCase = ValidateLoginUseCase(),
-    private val validatePasswordUseCase: ValidatePasswordUseCase = ValidatePasswordUseCase()
+    private val validateLoginUseCase: ValidateLoginUseCase,
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
     val loginFormIsCorrectlyFilled: Boolean

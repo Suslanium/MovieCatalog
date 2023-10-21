@@ -1,9 +1,9 @@
 package com.suslanium.filmus.presentation.viewmodel
 
-import android.util.Patterns
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.suslanium.filmus.domain.usecase.RegisterUseCase
 import com.suslanium.filmus.domain.usecase.ValidateEmailUseCase
 import com.suslanium.filmus.domain.usecase.ValidateLoginUseCase
 import com.suslanium.filmus.domain.usecase.ValidateNameUseCase
@@ -16,15 +16,12 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class RegistrationViewModel(
-    private val validateNameUseCase: ValidateNameUseCase = ValidateNameUseCase(),
-    private val validateLoginUseCase: ValidateLoginUseCase = ValidateLoginUseCase(),
-    private val validateEmailDateUseCase: ValidateEmailUseCase = ValidateEmailUseCase {
-        Patterns.EMAIL_ADDRESS.matcher(
-            it
-        ).matches()
-    },
-    private val validatePasswordUseCase: ValidatePasswordUseCase = ValidatePasswordUseCase(),
-    private val validateRepeatPasswordUseCase: ValidateRepeatPasswordUseCase = ValidateRepeatPasswordUseCase(),
+    private val validateNameUseCase: ValidateNameUseCase,
+    private val validateLoginUseCase: ValidateLoginUseCase,
+    private val validateEmailDateUseCase: ValidateEmailUseCase,
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val validateRepeatPasswordUseCase: ValidateRepeatPasswordUseCase,
+    private val registerUseCase: RegisterUseCase
 ) : ViewModel() {
 
     val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")

@@ -28,7 +28,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
@@ -50,11 +49,13 @@ import com.suslanium.filmus.presentation.ui.theme.Title
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
 import com.suslanium.filmus.presentation.viewmodel.LoginViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = viewModel(), navController: NavController
+    navController: NavController
 ) {
+    val loginViewModel: LoginViewModel = koinViewModel()
     val loginData by remember {
         loginViewModel.loginData
     }

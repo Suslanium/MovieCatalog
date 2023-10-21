@@ -24,7 +24,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.state.RegistrationState
@@ -45,11 +44,13 @@ import com.suslanium.filmus.presentation.ui.theme.Title
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
 import com.suslanium.filmus.presentation.viewmodel.RegistrationViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegistrationScreen(
-    registrationViewModel: RegistrationViewModel = viewModel(), navController: NavController
+    navController: NavController
 ) {
+    val registrationViewModel: RegistrationViewModel = koinViewModel()
     val registrationData by remember { registrationViewModel.registrationData }
     val registrationState by remember { registrationViewModel.registrationState }
     var isPasswordVisible by remember { mutableStateOf(false) }
