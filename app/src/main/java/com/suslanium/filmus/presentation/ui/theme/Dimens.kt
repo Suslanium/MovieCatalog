@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.dp
 
 val ButtonCornerRadius = 10.dp
+val ButtonProgressIndicatorSize = 12.dp
 val ButtonPadding = PaddingValues(start = 15.dp, top = 12.dp, end = 15.dp, bottom = 12.dp)
 val TextFieldPadding = PaddingValues(all = 12.dp)
 val ZeroDp = 0.dp
