@@ -46,7 +46,10 @@ fun AppButton(
         contentPadding = paddingValues
     ) {
         if (hasProgressIndicator) {
-            CircularProgressIndicator(modifier = Modifier.size(ButtonProgressIndicatorSize), color = buttonColors.contentColor)
+            CircularProgressIndicator(
+                modifier = Modifier.size(ButtonProgressIndicatorSize),
+                color = if (enabled) buttonColors.contentColor else buttonColors.disabledContentColor
+            )
             Spacer(modifier = Modifier.width(PaddingSmall))
         }
         Text(text = text, style = ButtonText, textAlign = TextAlign.Center)
@@ -64,12 +67,19 @@ fun AccentButton(
     hasProgressIndicator: Boolean = false
 ) {
     AppButton(
-        modifier = modifier, onClick = onClick, buttonColors = ButtonDefaults.buttonColors(
+        modifier = modifier,
+        onClick = onClick,
+        buttonColors = ButtonDefaults.buttonColors(
             contentColor = White,
             containerColor = Accent,
             disabledContainerColor = DisabledAccent,
             disabledContentColor = DisabledWhite
-        ), paddingValues = paddingValues, text = text, cornerRadius = cornerRadius, enabled = enabled, hasProgressIndicator = hasProgressIndicator
+        ),
+        paddingValues = paddingValues,
+        text = text,
+        cornerRadius = cornerRadius,
+        enabled = enabled,
+        hasProgressIndicator = hasProgressIndicator
     )
 }
 
@@ -84,11 +94,18 @@ fun SecondaryButton(
     hasProgressIndicator: Boolean = false
 ) {
     AppButton(
-        modifier = modifier, onClick = onClick, buttonColors = ButtonDefaults.buttonColors(
+        modifier = modifier,
+        onClick = onClick,
+        buttonColors = ButtonDefaults.buttonColors(
             contentColor = Accent,
             containerColor = Main,
             disabledContentColor = DisabledAccent,
             disabledContainerColor = DisabledMain
-        ), paddingValues = paddingValues, text = text, enabled = enabled, cornerRadius = cornerRadius, hasProgressIndicator = hasProgressIndicator
+        ),
+        paddingValues = paddingValues,
+        text = text,
+        enabled = enabled,
+        cornerRadius = cornerRadius,
+        hasProgressIndicator = hasProgressIndicator
     )
 }

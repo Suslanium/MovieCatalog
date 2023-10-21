@@ -1,5 +1,6 @@
 package com.suslanium.filmus.presentation.ui.screen.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +33,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
+import com.suslanium.filmus.presentation.state.AuthEvent
+import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.state.LoginData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
@@ -45,6 +49,9 @@ import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
 import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
+import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
+import com.suslanium.filmus.presentation.ui.theme.Red
+import com.suslanium.filmus.presentation.ui.theme.TextFieldInput
 import com.suslanium.filmus.presentation.ui.theme.Title
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
@@ -56,8 +63,17 @@ fun LoginScreen(
     navController: NavController
 ) {
     val loginViewModel: LoginViewModel = koinViewModel()
-    val loginData by remember {
-        loginViewModel.loginData
+    val loginData by remember { loginViewModel.loginData }
+    val loginState by remember { loginViewModel.loginState }
+    var loginErrorMessageId by remember { mutableStateOf<Int?>(null) }
+
+    LaunchedEffect(true) {
+        loginViewModel.loginEvents.collect { event ->
+            when (event) {
+                AuthEvent.Success -> Unit //TODO navigate to main
+                is AuthEvent.Error -> loginErrorMessageId = event.messageId
+            }
+        }
     }
 
     val bottomHint = buildAnnotatedString {
@@ -75,8 +91,12 @@ fun LoginScreen(
         pop()
     }
 
+    BackHandler {
+        if (loginState != AuthState.Loading) navController.navigateUp()
+    }
+
     Scaffold(containerColor = Background, topBar = {
-        AuthTopBar(onNavigateBackClick = { navController.navigateUp() })
+        AuthTopBar(onNavigateBackClick = { if (loginState != AuthState.Loading) navController.navigateUp() })
     }) {
         Box(
             modifier = Modifier
@@ -96,20 +116,28 @@ fun LoginScreen(
                     style = Title,
                     textAlign = TextAlign.Center
                 )
-                LoginContent(loginData, loginViewModel)
+                LoginContent(loginData = loginData,
+                    setLogin = loginViewModel::setLogin,
+                    setPassword = loginViewModel::setPassword,
+                    loginState = loginState,
+                    loginErrorMessageId = loginErrorMessageId,
+                    resetLoginError = { loginErrorMessageId = null })
 
                 Spacer(modifier = Modifier.height(LoginVerticalSpacing))
                 AccentButton(
-                    onClick = { /*TODO*/ },
+                    onClick = loginViewModel::login,
                     text = stringResource(id = R.string.sign_in),
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = loginViewModel.loginFormIsCorrectlyFilled
+                    enabled = loginViewModel.loginFormIsCorrectlyFilled && loginState != AuthState.Loading,
+                    hasProgressIndicator = loginState == AuthState.Loading
                 )
                 Spacer(modifier = Modifier.weight(DefaultWeight))
                 ClickableText(text = bottomHint, style = BottomHint, onClick = { offset ->
                     bottomHint.getStringAnnotations(tag = AUTH_TAG, start = offset, end = offset)
                         .firstOrNull()?.let {
-                            navController.navigate(FilmusDestinations.REGISTRATION)
+                            if (loginState != AuthState.Loading) navController.navigate(
+                                FilmusDestinations.REGISTRATION
+                            )
                         }
                 })
             }
@@ -120,25 +148,35 @@ fun LoginScreen(
 @Composable
 private fun LoginContent(
     loginData: LoginData,
-    loginViewModel: LoginViewModel
+    setLogin: (String) -> Unit,
+    setPassword: (String) -> Unit,
+    loginState: AuthState,
+    loginErrorMessageId: Int?,
+    resetLoginError: () -> Unit
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
     AuthTextField(title = stringResource(id = R.string.login),
         value = loginData.login,
-        onValueChange = loginViewModel::setLogin,
-        isError = loginData.loginValidationErrorType != null,
+        onValueChange = {
+            setLogin(it)
+            resetLoginError()
+        },
+        isError = loginData.loginValidationErrorType != null || loginErrorMessageId != null,
         errorMessage = if (loginData.loginValidationErrorType != null) ErrorTypeToStringResource.map[loginData.loginValidationErrorType]?.let { it1 ->
             stringResource(
                 id = it1
             )
-        } else null)
+        } else null,
+        enabled = loginState != AuthState.Loading)
     Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
 
-    AuthTextField(
-        title = stringResource(id = R.string.password),
+    AuthTextField(title = stringResource(id = R.string.password),
         value = loginData.password,
-        onValueChange = loginViewModel::setPassword,
+        onValueChange = {
+            setPassword(it)
+            resetLoginError()
+        },
         trailingIcon = {
             IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                 Icon(
@@ -148,11 +186,22 @@ private fun LoginContent(
             }
         },
         visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        isError = loginData.passwordValidationErrorType != null,
+        isError = loginData.passwordValidationErrorType != null || loginErrorMessageId != null,
         errorMessage = if (loginData.passwordValidationErrorType != null) ErrorTypeToStringResource.map[loginData.passwordValidationErrorType]?.let { it1 ->
             stringResource(
                 id = it1
             )
-        } else null
-    )
+        } else null,
+        enabled = loginState != AuthState.Loading)
+
+    if (loginErrorMessageId != null) {
+        Spacer(modifier = Modifier.height(PaddingSmall))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = loginErrorMessageId),
+            style = TextFieldInput,
+            textAlign = TextAlign.Start,
+            color = Red
+        )
+    }
 }

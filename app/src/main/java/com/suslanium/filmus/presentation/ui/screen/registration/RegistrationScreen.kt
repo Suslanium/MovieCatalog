@@ -153,7 +153,7 @@ fun RegistrationScreen(
                     bottomHint.getStringAnnotations(
                         tag = Constants.AUTH_TAG, start = offset, end = offset
                     ).firstOrNull()?.let {
-                        navController.navigate(FilmusDestinations.LOGIN)
+                        if (registrationState != AuthState.Loading) navController.navigate(FilmusDestinations.LOGIN)
                     }
                 })
             }
