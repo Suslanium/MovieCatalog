@@ -2,10 +2,14 @@ package com.suslanium.filmus.presentation.ui.screen.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.suslanium.filmus.domain.entity.movie.Genre
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.screen.main.components.PosterCarousel
+import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.MovieCard
+import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import java.util.UUID
 
 @Composable
@@ -13,13 +17,18 @@ fun MainScreen() {
     val moviesList = listOf(
         MovieSummary(
             UUID.randomUUID(),
-            null,
+            "Фокус",
             "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/90e751c7-88ba-4508-93a9-952b5b25500c/1920x",
-            2000,
-            null,
-            emptyList(),
-            null,
-            null
+            2014,
+            "CША",
+            listOf(
+                Genre(UUID.randomUUID(), "драма"),
+                Genre(UUID.randomUUID(), "мелодрама"),
+                Genre(UUID.randomUUID(), "комедия"),
+                Genre(UUID.randomUUID(), "криминал")
+            ),
+            10f,
+            10
         ),
         MovieSummary(
             UUID.randomUUID(),
@@ -54,5 +63,6 @@ fun MainScreen() {
     )
     Column(modifier = Modifier.fillMaxSize()) {
         PosterCarousel(movies = moviesList)
+        MovieCard(movieSummary = moviesList[0], modifier = Modifier.padding(PaddingMedium))
     }
 }

@@ -54,3 +54,33 @@ val SegmentedButtonText = TextStyle(
     fontSize = 14.sp,
     fontWeight = FontWeight.Normal
 )
+
+val OverallRatingText = TextStyle(
+    fontFamily = Inter,
+    fontSize = 13.sp,
+    fontWeight = FontWeight.Bold
+)
+
+val UserRatingText = TextStyle(
+    fontFamily = Inter,
+    fontSize = 15.sp,
+    fontWeight = FontWeight.Medium
+)
+
+val MovieCardYearCountryText = TextStyle(
+    fontFamily = Inter,
+    fontSize = 12.sp,
+    fontWeight = FontWeight.Normal
+)
+
+val GenreText = TextStyle(
+    fontFamily = Inter,
+    fontSize = 13.sp,
+    fontWeight = FontWeight.Normal
+)
+
+val MovieCardTitleText = TextStyle(
+    fontFamily = Inter,
+    fontSize = 16.sp,
+    fontWeight = FontWeight.Bold
+)

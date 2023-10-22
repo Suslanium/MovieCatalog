@@ -10,5 +10,5 @@ data class MovieSummary(
     val country: String?,
     val genres: List<Genre>,
     val rating: Float?,
-    val userRating: Float?
+    val userRating: Int?
 )
