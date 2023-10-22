@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suslanium.filmus.R
-import com.suslanium.filmus.domain.entity.RegistrationRequest
+import com.suslanium.filmus.domain.entity.auth.RegistrationRequest
 import com.suslanium.filmus.domain.usecase.RegisterUseCase
 import com.suslanium.filmus.domain.usecase.ValidateEmailUseCase
 import com.suslanium.filmus.domain.usecase.ValidateLoginUseCase

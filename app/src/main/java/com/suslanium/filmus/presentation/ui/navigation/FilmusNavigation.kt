@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.suslanium.filmus.presentation.ui.screen.launch.LaunchScreen
 import com.suslanium.filmus.presentation.ui.screen.login.LoginScreen
+import com.suslanium.filmus.presentation.ui.screen.main.MainScreen
 import com.suslanium.filmus.presentation.ui.screen.onboarding.OnboardingScreen
 import com.suslanium.filmus.presentation.ui.screen.registration.RegistrationScreen
 
@@ -37,7 +38,7 @@ fun FilmusNavigation(navHostController: NavHostController, onAppExit: () -> Unit
             LoginScreen(navController = navHostController)
         }
         composable(route = FilmusDestinations.MAIN) {
-
+            MainScreen()
         }
     }
 }

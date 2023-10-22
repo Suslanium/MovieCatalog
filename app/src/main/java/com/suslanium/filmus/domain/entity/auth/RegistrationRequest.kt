@@ -1,4 +1,4 @@
-package com.suslanium.filmus.domain.entity
+package com.suslanium.filmus.domain.entity.auth
 
 import java.time.LocalDate
 

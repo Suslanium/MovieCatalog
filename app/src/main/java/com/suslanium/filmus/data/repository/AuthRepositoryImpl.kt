@@ -2,8 +2,8 @@ package com.suslanium.filmus.data.repository
 
 import com.suslanium.filmus.data.datasource.TokenDataSource
 import com.suslanium.filmus.data.remote.api.AuthApiService
-import com.suslanium.filmus.domain.entity.LoginRequest
-import com.suslanium.filmus.domain.entity.RegistrationRequest
+import com.suslanium.filmus.domain.entity.auth.LoginRequest
+import com.suslanium.filmus.domain.entity.auth.RegistrationRequest
 import com.suslanium.filmus.domain.repository.AuthRepository
 
 class AuthRepositoryImpl(

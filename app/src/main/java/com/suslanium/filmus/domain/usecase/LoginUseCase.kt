@@ -1,6 +1,6 @@
 package com.suslanium.filmus.domain.usecase
 
-import com.suslanium.filmus.domain.entity.LoginRequest
+import com.suslanium.filmus.domain.entity.auth.LoginRequest
 import com.suslanium.filmus.domain.repository.AuthRepository
 
 class LoginUseCase(

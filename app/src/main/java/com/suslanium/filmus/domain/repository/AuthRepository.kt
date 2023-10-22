@@ -1,7 +1,7 @@
 package com.suslanium.filmus.domain.repository
 
-import com.suslanium.filmus.domain.entity.LoginRequest
-import com.suslanium.filmus.domain.entity.RegistrationRequest
+import com.suslanium.filmus.domain.entity.auth.LoginRequest
+import com.suslanium.filmus.domain.entity.auth.RegistrationRequest
 
 interface AuthRepository {
 
