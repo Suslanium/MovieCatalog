@@ -84,3 +84,9 @@ val MovieCardTitleText = TextStyle(
     fontSize = 16.sp,
     fontWeight = FontWeight.Bold
 )
+
+val MovieTitle = TextStyle(
+    fontFamily = Inter,
+    fontSize = 24.sp,
+    fontWeight = FontWeight.Bold
+)
