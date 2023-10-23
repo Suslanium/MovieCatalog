@@ -1,22 +1,26 @@
 package com.suslanium.filmus.data.repository
 
-import com.suslanium.filmus.data.converter.MovieSummaryConverter
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.suslanium.filmus.data.paging.MoviePagingSource
 import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.domain.repository.MovieRepository
+import kotlinx.coroutines.flow.Flow
 
 class MovieRepositoryImpl(
     private val movieApiService: MovieApiService
 ) : MovieRepository {
 
-    override suspend fun getMoviesList(page: Int): List<MovieSummary> {
-        val moviesPagedList = movieApiService.getMoviesList(page)
-        if (moviesPagedList.movies.isNullOrEmpty()) return emptyList()
-        return moviesPagedList.movies.map { movieElementModel ->
-            MovieSummaryConverter.convert(
-                movieElementModel
-            )
-        }
+    override fun getMoviesList(): Flow<PagingData<MovieSummary>> {
+        return Pager(
+            config = PagingConfig(pageSize = 6),
+            initialKey = 1,
+            pagingSourceFactory = {
+                MoviePagingSource(movieApiService)
+            }
+        ).flow
     }
 
 }

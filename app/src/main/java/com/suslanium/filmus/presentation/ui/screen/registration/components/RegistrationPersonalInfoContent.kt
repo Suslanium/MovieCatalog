@@ -29,7 +29,7 @@ import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
 import com.suslanium.filmus.presentation.state.RegistrationData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
-import com.suslanium.filmus.presentation.ui.common.Constants
+import com.suslanium.filmus.presentation.common.Constants
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
 import java.time.format.DateTimeFormatter

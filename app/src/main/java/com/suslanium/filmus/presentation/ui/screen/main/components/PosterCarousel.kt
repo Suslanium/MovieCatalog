@@ -17,7 +17,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +32,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.CarouselIconSize
 import com.suslanium.filmus.presentation.ui.theme.CarouselIndicatorCornerRadius
@@ -53,7 +53,8 @@ fun PosterCarousel(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(497.dp).background(Gray750), contentAlignment = Alignment.Center
+            .height(497.dp)
+            .background(Gray750), contentAlignment = Alignment.Center
     ) {
         HorizontalPager(state = pagerState) { pageIndex ->
             GlideImage(
@@ -61,13 +62,20 @@ fun PosterCarousel(
                 imageModel = { movies[pageIndex].posterUri },
                 imageOptions = ImageOptions(contentScale = ContentScale.Crop),
                 loading = {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center)  {
-                        CircularProgressIndicator(modifier = Modifier.size(CarouselIconSize))
-                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                    )
                 },
                 failure = {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Icon(modifier = Modifier.size(CarouselIconSize), imageVector = ImageVector.vectorResource(R.drawable.download_error), contentDescription = null, tint = Accent)
+                        Icon(
+                            modifier = Modifier.size(CarouselIconSize),
+                            imageVector = ImageVector.vectorResource(R.drawable.download_error),
+                            contentDescription = null,
+                            tint = Accent
+                        )
                     }
                 }
             )

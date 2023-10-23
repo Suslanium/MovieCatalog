@@ -5,7 +5,7 @@ import com.suslanium.filmus.domain.entity.validation.LoginValidationErrorType
 import com.suslanium.filmus.domain.entity.validation.NameValidationErrorType
 import com.suslanium.filmus.domain.entity.validation.PasswordValidationErrorType
 import com.suslanium.filmus.domain.entity.validation.RepeatPasswordValidationErrorType
-import com.suslanium.filmus.presentation.ui.common.Constants.EMPTY_STRING
+import com.suslanium.filmus.presentation.common.Constants.EMPTY_STRING
 import java.time.LocalDate
 
 data class RegistrationData(

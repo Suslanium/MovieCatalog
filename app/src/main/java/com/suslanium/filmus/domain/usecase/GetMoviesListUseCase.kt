@@ -6,6 +6,6 @@ class GetMoviesListUseCase(
     private val moviesRepository: MovieRepository
 ) {
 
-    suspend operator fun invoke(pageNumber: Int) = moviesRepository.getMoviesList(pageNumber)
+    operator fun invoke() = moviesRepository.getMoviesList()
 
 }

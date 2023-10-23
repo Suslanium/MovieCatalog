@@ -19,11 +19,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.glide.GlideImage
-import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.Gray750
@@ -46,9 +45,11 @@ fun MovieCardImage(movieSummary: MovieSummary) {
             .clip(RoundedCornerShape(MovieCardCornerRadiusSmall)),
             imageModel = { movieSummary.posterUri },
             imageOptions = ImageOptions(contentScale = ContentScale.Crop),
-            component = rememberImageComponent {
-                +ShimmerPlugin(
-                    baseColor = Gray750, highlightColor = Accent
+            loading = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
                 )
             },
             failure = {

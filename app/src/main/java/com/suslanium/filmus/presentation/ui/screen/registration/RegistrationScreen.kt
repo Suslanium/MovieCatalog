@@ -31,8 +31,8 @@ import com.suslanium.filmus.presentation.state.AuthEvent
 import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.state.RegistrationPage
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
-import com.suslanium.filmus.presentation.ui.common.Constants
-import com.suslanium.filmus.presentation.ui.common.Constants.EMPTY_STRING
+import com.suslanium.filmus.presentation.common.Constants
+import com.suslanium.filmus.presentation.common.Constants.EMPTY_STRING
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.registration.components.RegistrationCredentialsContent
 import com.suslanium.filmus.presentation.ui.screen.registration.components.RegistrationPersonalInfoContent
