@@ -6,5 +6,6 @@ object Constants {
     const val BASE_URL = "https://react-midterm.kreosoft.space/api/"
     const val REGISTER_URL = "account/register"
     const val LOGIN_URL = "account/login"
+    const val MOVIE_LIST_URL = "movies/{page}"
     const val DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.suslanium.filmus.data.Constants
 import com.suslanium.filmus.data.remote.api.AuthApiService
+import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.data.remote.serialization.LocalDateSerializer
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -19,6 +20,8 @@ private fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder().baseUrl(C
 
 private fun provideAuthApi(gson: Gson): AuthApiService = provideRetrofit(gson).create(AuthApiService::class.java)
 
+private fun provideMovieApi(gson: Gson): MovieApiService = provideRetrofit(gson).create(MovieApiService::class.java)
+
 fun provideNetworkModule() = module {
 
     factory {
@@ -27,6 +30,10 @@ fun provideNetworkModule() = module {
 
     single {
         provideAuthApi(get())
+    }
+
+    single {
+        provideMovieApi(get())
     }
 
 }
