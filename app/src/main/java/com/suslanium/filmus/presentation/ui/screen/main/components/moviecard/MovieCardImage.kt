@@ -28,16 +28,18 @@ import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusSmall
+import com.suslanium.filmus.presentation.ui.theme.MovieCardImageHeight
+import com.suslanium.filmus.presentation.ui.theme.MovieCardImageWidth
 import com.suslanium.filmus.presentation.ui.theme.OverallRatingText
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingUltraSmall
 
 @Composable
-fun MovieCardImage(movieSummary: MovieSummary) {
+fun MovieCardImage(movieSummary: MovieSummary, shimmerOffset: Float) {
     Box(
         modifier = Modifier
-            .height(130.dp)
-            .width(95.dp), contentAlignment = Alignment.Center
+            .height(MovieCardImageHeight)
+            .width(MovieCardImageWidth), contentAlignment = Alignment.Center
     ) {
 
         GlideImage(modifier = Modifier
@@ -49,7 +51,7 @@ fun MovieCardImage(movieSummary: MovieSummary) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                        .shimmerEffect(startOffsetX = shimmerOffset, backgroundColor = Gray750, shimmerColor = Accent)
                 )
             },
             failure = {

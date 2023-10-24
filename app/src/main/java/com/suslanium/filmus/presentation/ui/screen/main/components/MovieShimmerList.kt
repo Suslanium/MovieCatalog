@@ -20,11 +20,14 @@ import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.Shi
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
+import com.suslanium.filmus.presentation.ui.theme.MoviePosterCarouselHeight
 import com.suslanium.filmus.presentation.ui.theme.MovieTitle
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 
 @Composable
-fun MovieShimmerList() {
+fun MovieShimmerList(
+    shimmerOffset: Float
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         state = rememberLazyListState(),
@@ -34,17 +37,18 @@ fun MovieShimmerList() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(497.dp)
-                    .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                    .height(MoviePosterCarouselHeight)
+                    .shimmerEffect(
+                        startOffsetX = shimmerOffset,
+                        backgroundColor = Gray750,
+                        shimmerColor = Accent
+                    )
             )
         }
         item {
             Box(
                 modifier = Modifier.padding(
-                    start = PaddingMedium,
-                    end = PaddingMedium,
-                    top = PaddingMedium,
-                    bottom = 15.dp
+                    start = PaddingMedium, end = PaddingMedium, top = PaddingMedium, bottom = 19.dp
                 ), contentAlignment = Alignment.CenterStart
             ) {
                 Box(
@@ -54,7 +58,11 @@ fun MovieShimmerList() {
                         .clip(
                             RoundedCornerShape(MovieCardCornerRadiusMedium)
                         )
-                        .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                        .shimmerEffect(
+                            startOffsetX = shimmerOffset,
+                            backgroundColor = Gray750,
+                            shimmerColor = Accent
+                        )
                 )
             }
         }
@@ -62,7 +70,7 @@ fun MovieShimmerList() {
             ShimmerMovieCard(
                 modifier = Modifier.padding(
                     start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
-                )
+                ), shimmerOffset = shimmerOffset
             )
         }
     }

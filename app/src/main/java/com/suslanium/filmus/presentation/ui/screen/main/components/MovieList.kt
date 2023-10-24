@@ -2,6 +2,7 @@ package com.suslanium.filmus.presentation.ui.screen.main.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -31,7 +33,9 @@ import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
-fun MovieList(moviePagingItems: LazyPagingItems<MovieSummary>) {
+fun MovieList(
+    moviePagingItems: LazyPagingItems<MovieSummary>, shimmerOffset: Float
+) {
     LazyColumn(modifier = Modifier.fillMaxSize(), state = rememberLazyListState()) {
 
         item {
@@ -40,33 +44,32 @@ fun MovieList(moviePagingItems: LazyPagingItems<MovieSummary>) {
                 moviePagingItems[index]?.let { movieList.add(it) }
             }
             PosterCarousel(
-                movies = movieList
+                movies = movieList, shimmerOffset = shimmerOffset
             )
         }
 
         item {
-            Text(
+            Box(
                 modifier = Modifier.padding(
-                    start = PaddingMedium,
-                    end = PaddingMedium,
-                    top = PaddingMedium,
-                    bottom = 15.dp
-                ),
-                text = stringResource(id = R.string.catalog),
-                style = MovieTitle,
-                color = White,
-                textAlign = TextAlign.Start
-            )
+                    start = PaddingMedium, end = PaddingMedium, top = PaddingMedium, bottom = 15.dp
+                ), contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = stringResource(id = R.string.catalog),
+                    style = MovieTitle,
+                    color = White,
+                    textAlign = TextAlign.Start
+                )
+            }
         }
 
-        items(count = moviePagingItems.itemCount - 4,
-            key = { moviePagingItems[it]?.id ?: it }) {
+        items(count = moviePagingItems.itemCount - 4, key = { moviePagingItems[it]?.id ?: it }) {
             val movie = moviePagingItems[it + 4]
             if (movie != null) {
                 MovieCard(
                     movieSummary = movie, modifier = Modifier.padding(
                         start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
-                    )
+                    ), shimmerOffset = shimmerOffset
                 )
             }
         }
@@ -80,7 +83,7 @@ fun MovieList(moviePagingItems: LazyPagingItems<MovieSummary>) {
                 ShimmerMovieCard(
                     modifier = Modifier.padding(
                         start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
-                    )
+                    ), shimmerOffset = shimmerOffset
                 )
             }
 

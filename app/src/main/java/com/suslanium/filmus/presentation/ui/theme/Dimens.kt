@@ -20,6 +20,10 @@ val CarouselPadding = 10.dp
 val MovieCardCornerRadiusSmall = 3.dp
 val MovieCardCornerRadiusMedium = 5.dp
 val MovieCardCornerRadiusLarge = 35.dp
+val MovieCardImageHeight = 130.dp
+val MovieCardImageWidth = 95.dp
+val MovieCardNameAndRatingHeight = 26.dp
+val MoviePosterCarouselHeight = 497.dp
 
 val ButtonCornerRadius = 10.dp
 val ButtonProgressIndicatorSize = 12.dp

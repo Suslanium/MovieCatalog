@@ -21,6 +21,7 @@ import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusLarge
+import com.suslanium.filmus.presentation.ui.theme.MovieCardNameAndRatingHeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardTitleText
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.UserRatingText
@@ -43,7 +44,7 @@ fun MovieCardNameAndRating(
         if (movieSummary.userRating != null) {
             Row(
                 modifier = Modifier
-                    .height(26.dp)
+                    .height(MovieCardNameAndRatingHeight)
                     .clip(
                         RoundedCornerShape(MovieCardCornerRadiusLarge)
                     )

@@ -21,10 +21,10 @@ import com.suslanium.filmus.presentation.ui.theme.RatingOver8
 
 @Composable
 fun MovieCard(
-    movieSummary: MovieSummary, modifier: Modifier = Modifier
+    movieSummary: MovieSummary, modifier: Modifier = Modifier, shimmerOffset: Float
 ) {
     Row(modifier = modifier.fillMaxWidth()) {
-        MovieCardImage(movieSummary)
+        MovieCardImage(movieSummary, shimmerOffset)
         Spacer(modifier = Modifier.width(PaddingNormal))
         Column {
             MovieCardNameAndRating(movieSummary)

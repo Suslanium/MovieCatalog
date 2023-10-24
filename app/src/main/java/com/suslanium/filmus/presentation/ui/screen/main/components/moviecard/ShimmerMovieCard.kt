@@ -19,24 +19,36 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusSmall
+import com.suslanium.filmus.presentation.ui.theme.MovieCardImageHeight
+import com.suslanium.filmus.presentation.ui.theme.MovieCardImageWidth
+import com.suslanium.filmus.presentation.ui.theme.MovieCardNameAndRatingHeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardTitleText
 import com.suslanium.filmus.presentation.ui.theme.MovieCardYearCountryText
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingNormal
 
 @Composable
-fun ShimmerMovieCard(modifier: Modifier = Modifier) {
+fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
     Row(modifier = modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
-                .height(130.dp)
-                .width(95.dp)
+                .height(MovieCardImageHeight)
+                .width(MovieCardImageWidth)
                 .clip(RoundedCornerShape(MovieCardCornerRadiusSmall))
-                .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                .shimmerEffect(
+                    startOffsetX = shimmerOffset,
+                    backgroundColor = Gray750,
+                    shimmerColor = Accent
+                )
         )
         Spacer(modifier = Modifier.width(PaddingNormal))
         Column {
-            Box(modifier = Modifier.height(26.dp).fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+            Box(
+                modifier = Modifier
+                    .height(MovieCardNameAndRatingHeight)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.TopCenter
+            ) {
                 Box(
                     modifier = Modifier
                         .height(with(LocalDensity.current) { MovieCardTitleText.fontSize.toDp() })
@@ -44,7 +56,11 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier) {
                         .clip(
                             RoundedCornerShape(MovieCardCornerRadiusMedium)
                         )
-                        .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                        .shimmerEffect(
+                            startOffsetX = shimmerOffset,
+                            backgroundColor = Gray750,
+                            shimmerColor = Accent
+                        )
                 )
             }
             Spacer(modifier = Modifier.height(PaddingExtraSmall))
@@ -55,7 +71,11 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier) {
                     .clip(
                         RoundedCornerShape(MovieCardCornerRadiusMedium)
                     )
-                    .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                    .shimmerEffect(
+                        startOffsetX = shimmerOffset,
+                        backgroundColor = Gray750,
+                        shimmerColor = Accent
+                    )
             )
         }
     }

@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
@@ -38,13 +37,15 @@ import com.suslanium.filmus.presentation.ui.theme.CarouselIconSize
 import com.suslanium.filmus.presentation.ui.theme.CarouselIndicatorCornerRadius
 import com.suslanium.filmus.presentation.ui.theme.CarouselPadding
 import com.suslanium.filmus.presentation.ui.theme.Gray750
+import com.suslanium.filmus.presentation.ui.theme.MoviePosterCarouselHeight
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PosterCarousel(
-    movies: List<MovieSummary>
+    movies: List<MovieSummary>,
+    shimmerOffset: Float
 ) {
     val pagerState = rememberPagerState(pageCount = { movies.size })
 
@@ -53,7 +54,7 @@ fun PosterCarousel(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(497.dp)
+            .height(MoviePosterCarouselHeight)
             .background(Gray750), contentAlignment = Alignment.Center
     ) {
         HorizontalPager(state = pagerState) { pageIndex ->
@@ -65,7 +66,7 @@ fun PosterCarousel(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .shimmerEffect(backgroundColor = Gray750, shimmerColor = Accent)
+                            .shimmerEffect(startOffsetX = shimmerOffset, backgroundColor = Gray750, shimmerColor = Accent)
                     )
                 },
                 failure = {
