@@ -7,5 +7,6 @@ object Constants {
     const val REGISTER_URL = "account/register"
     const val LOGIN_URL = "account/login"
     const val MOVIE_LIST_URL = "movies/{page}"
+    const val MOVIE_DETAILS_URL = "movies/details/{id}"
     const val DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 }
