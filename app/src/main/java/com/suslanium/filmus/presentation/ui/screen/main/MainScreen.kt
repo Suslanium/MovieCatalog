@@ -1,5 +1,6 @@
 package com.suslanium.filmus.presentation.ui.screen.main
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -29,18 +30,21 @@ fun MainScreen() {
             animation = tween(1000)
         ), label = ""
     )
-    when (moviePagingItems.loadState.refresh) {
-        is LoadState.NotLoading -> {
-            MovieList(moviePagingItems, startOffsetX)
-        }
+    Crossfade(targetState = moviePagingItems.loadState.refresh, label = "") {
+        when (it) {
+            is LoadState.NotLoading -> {
+                MovieList(moviePagingItems, startOffsetX)
+            }
 
-        is LoadState.Loading -> {
-            MovieShimmerList(startOffsetX)
-        }
+            is LoadState.Loading -> {
+                MovieShimmerList(startOffsetX)
+            }
 
-        is LoadState.Error -> {
-            ErrorContent(onRetry = moviePagingItems::refresh)
+            is LoadState.Error -> {
+                ErrorContent(onRetry = moviePagingItems::refresh)
+            }
         }
     }
+
 }
 

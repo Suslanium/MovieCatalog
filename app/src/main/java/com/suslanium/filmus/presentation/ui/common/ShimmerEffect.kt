@@ -14,9 +14,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 
 fun Modifier.shimmerEffect(
-    startOffsetX: Float,
-    backgroundColor: Color = Color.Gray,
-    shimmerColor: Color = Color.DarkGray
+    startOffsetX: Float, backgroundColor: Color = Color.Gray, shimmerColor: Color = Color.DarkGray
 ): Modifier = composed {
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -25,15 +23,12 @@ fun Modifier.shimmerEffect(
     background(
         brush = Brush.linearGradient(
             colors = listOf(
-                backgroundColor,
-                shimmerColor,
-                backgroundColor
-            ),
-            start = Offset(startOffsetX * size.width.toFloat(), 0f),
-            end = Offset(startOffsetX * size.width.toFloat() + size.width.toFloat(), size.height.toFloat())
+                backgroundColor, shimmerColor, backgroundColor
+            ), start = Offset(startOffsetX * size.width.toFloat(), 0f), end = Offset(
+                startOffsetX * size.width.toFloat() + size.width.toFloat(), size.height.toFloat()
+            )
         )
-    )
-        .onGloballyPositioned {
-            size = it.size
-        }
+    ).onGloballyPositioned {
+        size = it.size
+    }
 }
