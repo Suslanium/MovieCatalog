@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -19,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
-import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusLarge
 import com.suslanium.filmus.presentation.ui.theme.MovieCardNameAndRatingHeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardTitleText
@@ -34,13 +34,14 @@ fun MovieCardNameAndRating(
     Row(verticalAlignment = Alignment.Top) {
         if (movieSummary.name != null) {
             Text(
+                modifier = Modifier.weight(1f),
                 text = movieSummary.name,
                 style = MovieCardTitleText,
                 color = White,
                 textAlign = TextAlign.Start
             )
         }
-        Spacer(modifier = Modifier.weight(DefaultWeight))
+        Spacer(modifier = Modifier.requiredWidth(10.dp))
         if (movieSummary.userRating != null) {
             Row(
                 modifier = Modifier

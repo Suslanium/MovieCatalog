@@ -2,9 +2,9 @@ package com.suslanium.filmus.di
 
 import android.util.Patterns
 import com.suslanium.filmus.data.datasource.TokenDataSource
+import com.suslanium.filmus.data.datasource.UserDataSource
 import com.suslanium.filmus.data.remote.api.AuthApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
-import com.suslanium.filmus.data.remote.api.UserApiService
 import com.suslanium.filmus.data.repository.AuthRepositoryImpl
 import com.suslanium.filmus.data.repository.MovieRepositoryImpl
 import com.suslanium.filmus.data.repository.UserRepositoryImpl
@@ -28,11 +28,11 @@ fun provideAuthRepository(
     authApiService: AuthApiService, tokenDataSource: TokenDataSource
 ): AuthRepository = AuthRepositoryImpl(authApiService, tokenDataSource)
 
-fun provideMovieRepository(movieApiService: MovieApiService): MovieRepository =
-    MovieRepositoryImpl(movieApiService)
+fun provideMovieRepository(movieApiService: MovieApiService, userDataSource: UserDataSource): MovieRepository =
+    MovieRepositoryImpl(movieApiService, userDataSource)
 
-fun provideUserRepository(userApiService: UserApiService): UserRepository =
-    UserRepositoryImpl(userApiService)
+fun provideUserRepository(userDataSource: UserDataSource): UserRepository =
+    UserRepositoryImpl(userDataSource)
 
 fun provideDomainModule() = module {
     single {
@@ -40,7 +40,7 @@ fun provideDomainModule() = module {
     }
 
     single {
-        provideMovieRepository(get())
+        provideMovieRepository(get(), get())
     }
 
     single {

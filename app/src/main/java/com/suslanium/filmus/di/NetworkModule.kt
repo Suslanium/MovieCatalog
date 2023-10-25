@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.suslanium.filmus.data.Constants
 import com.suslanium.filmus.data.remote.api.AuthApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
+import com.suslanium.filmus.data.remote.api.UserApiService
 import com.suslanium.filmus.data.remote.interceptor.AuthInterceptor
 import com.suslanium.filmus.data.remote.serialization.LocalDateDeserializer
 import com.suslanium.filmus.data.remote.serialization.LocalDateSerializer
@@ -46,6 +47,9 @@ private fun provideAuthApi(gson: Gson, okHttpClient: OkHttpClient): AuthApiServi
 private fun provideMovieApi(gson: Gson, okHttpClient: OkHttpClient): MovieApiService =
     provideRetrofit(gson, okHttpClient).create(MovieApiService::class.java)
 
+private fun provideUserApi(gson: Gson, okHttpClient: OkHttpClient): UserApiService =
+    provideRetrofit(gson, okHttpClient).create(UserApiService::class.java)
+
 fun provideNetworkModule() = module {
 
     factory {
@@ -70,6 +74,10 @@ fun provideNetworkModule() = module {
 
     single {
         provideMovieApi(get(), get(named("RegularOkHttp")))
+    }
+
+    single {
+        provideUserApi(get(), get(named("AuthOkHttp")))
     }
 
 }

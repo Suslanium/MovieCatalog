@@ -6,7 +6,7 @@ import com.suslanium.filmus.domain.entity.movie.MovieSummary
 
 object MovieSummaryConverter {
 
-    fun convert(from: MovieElementModel): MovieSummary =
+    fun convert(from: MovieElementModel, userRating: Int?): MovieSummary =
         with(from) {
             MovieSummary(
                 id = id,
@@ -16,7 +16,7 @@ object MovieSummaryConverter {
                 country = country,
                 genres = genres ?: emptyList(),
                 rating = calculateRatingByReviews(reviews),
-                userRating = null
+                userRating = userRating
             )
         }
 

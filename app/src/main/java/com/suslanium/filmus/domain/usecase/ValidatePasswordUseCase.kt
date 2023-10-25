@@ -6,7 +6,7 @@ class ValidatePasswordUseCase {
 
     operator fun invoke(password: String): PasswordValidationErrorType? {
         if (password.isBlank()) return PasswordValidationErrorType.BLANK
-        if (password.length < 8) return PasswordValidationErrorType.TOO_SHORT
+        if (password.length < 6) return PasswordValidationErrorType.TOO_SHORT
         return null
     }
 

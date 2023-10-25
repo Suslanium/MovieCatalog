@@ -3,12 +3,9 @@ package com.suslanium.filmus.data.remote.serialization
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.suslanium.filmus.data.Constants
 import java.lang.reflect.Type
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
-private val dateTimeFormatter = DateTimeFormatter.ofPattern(Constants.DATETIME_PATTERN)
+import java.time.LocalDateTime
 
 object LocalDateDeserializer: JsonDeserializer<LocalDate> {
 
@@ -18,7 +15,7 @@ object LocalDateDeserializer: JsonDeserializer<LocalDate> {
         context: JsonDeserializationContext?
     ): LocalDate {
         if (json != null) {
-            return LocalDate.parse(json.asString, dateTimeFormatter)
+            return LocalDateTime.parse(json.asString).toLocalDate()
         }
         throw IllegalArgumentException("Cannot convert null to LocalDate")
     }
