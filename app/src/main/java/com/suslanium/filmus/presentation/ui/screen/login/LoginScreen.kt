@@ -1,6 +1,7 @@
 package com.suslanium.filmus.presentation.ui.screen.login
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -66,6 +69,7 @@ fun LoginScreen(
     val loginData by remember { loginViewModel.loginData }
     val loginState by remember { loginViewModel.loginState }
     var loginErrorMessageId by remember { mutableStateOf<Int?>(null) }
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(true) {
         loginViewModel.loginEvents.collect { event ->
@@ -95,7 +99,11 @@ fun LoginScreen(
         if (loginState != AuthState.Loading) navController.navigateUp()
     }
 
-    Scaffold(containerColor = Background, topBar = {
+    Scaffold(modifier = Modifier.pointerInput(Unit) {
+        detectTapGestures(onTap = {
+            focusManager.clearFocus()
+        })
+    }, containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = { if (loginState != AuthState.Loading) navController.navigateUp() })
     }) {
         Box(

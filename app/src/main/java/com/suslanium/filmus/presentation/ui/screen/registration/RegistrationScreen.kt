@@ -2,6 +2,7 @@ package com.suslanium.filmus.presentation.ui.screen.registration
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -60,10 +63,11 @@ fun RegistrationScreen(
     var registrationErrorMessageId by remember { mutableStateOf<Int?>(null) }
     var isPasswordVisible by remember { mutableStateOf(false) }
     var isRepeatPasswordVisible by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(true) {
         registrationViewModel.registrationEvents.collect { event ->
-            when(event) {
+            when (event) {
                 AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
                 is AuthEvent.Error -> registrationErrorMessageId = event.messageId
             }
@@ -91,7 +95,11 @@ fun RegistrationScreen(
         }
     }
 
-    Scaffold(containerColor = Background, topBar = {
+    Scaffold(modifier = Modifier.pointerInput(Unit) {
+        detectTapGestures(onTap = {
+            focusManager.clearFocus()
+        })
+    }, containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = {
             if (registrationState != AuthState.Loading) {
                 if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
@@ -129,8 +137,7 @@ fun RegistrationScreen(
                             openCredentialsPart = registrationViewModel::openCredentialsPart,
                             continueButtonIsEnabled = registrationViewModel.personalInfoIsCorrectlyFilled,
                             registrationFailed = registrationErrorMessageId != null,
-                            resetRegistrationError = { registrationErrorMessageId = null }
-                        )
+                            resetRegistrationError = { registrationErrorMessageId = null })
 
                         RegistrationPage.Credentials -> RegistrationCredentialsContent(
                             registrationData = registrationData,
@@ -153,7 +160,9 @@ fun RegistrationScreen(
                     bottomHint.getStringAnnotations(
                         tag = Constants.AUTH_TAG, start = offset, end = offset
                     ).firstOrNull()?.let {
-                        if (registrationState != AuthState.Loading) navController.navigate(FilmusDestinations.LOGIN)
+                        if (registrationState != AuthState.Loading) navController.navigate(
+                            FilmusDestinations.LOGIN
+                        )
                     }
                 })
             }
