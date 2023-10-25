@@ -35,4 +35,5 @@
     <string name="incorrect_login_data">Неверный логин или пароль.</string>
     <string name="account_already_exists">Аккаунт с таким логином уже существует.</string>
     <string name="unknown_error">Что-то пошло не так…</string>
+    <string name="catalog">Каталог</string>
 </resources>

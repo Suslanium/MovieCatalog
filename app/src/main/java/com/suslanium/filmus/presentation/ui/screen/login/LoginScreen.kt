@@ -42,7 +42,7 @@ import com.suslanium.filmus.presentation.state.LoginData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
-import com.suslanium.filmus.presentation.ui.common.Constants.AUTH_TAG
+import com.suslanium.filmus.presentation.common.Constants.AUTH_TAG
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
