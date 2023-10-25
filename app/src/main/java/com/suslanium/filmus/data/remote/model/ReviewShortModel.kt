@@ -1,6 +1,8 @@
 package com.suslanium.filmus.data.remote.model
 
+import java.util.UUID
+
 data class ReviewShortModel(
-    val id: String,
+    val id: UUID,
     val rating: Int
 )
