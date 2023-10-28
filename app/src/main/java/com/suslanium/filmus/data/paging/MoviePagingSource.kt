@@ -10,7 +10,9 @@ import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import java.util.UUID
 
 class MoviePagingSource(
-    private val movieApiService: MovieApiService, private val userDataSource: UserDataSource
+    private val movieApiService: MovieApiService,
+    private val userDataSource: UserDataSource,
+    private val fetchUserRating: suspend (MovieApiService, MovieElementModel, UUID) -> Int?
 ) : PagingSource<Int, MovieSummary>() {
 
     private lateinit var userId: UUID
@@ -21,10 +23,10 @@ class MoviePagingSource(
         return try {
             val currentPage = params.key ?: 1
             val moviesPage = movieApiService.getMoviesList(currentPage)
-            if(!this::userId.isInitialized) userId = userDataSource.fetchUserId()
+            if (!this::userId.isInitialized) userId = userDataSource.fetchUserId()
             val movies = moviesPage.movies?.map { movieElementModel ->
                 MovieSummaryConverter.convert(
-                    movieElementModel, fetchUserRating(movieElementModel, userId)
+                    movieElementModel, fetchUserRating(movieApiService, movieElementModel, userId)
                 )
             } ?: emptyList()
             LoadResult.Page(
@@ -35,15 +37,5 @@ class MoviePagingSource(
         } catch (exception: Exception) {
             LoadResult.Error(exception)
         }
-    }
-
-    private suspend fun fetchUserRating(movie: MovieElementModel, userId: UUID): Int? {
-        val movieDetails = movieApiService.getMovieDetails(movie.id.toString())
-        for (review in movieDetails.reviews ?: emptyList()) {
-            if (review.author?.userId == userId) {
-                return review.rating
-            }
-        }
-        return null
     }
 }
