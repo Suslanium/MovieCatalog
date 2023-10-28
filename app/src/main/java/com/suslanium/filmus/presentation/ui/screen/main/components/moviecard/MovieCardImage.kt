@@ -22,6 +22,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.ui.common.colorByRating
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
@@ -51,11 +52,20 @@ fun MovieCardImage(movieSummary: MovieSummary, shimmerOffset: Float) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .shimmerEffect(startOffsetX = shimmerOffset, backgroundColor = Gray750, shimmerColor = Accent)
+                        .shimmerEffect(
+                            startOffsetX = shimmerOffset,
+                            backgroundColor = Gray750,
+                            shimmerColor = Accent
+                        )
                 )
             },
             failure = {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Gray750),
+                    contentAlignment = Alignment.Center
+                ) {
                     Icon(
                         modifier = Modifier, imageVector = ImageVector.vectorResource(
                             R.drawable.download_error

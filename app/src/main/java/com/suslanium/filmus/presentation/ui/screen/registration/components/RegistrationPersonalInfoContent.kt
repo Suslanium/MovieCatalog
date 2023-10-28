@@ -31,7 +31,7 @@ import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
 import com.suslanium.filmus.presentation.common.Constants
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
 import java.time.format.DateTimeFormatter
 
 
@@ -149,7 +149,7 @@ fun RegistrationPersonalInfoContent(
                 }
             },
             isError = registrationFailed)
-        Spacer(modifier = Modifier.height(LoginVerticalSpacing))
+        Spacer(modifier = Modifier.height(PaddingMediumLarge))
         AccentButton(
             onClick = openCredentialsPart,
             text = stringResource(id = R.string.continue_button),
