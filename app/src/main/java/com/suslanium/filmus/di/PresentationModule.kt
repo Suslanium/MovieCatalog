@@ -3,6 +3,7 @@ package com.suslanium.filmus.di
 import com.suslanium.filmus.presentation.viewmodel.LaunchViewModel
 import com.suslanium.filmus.presentation.viewmodel.LoginViewModel
 import com.suslanium.filmus.presentation.viewmodel.MainViewModel
+import com.suslanium.filmus.presentation.viewmodel.ProfileViewModel
 import com.suslanium.filmus.presentation.viewmodel.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,6 +24,10 @@ fun providePresentationModule() = module {
 
     viewModel {
         MainViewModel(get())
+    }
+
+    viewModel {
+        ProfileViewModel(get(), get(), get(), get())
     }
 
 }

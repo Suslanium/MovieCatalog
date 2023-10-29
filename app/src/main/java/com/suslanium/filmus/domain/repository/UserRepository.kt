@@ -6,4 +6,6 @@ interface UserRepository {
 
     suspend fun getUserProfile(): UserProfile
 
+    suspend fun changeUserProfile(userProfile: UserProfile)
+
 }

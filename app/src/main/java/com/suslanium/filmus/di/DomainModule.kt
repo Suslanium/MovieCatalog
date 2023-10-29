@@ -11,6 +11,7 @@ import com.suslanium.filmus.data.repository.UserRepositoryImpl
 import com.suslanium.filmus.domain.repository.AuthRepository
 import com.suslanium.filmus.domain.repository.MovieRepository
 import com.suslanium.filmus.domain.repository.UserRepository
+import com.suslanium.filmus.domain.usecase.ChangeUserProfileUseCase
 import com.suslanium.filmus.domain.usecase.CheckTokenExistenceUseCase
 import com.suslanium.filmus.domain.usecase.GetMovieDetailsUseCase
 import com.suslanium.filmus.domain.usecase.GetMoviesListUseCase
@@ -93,5 +94,9 @@ fun provideDomainModule() = module {
 
     factory {
         GetUserProfileUseCase(get())
+    }
+
+    factory {
+        ChangeUserProfileUseCase(get())
     }
 }
