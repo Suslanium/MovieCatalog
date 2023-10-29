@@ -11,7 +11,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
-import com.suslanium.filmus.presentation.ui.screen.main.components.ErrorContent
+import com.suslanium.filmus.presentation.ui.common.ErrorContent
 import com.suslanium.filmus.presentation.ui.screen.main.components.MovieList
 import com.suslanium.filmus.presentation.ui.screen.main.components.MovieShimmerList
 import com.suslanium.filmus.presentation.viewmodel.MainViewModel

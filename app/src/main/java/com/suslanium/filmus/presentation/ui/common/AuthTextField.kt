@@ -26,7 +26,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
 import com.suslanium.filmus.presentation.ui.theme.SemiTransparentRed
 import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
-import com.suslanium.filmus.presentation.ui.theme.TextFieldInput
+import com.suslanium.filmus.presentation.ui.theme.S15_W400
 import com.suslanium.filmus.presentation.ui.theme.TextFieldPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,7 +78,7 @@ fun AuthTextField(
             modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = onValueChange,
-            textStyle = TextFieldInput.copy(color = White),
+            textStyle = S15_W400.copy(color = White),
             visualTransformation = visualTransformation,
             interactionSource = interactionSource,
             enabled = enabled,
@@ -113,7 +113,7 @@ fun AuthTextField(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = errorMessage,
-                style = TextFieldInput,
+                style = S15_W400,
                 textAlign = TextAlign.Start,
                 color = Red
             )

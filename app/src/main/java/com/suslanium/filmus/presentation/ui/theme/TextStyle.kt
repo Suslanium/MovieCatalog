@@ -24,7 +24,7 @@ val SubTitleMedium = TextStyle(
     fontWeight = FontWeight.Medium
 )
 
-val TextFieldInput = TextStyle(
+val S15_W400 = TextStyle(
     fontFamily = Inter,
     fontSize = 15.sp,
     fontWeight = FontWeight.Normal
@@ -43,7 +43,7 @@ val TopBar = TextStyle(
     fontWeight = FontWeight.SemiBold
 )
 
-val BottomHint = TextStyle(
+val S14_W500 = TextStyle(
     fontFamily = Inter,
     fontSize = 14.sp,
     fontWeight = FontWeight.Medium
@@ -85,7 +85,7 @@ val MovieCardTitleText = TextStyle(
     fontWeight = FontWeight.Bold
 )
 
-val MovieTitle = TextStyle(
+val S24_W700 = TextStyle(
     fontFamily = Inter,
     fontSize = 24.sp,
     fontWeight = FontWeight.Bold

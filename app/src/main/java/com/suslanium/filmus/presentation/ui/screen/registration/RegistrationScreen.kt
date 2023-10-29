@@ -41,7 +41,7 @@ import com.suslanium.filmus.presentation.ui.screen.registration.components.Regis
 import com.suslanium.filmus.presentation.ui.screen.registration.components.RegistrationPersonalInfoContent
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
-import com.suslanium.filmus.presentation.ui.theme.BottomHint
+import com.suslanium.filmus.presentation.ui.theme.S14_W500
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
@@ -156,7 +156,7 @@ fun RegistrationScreen(
                     }
                 }
                 Spacer(modifier = Modifier.weight(DefaultWeight))
-                ClickableText(text = bottomHint, style = BottomHint, onClick = { offset ->
+                ClickableText(text = bottomHint, style = S14_W500, onClick = { offset ->
                     bottomHint.getStringAnnotations(
                         tag = Constants.AUTH_TAG, start = offset, end = offset
                     ).firstOrNull()?.let {

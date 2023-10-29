@@ -1,4 +1,4 @@
-package com.suslanium.filmus.presentation.ui.screen.main.components
+package com.suslanium.filmus.presentation.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

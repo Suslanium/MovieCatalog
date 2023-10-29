@@ -12,4 +12,6 @@ interface MovieRepository {
 
     suspend fun getMovieDetails(id: UUID): MovieDetails
 
+    suspend fun getFavoriteMoviesList(): List<MovieSummary>
+
 }

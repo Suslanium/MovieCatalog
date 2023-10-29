@@ -4,6 +4,7 @@ import android.util.Patterns
 import com.suslanium.filmus.data.datasource.TokenDataSource
 import com.suslanium.filmus.data.datasource.UserDataSource
 import com.suslanium.filmus.data.remote.api.AuthApiService
+import com.suslanium.filmus.data.remote.api.FavoriteMoviesApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.data.repository.AuthRepositoryImpl
 import com.suslanium.filmus.data.repository.MovieRepositoryImpl
@@ -12,6 +13,7 @@ import com.suslanium.filmus.domain.repository.AuthRepository
 import com.suslanium.filmus.domain.repository.MovieRepository
 import com.suslanium.filmus.domain.repository.UserRepository
 import com.suslanium.filmus.domain.usecase.CheckTokenExistenceUseCase
+import com.suslanium.filmus.domain.usecase.GetFavoriteMoviesListUseCase
 import com.suslanium.filmus.domain.usecase.GetMovieDetailsUseCase
 import com.suslanium.filmus.domain.usecase.GetMoviesListUseCase
 import com.suslanium.filmus.domain.usecase.GetUserProfileUseCase
@@ -28,8 +30,8 @@ fun provideAuthRepository(
     authApiService: AuthApiService, tokenDataSource: TokenDataSource
 ): AuthRepository = AuthRepositoryImpl(authApiService, tokenDataSource)
 
-fun provideMovieRepository(movieApiService: MovieApiService, userDataSource: UserDataSource): MovieRepository =
-    MovieRepositoryImpl(movieApiService, userDataSource)
+fun provideMovieRepository(movieApiService: MovieApiService, favoriteMoviesApiService: FavoriteMoviesApiService, userDataSource: UserDataSource): MovieRepository =
+    MovieRepositoryImpl(movieApiService, favoriteMoviesApiService, userDataSource)
 
 fun provideUserRepository(userDataSource: UserDataSource): UserRepository =
     UserRepositoryImpl(userDataSource)
@@ -40,7 +42,7 @@ fun provideDomainModule() = module {
     }
 
     single {
-        provideMovieRepository(get(), get())
+        provideMovieRepository(get(), get(), get())
     }
 
     single {
@@ -93,5 +95,9 @@ fun provideDomainModule() = module {
 
     factory {
         GetUserProfileUseCase(get())
+    }
+
+    factory {
+        GetFavoriteMoviesListUseCase(get())
     }
 }

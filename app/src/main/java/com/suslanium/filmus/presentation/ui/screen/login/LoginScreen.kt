@@ -46,15 +46,15 @@ import com.suslanium.filmus.presentation.common.Constants.AUTH_TAG
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
-import com.suslanium.filmus.presentation.ui.theme.BottomHint
+import com.suslanium.filmus.presentation.ui.theme.S14_W500
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
-import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
-import com.suslanium.filmus.presentation.ui.theme.TextFieldInput
+import com.suslanium.filmus.presentation.ui.theme.S15_W400
 import com.suslanium.filmus.presentation.ui.theme.Title
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
@@ -131,7 +131,7 @@ fun LoginScreen(
                     loginErrorMessageId = loginErrorMessageId,
                     resetLoginError = { loginErrorMessageId = null })
 
-                Spacer(modifier = Modifier.height(LoginVerticalSpacing))
+                Spacer(modifier = Modifier.height(PaddingMediumLarge))
                 AccentButton(
                     onClick = loginViewModel::login,
                     text = stringResource(id = R.string.sign_in),
@@ -140,7 +140,7 @@ fun LoginScreen(
                     hasProgressIndicator = loginState == AuthState.Loading
                 )
                 Spacer(modifier = Modifier.weight(DefaultWeight))
-                ClickableText(text = bottomHint, style = BottomHint, onClick = { offset ->
+                ClickableText(text = bottomHint, style = S14_W500, onClick = { offset ->
                     bottomHint.getStringAnnotations(tag = AUTH_TAG, start = offset, end = offset)
                         .firstOrNull()?.let {
                             if (loginState != AuthState.Loading) navController.navigate(
@@ -207,7 +207,7 @@ private fun LoginContent(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = loginErrorMessageId),
-            style = TextFieldInput,
+            style = S15_W400,
             textAlign = TextAlign.Start,
             color = Red
         )

@@ -27,7 +27,7 @@ import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.MovieCard
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.ShimmerMovieCard
 import com.suslanium.filmus.presentation.ui.theme.Accent
-import com.suslanium.filmus.presentation.ui.theme.MovieTitle
+import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
 import com.suslanium.filmus.presentation.ui.theme.White
@@ -56,7 +56,7 @@ fun MovieList(
             ) {
                 Text(
                     text = stringResource(id = R.string.catalog),
-                    style = MovieTitle,
+                    style = S24_W700,
                     color = White,
                     textAlign = TextAlign.Start
                 )
