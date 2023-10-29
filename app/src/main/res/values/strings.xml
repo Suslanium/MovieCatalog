@@ -36,4 +36,6 @@
     <string name="account_already_exists">Аккаунт с таким логином уже существует.</string>
     <string name="unknown_error">Что-то пошло не так…</string>
     <string name="catalog">Каталог</string>
+    <string name="avatar_link">Ссылка на аватар</string>
+    <string name="save">Сохранить</string>
 </resources>

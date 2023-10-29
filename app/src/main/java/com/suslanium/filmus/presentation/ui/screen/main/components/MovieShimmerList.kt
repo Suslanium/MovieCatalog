@@ -21,7 +21,7 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.MoviePosterCarouselHeight
-import com.suslanium.filmus.presentation.ui.theme.MovieTitle
+import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 
 @Composable
@@ -53,7 +53,7 @@ fun MovieShimmerList(
             ) {
                 Box(
                     modifier = Modifier
-                        .height(with(LocalDensity.current) { MovieTitle.fontSize.toDp() })
+                        .height(with(LocalDensity.current) { S24_W700.fontSize.toDp() })
                         .width(70.dp)
                         .clip(
                             RoundedCornerShape(MovieCardCornerRadiusMedium)

@@ -25,7 +25,7 @@ import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.SecondaryButton
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Background
-import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.OnboardingVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.SubTitle
@@ -74,7 +74,7 @@ fun OnboardingScreen(
                 onClick = { navController.navigate(FilmusDestinations.REGISTRATION) },
                 text = stringResource(id = R.string.registration)
             )
-            Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+            Spacer(modifier = Modifier.height(VerticalSpacing))
             SecondaryButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { navController.navigate(FilmusDestinations.LOGIN) },

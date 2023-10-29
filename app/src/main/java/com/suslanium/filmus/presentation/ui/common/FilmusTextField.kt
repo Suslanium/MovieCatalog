@@ -31,7 +31,7 @@ import com.suslanium.filmus.presentation.ui.theme.TextFieldPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthTextField(
+fun FilmusTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     title: String,

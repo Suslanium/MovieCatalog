@@ -9,6 +9,7 @@ val PaddingExtraSmall = 4.dp
 val PaddingSmall = 8.dp
 val PaddingNormal = 10.dp
 val PaddingMedium = 16.dp
+val PaddingLarge = 20.dp
 
 const val WidthFraction = 0.9f
 const val DefaultWeight = 1f
@@ -34,6 +35,6 @@ val GenreElementPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
 val AuthFieldHeight = 42.dp
 val OnboardingVerticalSpacing = 35.dp
 
-val ButtonVerticalSpacing = 15.dp
+val VerticalSpacing = 15.dp
 val LoginVerticalSpacing = 20.dp
 val OutlineBorderThickness = 1.dp
