@@ -21,6 +21,8 @@ class UserDataSource(
     //TODO add unauthorized exception handling
     suspend fun getUserProfile(): UserProfile = userApiService.getUserProfile()
 
+    suspend fun changeUserProfile(userProfile: UserProfile) = userApiService.changeUserProfile(userProfile)
+
     private suspend fun saveUserId(id: UUID) {
         context.userDataStore.edit { dataStore ->
             dataStore[dataStoreUserIdKey] = id.toString()

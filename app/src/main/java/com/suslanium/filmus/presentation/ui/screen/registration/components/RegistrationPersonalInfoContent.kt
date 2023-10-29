@@ -9,7 +9,6 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -28,23 +27,16 @@ import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
 import com.suslanium.filmus.presentation.state.RegistrationData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
-import com.suslanium.filmus.presentation.ui.common.AuthTextField
+import com.suslanium.filmus.presentation.ui.common.FilmusTextField
 import com.suslanium.filmus.presentation.common.Constants
+import com.suslanium.filmus.presentation.ui.common.SegmentedSelectionButton
+import com.suslanium.filmus.presentation.ui.common.availableBirthDates
+import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
 import java.time.format.DateTimeFormatter
 
-
-@ExperimentalMaterial3Api
-private val availableDates = object : SelectableDates {
-    override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-        return utcTimeMillis <= System.currentTimeMillis() && utcTimeMillis >= -2177452800000
-    }
-
-    override fun isSelectableYear(year: Int): Boolean {
-        return year > 1900
-    }
-}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +56,7 @@ fun RegistrationPersonalInfoContent(
 ) {
     var shouldShowDatePickerDialog by remember { mutableStateOf(false) }
     if (shouldShowDatePickerDialog) {
-        val datePickerState = rememberDatePickerState(selectableDates = availableDates)
+        val datePickerState = rememberDatePickerState(selectableDates = availableBirthDates)
         val confirmEnabled by remember { derivedStateOf { datePickerState.selectedDateMillis != null } }
         DatePickerDialog(onDismissRequest = { shouldShowDatePickerDialog = false },
             confirmButton = {
@@ -90,7 +82,7 @@ fun RegistrationPersonalInfoContent(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AuthTextField(title = stringResource(id = R.string.name),
+        FilmusTextField(title = stringResource(id = R.string.name),
             value = registrationData.name,
             onValueChange = {
                 setName(it)
@@ -102,14 +94,14 @@ fun RegistrationPersonalInfoContent(
                     id = it
                 )
             } else null)
-        Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+        Spacer(modifier = Modifier.height(VerticalSpacing))
         SegmentedSelectionButton(
             title = stringResource(id = R.string.gender), options = listOf(
                 stringResource(id = R.string.male), stringResource(id = R.string.female)
             ), selectedIndex = registrationData.gender, onItemSelected = setGender
         )
-        Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(title = stringResource(id = R.string.login),
+        Spacer(modifier = Modifier.height(VerticalSpacing))
+        FilmusTextField(title = stringResource(id = R.string.login),
             value = registrationData.login,
             onValueChange = {
                 setLogin(it)
@@ -121,8 +113,8 @@ fun RegistrationPersonalInfoContent(
                     id = it
                 )
             } else null)
-        Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(title = stringResource(id = R.string.email),
+        Spacer(modifier = Modifier.height(VerticalSpacing))
+        FilmusTextField(title = stringResource(id = R.string.email),
             value = registrationData.email,
             onValueChange = {
                 setEmail(it)
@@ -134,8 +126,8 @@ fun RegistrationPersonalInfoContent(
                     id = it
                 )
             } else null)
-        Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(title = stringResource(id = R.string.birthdate),
+        Spacer(modifier = Modifier.height(VerticalSpacing))
+        FilmusTextField(title = stringResource(id = R.string.birthdate),
             value = if (registrationData.birthDate != null) registrationData.birthDate.format(
                 dateTimeFormatter
             ).toString() else Constants.EMPTY_STRING,

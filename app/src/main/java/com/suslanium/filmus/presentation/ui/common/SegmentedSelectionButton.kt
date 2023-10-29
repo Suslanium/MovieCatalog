@@ -1,4 +1,4 @@
-package com.suslanium.filmus.presentation.ui.screen.registration.components
+package com.suslanium.filmus.presentation.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

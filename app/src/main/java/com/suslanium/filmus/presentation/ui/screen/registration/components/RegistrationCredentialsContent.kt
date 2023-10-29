@@ -24,6 +24,9 @@ import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTextField
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
+import com.suslanium.filmus.presentation.ui.common.FilmusTextField
+import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
 import com.suslanium.filmus.presentation.ui.theme.S15_W400
@@ -47,7 +50,7 @@ fun RegistrationCredentialsContent(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AuthTextField(title = stringResource(id = R.string.password),
+        FilmusTextField(title = stringResource(id = R.string.password),
             enabled = registrationState != AuthState.Loading,
             value = registrationData.password,
             onValueChange = {
@@ -69,8 +72,8 @@ fun RegistrationCredentialsContent(
                     id = it
                 )
             } else null)
-        Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-        AuthTextField(title = stringResource(id = R.string.repeat_password),
+        Spacer(modifier = Modifier.height(VerticalSpacing))
+        FilmusTextField(title = stringResource(id = R.string.repeat_password),
             enabled = registrationState != AuthState.Loading,
             value = registrationData.repeatPassword,
             onValueChange = {

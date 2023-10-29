@@ -10,4 +10,7 @@ class UserRepositoryImpl(
 
     override suspend fun getUserProfile(): UserProfile = userDataSource.getUserProfile()
 
+    override suspend fun changeUserProfile(userProfile: UserProfile) =
+        userDataSource.changeUserProfile(userProfile)
+
 }

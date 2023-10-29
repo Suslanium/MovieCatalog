@@ -43,6 +43,8 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.S14_W500
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.BottomHint
+import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
@@ -123,7 +125,7 @@ fun RegistrationScreen(
                     style = Title,
                     textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+                Spacer(modifier = Modifier.height(VerticalSpacing))
                 Crossfade(targetState = registrationPage, label = EMPTY_STRING) { state ->
                     when (state) {
                         RegistrationPage.PersonalInfo -> RegistrationPersonalInfoContent(

@@ -39,4 +39,6 @@
     <string name="favorites">Любимое</string>
     <string name="no_favorites_title">У вас пока нет любимых фильмов</string>
     <string name="no_favorites_message">Выберите понравившийся фильм в каталоге и добавьте его в любимые</string>
+    <string name="avatar_link">Ссылка на аватар</string>
+    <string name="save">Сохранить</string>
 </resources>

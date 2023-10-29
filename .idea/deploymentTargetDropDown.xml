@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="FavoritePreview">
-        <State />
-      </entry>
       <entry key="FavoritesPreview">
         <State />
       </entry>
@@ -12,6 +9,9 @@
         <State />
       </entry>
       <entry key="OnboardingPreview">
+        <State />
+      </entry>
+      <entry key="ProfilePreview">
         <State />
       </entry>
       <entry key="RegistrationPreview">

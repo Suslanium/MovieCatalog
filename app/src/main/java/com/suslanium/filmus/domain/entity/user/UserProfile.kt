@@ -7,7 +7,7 @@ data class UserProfile(
     val id: UUID,
     val nickName: String?,
     val email: String,
-    val avatarUri: String?,
+    val avatarLink: String?,
     val name: String,
     val birthDate: LocalDate,
     val gender: Int

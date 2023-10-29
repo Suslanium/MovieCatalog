@@ -40,7 +40,7 @@ import com.suslanium.filmus.presentation.state.AuthEvent
 import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.state.LoginData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
-import com.suslanium.filmus.presentation.ui.common.AuthTextField
+import com.suslanium.filmus.presentation.ui.common.FilmusTextField
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
 import com.suslanium.filmus.presentation.common.Constants.AUTH_TAG
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
@@ -48,6 +48,8 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.S14_W500
 import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.BottomHint
+import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
 import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
@@ -163,8 +165,8 @@ private fun LoginContent(
     resetLoginError: () -> Unit
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
-    Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
-    AuthTextField(title = stringResource(id = R.string.login),
+    Spacer(modifier = Modifier.height(VerticalSpacing))
+    FilmusTextField(title = stringResource(id = R.string.login),
         value = loginData.login,
         onValueChange = {
             setLogin(it)
@@ -177,9 +179,9 @@ private fun LoginContent(
             )
         } else null,
         enabled = loginState != AuthState.Loading)
-    Spacer(modifier = Modifier.height(ButtonVerticalSpacing))
+    Spacer(modifier = Modifier.height(VerticalSpacing))
 
-    AuthTextField(title = stringResource(id = R.string.password),
+    FilmusTextField(title = stringResource(id = R.string.password),
         value = loginData.password,
         onValueChange = {
             setPassword(it)
