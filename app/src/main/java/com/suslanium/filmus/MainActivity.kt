@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
                 enableEdgeToEdge(SystemBarStyle.dark(Background.toArgb()), SystemBarStyle.dark(Background.toArgb()))
                 val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
