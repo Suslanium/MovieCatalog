@@ -47,12 +47,10 @@ import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.S14_W500
-import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.BottomHint
 import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
-import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
+import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
@@ -133,7 +131,7 @@ fun LoginScreen(
                     loginErrorMessageId = loginErrorMessageId,
                     resetLoginError = { loginErrorMessageId = null })
 
-                Spacer(modifier = Modifier.height(PaddingMediumLarge))
+                Spacer(modifier = Modifier.height(PaddingLarge))
                 AccentButton(
                     onClick = loginViewModel::login,
                     text = stringResource(id = R.string.sign_in),

@@ -21,8 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.state.ProfileState
+import com.suslanium.filmus.presentation.ui.common.ErrorContent
 import com.suslanium.filmus.presentation.ui.common.availableBirthDates
-import com.suslanium.filmus.presentation.ui.screen.main.components.ErrorContent
 import com.suslanium.filmus.presentation.ui.screen.profile.components.ProfileContent
 import com.suslanium.filmus.presentation.ui.screen.profile.components.ShimmerProfileContent
 import com.suslanium.filmus.presentation.viewmodel.ProfileViewModel

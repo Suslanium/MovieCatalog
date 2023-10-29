@@ -21,15 +21,12 @@ import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
 import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.state.RegistrationData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
-import com.suslanium.filmus.presentation.ui.common.AuthTextField
-import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
 import com.suslanium.filmus.presentation.ui.common.FilmusTextField
-import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
+import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
 import com.suslanium.filmus.presentation.ui.theme.S15_W400
+import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 
 @Composable
 fun RegistrationCredentialsContent(
@@ -105,7 +102,7 @@ fun RegistrationCredentialsContent(
                 color = Red
             )
         }
-        Spacer(modifier = Modifier.height(PaddingMediumLarge))
+        Spacer(modifier = Modifier.height(PaddingLarge))
         AccentButton(
             onClick = register,
             text = stringResource(id = R.string.register_button),

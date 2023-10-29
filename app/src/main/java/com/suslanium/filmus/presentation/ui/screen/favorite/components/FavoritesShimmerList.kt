@@ -25,7 +25,7 @@ import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
-import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
+import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 
 @Composable
@@ -36,7 +36,7 @@ fun FavoritesShimmerList(shimmerOffset: Float) {
         state = rememberLazyListState(),
         userScrollEnabled = false,
         verticalArrangement = Arrangement.spacedBy(
-            PaddingMediumLarge
+            PaddingLarge
         ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

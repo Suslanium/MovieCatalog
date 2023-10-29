@@ -24,19 +24,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.common.Constants
 import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
 import com.suslanium.filmus.presentation.state.RegistrationData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.FilmusTextField
-import com.suslanium.filmus.presentation.common.Constants
 import com.suslanium.filmus.presentation.ui.common.SegmentedSelectionButton
 import com.suslanium.filmus.presentation.ui.common.availableBirthDates
+import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.LoginVerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.ButtonVerticalSpacing
-import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
 import java.time.format.DateTimeFormatter
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -141,7 +138,7 @@ fun RegistrationPersonalInfoContent(
                 }
             },
             isError = registrationFailed)
-        Spacer(modifier = Modifier.height(PaddingMediumLarge))
+        Spacer(modifier = Modifier.height(PaddingLarge))
         AccentButton(
             onClick = openCredentialsPart,
             text = stringResource(id = R.string.continue_button),

@@ -19,7 +19,7 @@ import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
-import com.suslanium.filmus.presentation.ui.theme.TextFieldInput
+import com.suslanium.filmus.presentation.ui.theme.S14_W500
 
 @Composable
 fun ShimmerTextField(shimmerOffset: Float) {
@@ -42,7 +42,7 @@ fun ShimmerTextField(shimmerOffset: Float) {
                 )
         )
         Box(modifier = Modifier
-            .height(with(LocalDensity.current) { TextFieldInput.fontSize.toDp() } + 32.dp)
+            .height(with(LocalDensity.current) { S14_W500.fontSize.toDp() } + 32.dp)
             .fillMaxWidth()
             .clip(
                 RoundedCornerShape(ButtonCornerRadius)

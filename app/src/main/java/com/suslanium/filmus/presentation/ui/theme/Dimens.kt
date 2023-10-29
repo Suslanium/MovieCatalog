@@ -9,7 +9,6 @@ val PaddingExtraSmall = 4.dp
 val PaddingSmall = 8.dp
 val PaddingNormal = 10.dp
 val PaddingMedium = 16.dp
-val PaddingMediumLarge = 20.dp
 val PaddingLarge = 20.dp
 
 const val WidthFraction = 0.9f

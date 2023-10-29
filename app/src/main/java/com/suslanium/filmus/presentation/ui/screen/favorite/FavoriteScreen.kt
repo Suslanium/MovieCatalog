@@ -28,7 +28,7 @@ import com.suslanium.filmus.presentation.ui.screen.favorite.components.Favorites
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.favoritesList
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.noFavoritesPlaceHolder
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
-import com.suslanium.filmus.presentation.ui.theme.PaddingMediumLarge
+import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.viewmodel.FavoriteViewModel
@@ -70,7 +70,7 @@ private fun FavoritesList(
             .fillMaxSize()
             .padding(PaddingMedium),
         state = rememberLazyListState(),
-        verticalArrangement = Arrangement.spacedBy(PaddingMediumLarge)
+        verticalArrangement = Arrangement.spacedBy(PaddingLarge)
     ) {
         item {
             Text(
