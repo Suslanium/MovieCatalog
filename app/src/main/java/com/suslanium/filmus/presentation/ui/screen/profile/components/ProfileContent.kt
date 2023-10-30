@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -67,12 +66,11 @@ fun ProfileContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(PaddingMedium)
-            //For some reason window insets broke, so I had to add this
-            .systemBarsPadding()
+            .padding(horizontal = PaddingMedium)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(PaddingMedium))
         GlideImage(
             modifier = Modifier
                 .size(88.dp)
@@ -179,5 +177,6 @@ fun ProfileContent(
             onClick = revertChanges,
             text = stringResource(id = R.string.cancel)
         )
+        Spacer(modifier = Modifier.height(PaddingMedium))
     }
 }

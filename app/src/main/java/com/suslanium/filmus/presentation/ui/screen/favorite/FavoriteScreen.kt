@@ -5,14 +5,13 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +27,6 @@ import com.suslanium.filmus.presentation.ui.screen.favorite.components.Favorites
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.favoritesList
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.noFavoritesPlaceHolder
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
-import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.viewmodel.FavoriteViewModel
@@ -47,15 +45,11 @@ fun FavoriteScreen() {
         ), label = ""
     )
 
-    Scaffold {
-        Box(modifier = Modifier.fillMaxSize().padding(it)) {
-            Crossfade(targetState = favoritesListState, label = "") { state ->
-                when (state) {
-                    is FavoritesListState.Content -> FavoritesList(state.movies, startOffsetX)
-                    FavoritesListState.Error -> ErrorContent(onRetry = favoriteViewModel::loadData)
-                    FavoritesListState.Loading -> FavoritesShimmerList(startOffsetX)
-                }
-            }
+    Crossfade(targetState = favoritesListState, label = "") { state ->
+        when (state) {
+            is FavoritesListState.Content -> FavoritesList(state.movies, startOffsetX)
+            FavoritesListState.Error -> ErrorContent(onRetry = favoriteViewModel::loadData)
+            FavoritesListState.Loading -> FavoritesShimmerList(startOffsetX)
         }
     }
 }
@@ -68,10 +62,12 @@ private fun FavoritesList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(PaddingMedium),
-        state = rememberLazyListState(),
-        verticalArrangement = Arrangement.spacedBy(PaddingLarge)
+            .padding(horizontal = PaddingMedium),
+        state = rememberLazyListState()
     ) {
+        item {
+            Spacer(modifier = Modifier.height(PaddingMedium))
+        }
         item {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -83,6 +79,9 @@ private fun FavoritesList(
         }
         if (moviesList.isNotEmpty()) {
             favoritesList(moviesList, shimmerOffset)
+            item {
+                Spacer(modifier = Modifier.height(PaddingMedium))
+            }
         } else {
             noFavoritesPlaceHolder()
         }
