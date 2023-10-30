@@ -28,8 +28,8 @@ import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.OnboardingVerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
-import com.suslanium.filmus.presentation.ui.theme.SubTitle
-import com.suslanium.filmus.presentation.ui.theme.Title
+import com.suslanium.filmus.presentation.ui.theme.S15_W400_H18
+import com.suslanium.filmus.presentation.ui.theme.S20_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
 
@@ -56,7 +56,7 @@ fun OnboardingScreen(
             Text(
                 text = stringResource(id = R.string.onboarding_title),
                 textAlign = TextAlign.Center,
-                style = Title,
+                style = S20_W700,
                 color = White,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -64,7 +64,7 @@ fun OnboardingScreen(
             Text(
                 text = stringResource(id = R.string.onboarding_message),
                 textAlign = TextAlign.Center,
-                style = SubTitle,
+                style = S15_W400_H18,
                 color = White,
                 modifier = Modifier.fillMaxWidth()
             )

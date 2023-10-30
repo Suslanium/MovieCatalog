@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.theme.S15_W400
-import com.suslanium.filmus.presentation.ui.theme.Title
+import com.suslanium.filmus.presentation.ui.theme.S20_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 
 fun LazyListScope.noFavoritesPlaceHolder() {
@@ -22,7 +22,7 @@ fun LazyListScope.noFavoritesPlaceHolder() {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.no_favorites_title),
-                style = Title,
+                style = S20_W700,
                 color = White,
                 textAlign = TextAlign.Center
             )

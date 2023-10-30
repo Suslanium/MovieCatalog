@@ -11,7 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.common.UserRating
-import com.suslanium.filmus.presentation.ui.theme.MovieCardTitleText
+import com.suslanium.filmus.presentation.ui.theme.S16_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
@@ -23,7 +23,7 @@ fun MovieCardNameAndRating(
             Text(
                 modifier = Modifier.weight(1f),
                 text = movieSummary.name,
-                style = MovieCardTitleText,
+                style = S16_W700,
                 color = White,
                 textAlign = TextAlign.Start
             )

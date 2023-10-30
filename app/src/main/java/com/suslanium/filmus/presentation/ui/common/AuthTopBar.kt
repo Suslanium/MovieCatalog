@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
-import com.suslanium.filmus.presentation.ui.theme.TopBar
+import com.suslanium.filmus.presentation.ui.theme.S17_W600
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +29,7 @@ fun AuthTopBar(
     ), title = {
         Text(
             text = stringResource(id = R.string.app_name),
-            style = TopBar,
+            style = S17_W600,
             maxLines = 1,
             textAlign = TextAlign.Center
         )

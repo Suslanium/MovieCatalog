@@ -24,8 +24,8 @@ import com.suslanium.filmus.presentation.ui.theme.Gray400
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.LightTertiary
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
-import com.suslanium.filmus.presentation.ui.theme.SegmentedButtonText
-import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
+import com.suslanium.filmus.presentation.ui.theme.S14_W400
+import com.suslanium.filmus.presentation.ui.theme.S15_W500
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.ZeroDp
 
@@ -45,7 +45,7 @@ fun SegmentedSelectionButton(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = title,
-            style = SubTitleMedium,
+            style = S15_W500,
             textAlign = TextAlign.Start,
             color = Color.White
         )
@@ -83,7 +83,7 @@ fun SegmentedSelectionButton(
                         disabledActiveBorderColor = Color.Transparent
                     )
                 ) {
-                    Text(text = label, style = SegmentedButtonText)
+                    Text(text = label, style = S14_W400)
                 }
             }
         }

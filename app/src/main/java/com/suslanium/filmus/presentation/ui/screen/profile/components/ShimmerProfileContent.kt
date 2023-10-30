@@ -24,7 +24,7 @@ import com.suslanium.filmus.presentation.ui.common.ShimmerTextField
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.ButtonCornerRadius
-import com.suslanium.filmus.presentation.ui.theme.ButtonText
+import com.suslanium.filmus.presentation.ui.theme.S15_W600
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
@@ -81,7 +81,7 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
         ShimmerTextField(shimmerOffset = shimmerOffset)
         Spacer(modifier = Modifier.height(PaddingLarge))
         Box(modifier = Modifier
-            .height(with(LocalDensity.current) { ButtonText.fontSize.toDp() } + PaddingLarge + PaddingSmall)
+            .height(with(LocalDensity.current) { S15_W600.fontSize.toDp() } + PaddingLarge + PaddingSmall)
             .fillMaxWidth()
             .clip(
                 RoundedCornerShape(ButtonCornerRadius)
@@ -93,7 +93,7 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
             ))
         Spacer(modifier = Modifier.height(19.dp))
         Box(modifier = Modifier
-            .height(with(LocalDensity.current) { ButtonText.fontSize.toDp() } + PaddingLarge + PaddingSmall)
+            .height(with(LocalDensity.current) { S15_W600.fontSize.toDp() } + PaddingLarge + PaddingSmall)
             .fillMaxWidth()
             .clip(
                 RoundedCornerShape(ButtonCornerRadius)

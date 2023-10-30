@@ -21,7 +21,7 @@ import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusLarge
 import com.suslanium.filmus.presentation.ui.theme.MovieCardNameAndRatingHeight
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
-import com.suslanium.filmus.presentation.ui.theme.UserRatingText
+import com.suslanium.filmus.presentation.ui.theme.S15_W500
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
@@ -51,7 +51,7 @@ fun UserRating(userRating: Int) {
         Spacer(modifier = Modifier.width(PaddingExtraSmall))
         Text(
             text = userRating.toString(),
-            style = UserRatingText,
+            style = S15_W500,
             color = White,
             textAlign = TextAlign.Center
         )

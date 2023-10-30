@@ -17,10 +17,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.theme.GenreElementPadding
-import com.suslanium.filmus.presentation.ui.theme.GenreText
+import com.suslanium.filmus.presentation.ui.theme.S13_W400
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
-import com.suslanium.filmus.presentation.ui.theme.MovieCardYearCountryText
+import com.suslanium.filmus.presentation.ui.theme.S12_W400
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingNormal
 import com.suslanium.filmus.presentation.ui.theme.White
@@ -31,7 +31,7 @@ fun MovieCardAdditionalInfo(movieSummary: MovieSummary) {
     Text(
         text = if (movieSummary.country == null) movieSummary.year.toString()
         else "${movieSummary.year} · ${movieSummary.country}",
-        style = MovieCardYearCountryText,
+        style = S12_W400,
         color = White,
         maxLines = 1
     )
@@ -51,7 +51,7 @@ fun MovieCardAdditionalInfo(movieSummary: MovieSummary) {
                 ) {
                     Text(
                         text = name,
-                        style = GenreText,
+                        style = S13_W400,
                         color = White,
                         textAlign = TextAlign.Center
                     )

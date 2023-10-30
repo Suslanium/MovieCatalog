@@ -18,7 +18,7 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.ButtonCornerRadius
 import com.suslanium.filmus.presentation.ui.theme.ButtonPadding
 import com.suslanium.filmus.presentation.ui.theme.ButtonProgressIndicatorSize
-import com.suslanium.filmus.presentation.ui.theme.ButtonText
+import com.suslanium.filmus.presentation.ui.theme.S15_W600
 import com.suslanium.filmus.presentation.ui.theme.DisabledAccent
 import com.suslanium.filmus.presentation.ui.theme.DisabledMain
 import com.suslanium.filmus.presentation.ui.theme.DisabledWhite
@@ -52,7 +52,7 @@ fun AppButton(
             )
             Spacer(modifier = Modifier.width(PaddingSmall))
         }
-        Text(text = text, style = ButtonText, textAlign = TextAlign.Center)
+        Text(text = text, style = S15_W600, textAlign = TextAlign.Center)
     }
 }
 

@@ -22,8 +22,8 @@ import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusSmall
 import com.suslanium.filmus.presentation.ui.theme.MovieCardImageHeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardImageWidth
 import com.suslanium.filmus.presentation.ui.theme.MovieCardNameAndRatingHeight
-import com.suslanium.filmus.presentation.ui.theme.MovieCardTitleText
-import com.suslanium.filmus.presentation.ui.theme.MovieCardYearCountryText
+import com.suslanium.filmus.presentation.ui.theme.S16_W700
+import com.suslanium.filmus.presentation.ui.theme.S12_W400
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingNormal
 
@@ -51,7 +51,7 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
             ) {
                 Box(
                     modifier = Modifier
-                        .height(with(LocalDensity.current) { MovieCardTitleText.fontSize.toDp() })
+                        .height(with(LocalDensity.current) { S16_W700.fontSize.toDp() })
                         .fillMaxWidth()
                         .clip(
                             RoundedCornerShape(MovieCardCornerRadiusMedium)
@@ -66,7 +66,7 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
             Spacer(modifier = Modifier.height(PaddingExtraSmall))
             Box(
                 modifier = Modifier
-                    .height(with(LocalDensity.current) { MovieCardYearCountryText.fontSize.toDp() })
+                    .height(with(LocalDensity.current) { S12_W400.fontSize.toDp() })
                     .width(70.dp)
                     .clip(
                         RoundedCornerShape(MovieCardCornerRadiusMedium)

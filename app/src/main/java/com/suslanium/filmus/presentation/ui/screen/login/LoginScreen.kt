@@ -55,7 +55,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
 import com.suslanium.filmus.presentation.ui.theme.S15_W400
-import com.suslanium.filmus.presentation.ui.theme.Title
+import com.suslanium.filmus.presentation.ui.theme.S20_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
 import com.suslanium.filmus.presentation.viewmodel.LoginViewModel
@@ -121,7 +121,7 @@ fun LoginScreen(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.log_in_title),
                     color = White,
-                    style = Title,
+                    style = S20_W700,
                     textAlign = TextAlign.Center
                 )
                 LoginContent(loginData = loginData,

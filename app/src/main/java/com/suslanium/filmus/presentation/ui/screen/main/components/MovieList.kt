@@ -29,7 +29,7 @@ import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.Shi
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
-import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
+import com.suslanium.filmus.presentation.ui.theme.S15_W500
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
@@ -103,7 +103,7 @@ private fun ErrorItem(onRetry: () -> Unit) {
     ) {
         Text(
             text = stringResource(id = R.string.unknown_error),
-            style = SubTitleMedium,
+            style = S15_W500,
             color = White,
             textAlign = TextAlign.Start
         )

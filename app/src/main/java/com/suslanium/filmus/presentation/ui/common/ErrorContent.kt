@@ -20,7 +20,7 @@ import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.CarouselIconSize
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
-import com.suslanium.filmus.presentation.ui.theme.Title
+import com.suslanium.filmus.presentation.ui.theme.S20_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
@@ -43,7 +43,7 @@ fun ErrorContent(
         Spacer(modifier = Modifier.height(PaddingMedium))
         Text(
             text = stringResource(id = R.string.unknown_error),
-            style = Title,
+            style = S20_W700,
             color = White,
             textAlign = TextAlign.Center
         )

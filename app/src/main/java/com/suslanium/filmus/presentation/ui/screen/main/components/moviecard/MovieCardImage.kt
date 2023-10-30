@@ -31,7 +31,7 @@ import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusSmall
 import com.suslanium.filmus.presentation.ui.theme.MovieCardImageHeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardImageWidth
-import com.suslanium.filmus.presentation.ui.theme.OverallRatingText
+import com.suslanium.filmus.presentation.ui.theme.S13_W700
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingUltraSmall
 
@@ -94,7 +94,7 @@ fun MovieCardImage(movieSummary: MovieSummary, shimmerOffset: Float) {
                     Text(
                         text = String.format("%.1f", movieSummary.rating),
                         textAlign = TextAlign.Center,
-                        style = OverallRatingText,
+                        style = S13_W700,
                         color = Background
                     )
                 }

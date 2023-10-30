@@ -25,7 +25,7 @@ import com.suslanium.filmus.presentation.ui.theme.OutlineBorderThickness
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.Red
 import com.suslanium.filmus.presentation.ui.theme.SemiTransparentRed
-import com.suslanium.filmus.presentation.ui.theme.SubTitleMedium
+import com.suslanium.filmus.presentation.ui.theme.S15_W500
 import com.suslanium.filmus.presentation.ui.theme.S15_W400
 import com.suslanium.filmus.presentation.ui.theme.TextFieldPadding
 
@@ -70,7 +70,7 @@ fun FilmusTextField(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = title,
-            style = SubTitleMedium,
+            style = S15_W500,
             textAlign = TextAlign.Start,
             color = White
         )
