@@ -14,6 +14,7 @@ val Accent = Color(0xFFFC315E)
 val White = Color.White
 val Main = Color(0xFF292929)
 val Background = Color(0xFF1D1D1D)
+val NavBarBackground = Color(0xFF161616)
 val DisabledAccent = Color(0x73FC315E)
 val DisabledWhite = Color(0xFF838383)
 val DisabledMain = Color(0x73292929)

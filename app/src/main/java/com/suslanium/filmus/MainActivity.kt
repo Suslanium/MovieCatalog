@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     FilmusNavigation(navHostController = navController, onAppExit = {
                         finish()
-                    })
+                    }, enableEdgeToEdge = this::enableEdgeToEdge)
                 }
             }
         }

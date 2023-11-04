@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -24,13 +23,13 @@ import com.suslanium.filmus.presentation.ui.common.ShimmerTextField
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.ButtonCornerRadius
-import com.suslanium.filmus.presentation.ui.theme.S15_W600
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
+import com.suslanium.filmus.presentation.ui.theme.S15_W600
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 
@@ -39,12 +38,11 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(PaddingMedium)
-            //For some reason window insets broke, so I had to add this
-            .systemBarsPadding()
+            .padding(horizontal = PaddingMedium)
             .verticalScroll(rememberScrollState(), false),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(PaddingMedium))
         Box(
             modifier = Modifier
                 .size(88.dp)
@@ -103,5 +101,6 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
                 backgroundColor = Gray750,
                 shimmerColor = Accent
             ))
+        Spacer(modifier = Modifier.height(PaddingMedium))
     }
 }

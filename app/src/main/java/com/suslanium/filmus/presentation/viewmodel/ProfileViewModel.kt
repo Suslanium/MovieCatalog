@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -51,11 +52,7 @@ class ProfileViewModel(
 
     private lateinit var unmodifiedProfile: UserProfile
 
-    private val profileLoadingExceptionHandler = CoroutineExceptionHandler { _, _ ->
-        _profileState.value = ProfileState.Error
-    }
-
-    private val profileEditingExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private val profileEditingExceptionHandler = CoroutineExceptionHandler { _, _ ->
         _profileState.value = ProfileState.Error
         _isApplyingChanges.value = false
     }
@@ -83,20 +80,29 @@ class ProfileViewModel(
 
     fun loadData() {
         _profileState.value = ProfileState.Loading
-        viewModelScope.launch(Dispatchers.IO + profileLoadingExceptionHandler) {
-            val profile = getUserProfileUseCase()
-            unmodifiedProfile = profile
-            _profileData.value = ProfileData(
-                id = profile.id,
-                nickName = profile.nickName.orEmpty(),
-                email = profile.email,
-                avatarUri = profile.avatarLink.orEmpty(),
-                name = profile.name,
-                birthDate = profile.birthDate,
-                gender = profile.gender
-            )
-            _avatarLinkFlow.value = profile.avatarLink.orEmpty()
-            _profileState.value = ProfileState.Content
+        viewModelScope.launch(Dispatchers.IO) {
+            //No exception handler here because changing state in exception handler sometimes causes crashes
+            try {
+                val profile = getUserProfileUseCase()
+                unmodifiedProfile = profile
+                withContext(Dispatchers.Main) {
+                    _profileData.value = ProfileData(
+                        id = profile.id,
+                        nickName = profile.nickName.orEmpty(),
+                        email = profile.email,
+                        avatarUri = profile.avatarLink.orEmpty(),
+                        name = profile.name,
+                        birthDate = profile.birthDate,
+                        gender = profile.gender
+                    )
+                    _avatarLinkFlow.value = profile.avatarLink.orEmpty()
+                    _profileState.value = ProfileState.Content
+                }
+            } catch (_: Exception) {
+                withContext(Dispatchers.Main) {
+                    _profileState.value = ProfileState.Error
+                }
+            }
         }
     }
 

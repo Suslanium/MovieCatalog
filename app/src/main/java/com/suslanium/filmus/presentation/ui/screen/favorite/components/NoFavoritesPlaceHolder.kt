@@ -18,7 +18,7 @@ import com.suslanium.filmus.presentation.ui.theme.White
 fun LazyListScope.noFavoritesPlaceHolder() {
     item {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(100.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.no_favorites_title),

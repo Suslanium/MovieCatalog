@@ -84,3 +84,9 @@ val S24_W700 = TextStyle(
     fontSize = 24.sp,
     fontWeight = FontWeight.Bold
 )
+
+val S11_W400 = TextStyle(
+    fontFamily = Inter,
+    fontSize=  11.sp,
+    fontWeight = FontWeight.Normal
+)

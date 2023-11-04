@@ -1,6 +1,5 @@
 package com.suslanium.filmus.presentation.ui.screen.favorite.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,8 +23,8 @@ import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
-import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
+import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 
 @Composable
@@ -35,9 +34,6 @@ fun FavoritesShimmerList(shimmerOffset: Float) {
             .fillMaxSize(),
         state = rememberLazyListState(),
         userScrollEnabled = false,
-        verticalArrangement = Arrangement.spacedBy(
-            PaddingLarge
-        ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
@@ -58,6 +54,7 @@ fun FavoritesShimmerList(shimmerOffset: Float) {
             Spacer(modifier = Modifier.height(PaddingExtraSmall))
         }
         items(count = 5) { rowIndex ->
+            Spacer(modifier = Modifier.height(PaddingLarge))
             if ((rowIndex + 1) % 2 == 0) {
                 ShimmerFavoriteCard(
                     modifier = Modifier

@@ -4,18 +4,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
+import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 
 fun LazyListScope.favoritesList(
     moviesList: List<MovieSummary>,
     startOffsetX: Float
 ) {
     items(count = (moviesList.size / 3) * 2 + if (moviesList.size % 3 == 0) 0 else 1) { rowIndex ->
+        Spacer(modifier = Modifier.height(PaddingLarge))
         val baseIndex = ((rowIndex + 1) / 2) * 3
         if ((rowIndex + 1) % 2 == 0) {
             val itemIndex = baseIndex - 1
