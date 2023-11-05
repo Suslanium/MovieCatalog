@@ -43,4 +43,24 @@
     <string name="save">Сохранить</string>
     <string name="main">Главная</string>
     <string name="profile">Профиль</string>
+    <string name="more">Подробнее</string>
+    <string name="genres">Жанры</string>
+    <string name="about_film">О фильме</string>
+    <string name="reviews">Отзывы</string>
+    <string name="anonymous_user">Анонимный пользователь</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="my_review">мой отзыв</string>
+    <string name="year">Год</string>
+    <string name="country">Страна</string>
+    <string name="tagline">Слоган</string>
+    <string name="director">Режиссёр</string>
+    <string name="budget">Бюджет</string>
+    <string name="fees">Сборы в мире</string>
+    <string name="age">Возраст</string>
+    <string name="length">Время</string>
+    <string name="money_format">\$%1$s</string>
+    <string name="age_format">%1$d+</string>
+    <string name="time_format">%1$d мин.</string>
+    <string name="tagline_format">«%1$s»</string>
 </resources>

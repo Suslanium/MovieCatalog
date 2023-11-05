@@ -20,10 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.ui.common.NoRippleInteractionSource
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.MovieCard
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.ShimmerMovieCard
 import com.suslanium.filmus.presentation.ui.theme.Accent
@@ -34,7 +37,9 @@ import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
 fun MovieList(
-    moviePagingItems: LazyPagingItems<MovieSummary>, shimmerOffset: Float
+    navController: NavController,
+    moviePagingItems: LazyPagingItems<MovieSummary>,
+    shimmerOffset: Float
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize(), state = rememberLazyListState()) {
 
@@ -67,9 +72,16 @@ fun MovieList(
             val movie = moviePagingItems[it + 4]
             if (movie != null) {
                 MovieCard(
-                    movieSummary = movie, modifier = Modifier.padding(
-                        start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
-                    ), shimmerOffset = shimmerOffset
+                    movieSummary = movie,
+                    modifier = Modifier
+                        .padding(
+                            start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
+                        )
+                        .clickable(
+                            interactionSource = NoRippleInteractionSource(),
+                            indication = null,
+                            onClick = { navController.navigate(FilmusDestinations.DETAILS) }),
+                    shimmerOffset = shimmerOffset
                 )
             }
         }

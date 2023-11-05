@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.suslanium.filmus.presentation.ui.screen.details.DetailsScreen
 import com.suslanium.filmus.presentation.ui.screen.launch.LaunchScreen
 import com.suslanium.filmus.presentation.ui.screen.login.LoginScreen
 import com.suslanium.filmus.presentation.ui.screen.mainroot.MainScreenRoot
@@ -21,6 +22,7 @@ object FilmusDestinations {
     const val REGISTRATION = "registration"
     const val LOGIN = "login"
     const val MAIN = "main"
+    const val DETAILS = "details"
 }
 
 @Composable
@@ -72,6 +74,14 @@ fun FilmusNavigation(
                 )
             )
             MainScreenRoot(onAppExit = onAppExit, rootNavController = navHostController)
+        }
+        composable(route = FilmusDestinations.DETAILS) {
+            enableEdgeToEdge(
+                SystemBarStyle.dark(Background.toArgb()), SystemBarStyle.dark(
+                    Background.toArgb()
+                )
+            )
+            DetailsScreen()
         }
     }
 }

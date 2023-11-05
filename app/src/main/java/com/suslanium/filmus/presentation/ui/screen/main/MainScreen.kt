@@ -7,6 +7,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -18,7 +19,9 @@ import com.suslanium.filmus.presentation.viewmodel.MainViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navController: NavController
+) {
     val mainViewModel: MainViewModel = koinViewModel()
     val moviePagingItems: LazyPagingItems<MovieSummary> =
         mainViewModel.movies.collectAsLazyPagingItems()
@@ -33,7 +36,7 @@ fun MainScreen() {
     Crossfade(targetState = moviePagingItems.loadState.refresh, label = "") {
         when (it) {
             is LoadState.NotLoading -> {
-                MovieList(moviePagingItems, startOffsetX)
+                MovieList(navController, moviePagingItems, startOffsetX)
             }
 
             is LoadState.Loading -> {
