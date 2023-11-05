@@ -20,6 +20,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -76,11 +77,10 @@ fun ReviewElement(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            GlideImage(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(GrayAvatarBackground),
+            GlideImage(modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(GrayAvatarBackground),
                 imageModel = { if (!review.isAnonymous) review.author?.avatar else null },
                 imageOptions = ImageOptions(contentScale = ContentScale.Crop),
                 loading = {
@@ -93,11 +93,13 @@ fun ReviewElement(
                                 shimmerColor = Accent
                             )
                     )
-                }, failure = {
+                },
+                failure = {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(GrayAvatarBackground), contentAlignment = Alignment.Center
+                            .background(GrayAvatarBackground),
+                        contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.no_avatar_icon),
@@ -105,8 +107,7 @@ fun ReviewElement(
                             tint = Color.Black
                         )
                     }
-                }
-            )
+                })
             Spacer(modifier = Modifier.width(PaddingLarge / 2))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -146,19 +147,14 @@ fun ReviewElement(
                         contentDescription = null
                     )
                     ReviewContextMenu(
-                        expanded,
-                        { expanded = it },
-                        onEditUserReview,
-                        onRemoveUserReview
+                        expanded, { expanded = it }, onEditUserReview, onRemoveUserReview
                     )
                 }
             }
         }
         Spacer(modifier = Modifier.height(PaddingSmall))
         Text(
-            text = review.reviewText.orEmpty(),
-            style = S14_W400,
-            color = White
+            text = review.reviewText.orEmpty(), style = S14_W400, color = White
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(text = dateFormat.format(review.creationDateTime), style = S12_W500, color = Gray400)
@@ -172,43 +168,42 @@ fun ReviewContextMenu(
     onEditUserReview: (() -> Unit)?,
     onRemoveUserReview: (() -> Unit)?
 ) {
-    DropdownMenu(
-        modifier = Modifier.background(Gray750, RoundedCornerShape(10.dp)),
-        expanded = expanded,
-        onDismissRequest = { setExpanded(false) }) {
-        DropdownMenuItem(text = {
-            Text(
-                text = stringResource(id = R.string.edit),
-                style = S14_W500,
-                color = White
-            )
-        }, onClick = {
-            if (onEditUserReview != null) {
-                onEditUserReview()
-            }
-        }, trailingIcon = {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.edit_review_icon),
-                contentDescription = null
-            )
-        })
-        HorizontalDivider(color = Color(0xFF55595D))
-        DropdownMenuItem(text = {
-            Text(
-                text = stringResource(id = R.string.delete),
-                style = S14_W500,
-                color = Red
-            )
-        }, onClick = {
-            if (onRemoveUserReview != null) {
-                onRemoveUserReview()
-            }
-        }, trailingIcon = {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.delete_review_icon),
-                contentDescription = null,
-                tint = Red
-            )
-        })
+    MaterialTheme(
+        shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(10.dp))
+    ) {
+        DropdownMenu(modifier = Modifier.background(Gray750),
+            expanded = expanded,
+            onDismissRequest = { setExpanded(false) }) {
+            DropdownMenuItem(text = {
+                Text(
+                    text = stringResource(id = R.string.edit), style = S14_W500, color = White
+                )
+            }, onClick = {
+                if (onEditUserReview != null) {
+                    onEditUserReview()
+                }
+            }, trailingIcon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.edit_review_icon),
+                    contentDescription = null
+                )
+            })
+            HorizontalDivider(color = Color(0xFF55595D))
+            DropdownMenuItem(text = {
+                Text(
+                    text = stringResource(id = R.string.delete), style = S14_W500, color = Red
+                )
+            }, onClick = {
+                if (onRemoveUserReview != null) {
+                    onRemoveUserReview()
+                }
+            }, trailingIcon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.delete_review_icon),
+                    contentDescription = null,
+                    tint = Red
+                )
+            })
+        }
     }
 }
