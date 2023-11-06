@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.common.NoRippleInteractionSource
 import com.suslanium.filmus.presentation.ui.theme.Accent
+import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
@@ -51,11 +52,12 @@ fun DetailsExpandableDescription(description: String) {
     var isExpanded by remember { mutableStateOf(false) }
     val isButtonShown by remember { derivedStateOf { isExpandable || isExpanded } }
 
-    Spacer(modifier = Modifier.height(PaddingLarge))
+    Spacer(modifier = Modifier.height(PaddingLarge).fillMaxWidth().background(Background))
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
+            .background(Background)
             .padding(horizontal = PaddingMedium)
     ) {
         Box(
@@ -98,9 +100,10 @@ fun DetailsExpandableDescription(description: String) {
         }
     }
     if (isButtonShown) {
-        Spacer(modifier = Modifier.height(6.5.dp))
+        Spacer(modifier = Modifier.height(6.5.dp).fillMaxWidth().background(Background))
         Row(
             modifier = Modifier
+                .fillMaxWidth().background(Background)
                 .padding(horizontal = PaddingMedium)
                 .clickable(
                     onClick = { isExpanded = !isExpanded },

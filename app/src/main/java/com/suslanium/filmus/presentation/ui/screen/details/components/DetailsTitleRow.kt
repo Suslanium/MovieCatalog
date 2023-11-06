@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.common.colorByRating
+import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
@@ -43,10 +44,11 @@ fun DetailsTitleRow(
     onFavoriteClick: () -> Unit,
     isFavorite: Boolean
 ) {
-    Spacer(modifier = Modifier.height(PaddingMedium))
+    Spacer(modifier = Modifier.height(PaddingMedium).fillMaxWidth().background(Background))
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Background)
             .padding(horizontal = PaddingMedium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

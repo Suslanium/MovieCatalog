@@ -63,4 +63,7 @@
     <string name="age_format">%1$d+</string>
     <string name="time_format">%1$d мин.</string>
     <string name="tagline_format">«%1$s»</string>
+    <string name="post_review">Оставить отзыв</string>
+    <string name="write_review">Напишите отзыв</string>
+    <string name="anonymous_review">Анонимный отзыв</string>
 </resources>

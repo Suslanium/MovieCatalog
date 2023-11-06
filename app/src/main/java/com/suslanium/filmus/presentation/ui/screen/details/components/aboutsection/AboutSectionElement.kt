@@ -1,4 +1,4 @@
-package com.suslanium.filmus.presentation.ui.screen.details.components
+package com.suslanium.filmus.presentation.ui.screen.details.components.aboutsection
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width

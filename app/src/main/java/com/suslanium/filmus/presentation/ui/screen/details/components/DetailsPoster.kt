@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
@@ -30,13 +31,26 @@ private val colorStops = arrayOf(
 )
 
 @Composable
-fun DetailsPoster(posterLink: Any?, startOffsetXProvider: () -> Float) {
+fun DetailsPoster(
+    posterLink: Any?,
+    startOffsetXProvider: () -> Float,
+    firstVisibleItemOffsetProvider: () -> Int
+) {
+    var scrolledY = 0f
+    var previousOffset = 0
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(497.dp)
     ) {
-        GlideImage(modifier = Modifier.fillMaxSize(),
+        GlideImage(modifier = Modifier.graphicsLayer {
+            scrolledY += firstVisibleItemOffsetProvider() - previousOffset
+            translationY = scrolledY * 0.5f
+            scaleX = 1f + scrolledY * 0.0003f
+            scaleY = 1f + scrolledY * 0.0003f
+            alpha = 1f - scrolledY * 0.001f
+            previousOffset = firstVisibleItemOffsetProvider()
+        }.fillMaxSize(),
             imageModel = { posterLink },
             imageOptions = ImageOptions(contentScale = ContentScale.Crop),
             loading = {
@@ -67,6 +81,10 @@ fun DetailsPoster(posterLink: Any?, startOffsetXProvider: () -> Float) {
                     )
                 }
             })
-        Box(modifier = Modifier.fillMaxSize().background(Brush.verticalGradient(colorStops = colorStops)))
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Brush.verticalGradient(colorStops = colorStops))
+        )
     }
 }

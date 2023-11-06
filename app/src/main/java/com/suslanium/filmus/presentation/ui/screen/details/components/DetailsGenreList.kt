@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.Genre
 import com.suslanium.filmus.presentation.ui.theme.Accent
+import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.GenreDetailsElementPadding
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
@@ -32,16 +33,17 @@ import com.suslanium.filmus.presentation.ui.theme.White
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
 fun DetailsGenreList(genresList: List<Genre>) {
-    Spacer(modifier = Modifier.height(PaddingLarge))
+    Spacer(modifier = Modifier.height(PaddingLarge).fillMaxWidth().background(Background))
     Text(
-        modifier = Modifier.padding(horizontal = PaddingMedium), text = stringResource(
+        modifier = Modifier.fillMaxWidth().background(Background).padding(horizontal = PaddingMedium), text = stringResource(
             id = R.string.genres
         ), style = S16_W700, color = White
     )
-    Spacer(modifier = Modifier.height(PaddingLarge / 2))
+    Spacer(modifier = Modifier.height(PaddingLarge / 2).fillMaxWidth().background(Background))
     FlowRow(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Background)
             .padding(horizontal = PaddingMedium),
         horizontalArrangement = Arrangement.spacedBy(PaddingSmall),
         verticalArrangement = Arrangement.spacedBy(PaddingSmall)

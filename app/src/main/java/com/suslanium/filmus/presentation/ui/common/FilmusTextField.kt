@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import com.suslanium.filmus.presentation.ui.theme.AuthFieldOutlineColor
+import com.suslanium.filmus.presentation.ui.theme.TextFieldOutlineColor
 import com.suslanium.filmus.presentation.ui.theme.ButtonCornerRadius
 import com.suslanium.filmus.presentation.ui.theme.Gray400
 import com.suslanium.filmus.presentation.ui.theme.OutlineBorderThickness
@@ -45,9 +45,9 @@ fun FilmusTextField(
         focusedContainerColor = if (isError) SemiTransparentRed else Color.Transparent,
         unfocusedContainerColor = if (isError) SemiTransparentRed else Color.Transparent,
         disabledContainerColor = Color.Transparent,
-        unfocusedBorderColor = AuthFieldOutlineColor,
+        unfocusedBorderColor = TextFieldOutlineColor,
         focusedBorderColor = Gray400,
-        disabledBorderColor = AuthFieldOutlineColor,
+        disabledBorderColor = TextFieldOutlineColor,
         focusedTextColor = White,
         unfocusedTextColor = White,
         disabledTextColor = White,
@@ -58,7 +58,7 @@ fun FilmusTextField(
         errorTrailingIconColor = Gray400,
         errorBorderColor = Red,
         errorCursorColor = Red,
-        cursorColor = AuthFieldOutlineColor
+        cursorColor = TextFieldOutlineColor
     )
 ) {
     val interactionSource = remember { MutableInteractionSource() }

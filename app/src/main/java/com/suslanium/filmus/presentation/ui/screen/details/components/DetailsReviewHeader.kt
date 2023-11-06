@@ -1,5 +1,6 @@
 package com.suslanium.filmus.presentation.ui.screen.details.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.theme.Accent
+import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.S16_W700
@@ -32,10 +34,11 @@ fun DetailsReviewHeader(
     userHasNoReview: Boolean,
     onAddReview: (() -> Unit)?
 ) {
-    Spacer(modifier = Modifier.height(PaddingLarge))
+    Spacer(modifier = Modifier.height(PaddingLarge).fillMaxWidth().background(Background))
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Background)
             .padding(horizontal = PaddingMedium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -69,5 +72,5 @@ fun DetailsReviewHeader(
             }
         }
     }
-    Spacer(modifier = Modifier.height(15.dp))
+    Spacer(modifier = Modifier.height(15.dp).fillMaxWidth().background(Background))
 }
