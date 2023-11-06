@@ -36,11 +36,11 @@ fun MainScreen(
     Crossfade(targetState = moviePagingItems.loadState.refresh, label = "") {
         when (it) {
             is LoadState.NotLoading -> {
-                MovieList(navController, moviePagingItems, startOffsetX)
+                MovieList(navController, moviePagingItems) { startOffsetX }
             }
 
             is LoadState.Loading -> {
-                MovieShimmerList(startOffsetX)
+                MovieShimmerList { startOffsetX }
             }
 
             is LoadState.Error -> {

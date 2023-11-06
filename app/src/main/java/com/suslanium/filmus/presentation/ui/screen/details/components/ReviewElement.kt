@@ -61,7 +61,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun ReviewElement(
     review: Review,
-    shimmerOffset: Float,
+    shimmerOffsetProvider: () -> Float,
     dateFormat: DateTimeFormatter,
     isUserReview: Boolean = false,
     onEditUserReview: (() -> Unit)? = null,
@@ -88,7 +88,7 @@ fun ReviewElement(
                         modifier = Modifier
                             .fillMaxSize()
                             .shimmerEffect(
-                                startOffsetX = shimmerOffset,
+                                startOffsetXProvider = shimmerOffsetProvider,
                                 backgroundColor = Gray750,
                                 shimmerColor = Accent
                             )

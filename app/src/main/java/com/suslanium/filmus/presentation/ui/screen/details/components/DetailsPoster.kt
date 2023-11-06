@@ -30,7 +30,7 @@ private val colorStops = arrayOf(
 )
 
 @Composable
-fun DetailsPoster(posterLink: Any?, startOffsetX: Float) {
+fun DetailsPoster(posterLink: Any?, startOffsetXProvider: () -> Float) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +44,7 @@ fun DetailsPoster(posterLink: Any?, startOffsetX: Float) {
                     modifier = Modifier
                         .fillMaxSize()
                         .shimmerEffect(
-                            startOffsetX = startOffsetX,
+                            startOffsetXProvider = startOffsetXProvider,
                             backgroundColor = Gray750,
                             shimmerColor = Accent
                         )

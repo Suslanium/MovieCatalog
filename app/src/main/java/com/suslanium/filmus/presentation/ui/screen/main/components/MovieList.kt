@@ -39,7 +39,7 @@ import com.suslanium.filmus.presentation.ui.theme.White
 fun MovieList(
     navController: NavController,
     moviePagingItems: LazyPagingItems<MovieSummary>,
-    shimmerOffset: Float
+    shimmerOffsetProvider: () -> Float
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize(), state = rememberLazyListState()) {
 
@@ -49,7 +49,7 @@ fun MovieList(
                 moviePagingItems[index]?.let { movieList.add(it) }
             }
             PosterCarousel(
-                movies = movieList, shimmerOffset = shimmerOffset
+                movies = movieList, shimmerOffsetProvider = shimmerOffsetProvider
             )
         }
 
@@ -81,7 +81,7 @@ fun MovieList(
                             interactionSource = NoRippleInteractionSource(),
                             indication = null,
                             onClick = { navController.navigate(FilmusDestinations.DETAILS) }),
-                    shimmerOffset = shimmerOffset
+                    shimmerOffsetProvider = shimmerOffsetProvider
                 )
             }
         }
@@ -95,7 +95,7 @@ fun MovieList(
                 ShimmerMovieCard(
                     modifier = Modifier.padding(
                         start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
-                    ), shimmerOffset = shimmerOffset
+                    ), shimmerOffsetProvider = shimmerOffsetProvider
                 )
             }
 

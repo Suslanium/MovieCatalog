@@ -15,7 +15,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 
 fun LazyListScope.favoritesList(
     moviesList: List<MovieSummary>,
-    startOffsetX: Float
+    shimmerOffsetProvider: () -> Float
 ) {
     items(count = (moviesList.size / 3) * 2 + if (moviesList.size % 3 == 0) 0 else 1) { rowIndex ->
         Spacer(modifier = Modifier.height(PaddingLarge))
@@ -25,7 +25,7 @@ fun LazyListScope.favoritesList(
             FavoriteMovieCard(
                 modifier = Modifier.fillMaxWidth(),
                 movieSummary = moviesList[itemIndex],
-                shimmerOffset = startOffsetX
+                shimmerOffsetProvider = shimmerOffsetProvider
             )
         } else {
             val firstItemIndex = baseIndex
@@ -34,14 +34,14 @@ fun LazyListScope.favoritesList(
                 FavoriteMovieCard(
                     modifier = Modifier.weight(DefaultWeight),
                     movieSummary = moviesList[firstItemIndex],
-                    shimmerOffset = startOffsetX
+                    shimmerOffsetProvider = shimmerOffsetProvider
                 )
                 Spacer(modifier = Modifier.width(15.dp))
                 if (secondItemIndex < moviesList.size) {
                     FavoriteMovieCard(
                         modifier = Modifier.weight(DefaultWeight),
                         movieSummary = moviesList[secondItemIndex],
-                        shimmerOffset = startOffsetX
+                        shimmerOffsetProvider = shimmerOffsetProvider
                     )
                 } else {
                     Box(modifier = Modifier.weight(DefaultWeight))

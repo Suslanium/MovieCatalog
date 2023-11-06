@@ -130,9 +130,8 @@ fun DetailsScreen() {
             //Poster
             item {
                 DetailsPoster(
-                    "https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/258fc3d6-8223-40ce-94ea-c87c2acc9f4b/1920x",
-                    startOffsetX
-                )
+                    "https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/258fc3d6-8223-40ce-94ea-c87c2acc9f4b/1920x"
+                ) { startOffsetX }
             }
             //Title, rating and fav button
             item {
@@ -174,7 +173,7 @@ fun DetailsScreen() {
             items(count = reviewList.size, key = { reviewList[it].id }) {
                 ReviewElement(
                     review = reviewList[it],
-                    shimmerOffset = startOffsetX,
+                    shimmerOffsetProvider = { startOffsetX },
                     dateFormat = dateFormat,
                     isUserReview = it == 0
                 )
