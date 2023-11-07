@@ -68,6 +68,20 @@ fun ShimmerProfileContent(shimmerOffsetProvider: () -> Float) {
                 )
         )
         Spacer(modifier = Modifier.height(PaddingLarge + PaddingExtraSmall))
+        Box(
+            modifier = Modifier
+                .height(with(LocalDensity.current) { S15_W600.fontSize.toDp() })
+                .width(100.dp)
+                .clip(
+                    RoundedCornerShape(MovieCardCornerRadiusMedium)
+                )
+                .shimmerEffect(
+                    startOffsetXProvider = shimmerOffsetProvider,
+                    backgroundColor = Gray750,
+                    shimmerColor = Accent
+                )
+        )
+        Spacer(modifier = Modifier.height(PaddingLarge + PaddingExtraSmall + 12.dp))
         ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)
         Spacer(modifier = Modifier.height(VerticalSpacing))
         ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)

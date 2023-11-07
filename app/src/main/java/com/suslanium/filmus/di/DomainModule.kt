@@ -5,6 +5,7 @@ import com.suslanium.filmus.data.datasource.TokenDataSource
 import com.suslanium.filmus.data.datasource.UserDataSource
 import com.suslanium.filmus.data.remote.api.AuthApiService
 import com.suslanium.filmus.data.remote.api.FavoriteMoviesApiService
+import com.suslanium.filmus.data.remote.api.LogoutApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.data.remote.api.ReviewApiService
 import com.suslanium.filmus.data.repository.AuthRepositoryImpl
@@ -28,6 +29,7 @@ import com.suslanium.filmus.domain.usecase.GetMovieDetailsUseCase
 import com.suslanium.filmus.domain.usecase.GetMoviesListUseCase
 import com.suslanium.filmus.domain.usecase.GetUserProfileUseCase
 import com.suslanium.filmus.domain.usecase.LoginUseCase
+import com.suslanium.filmus.domain.usecase.LogoutUseCase
 import com.suslanium.filmus.domain.usecase.RegisterUseCase
 import com.suslanium.filmus.domain.usecase.RemoveFavoriteUseCase
 import com.suslanium.filmus.domain.usecase.ValidateEmailUseCase
@@ -38,8 +40,8 @@ import com.suslanium.filmus.domain.usecase.ValidateRepeatPasswordUseCase
 import org.koin.dsl.module
 
 fun provideAuthRepository(
-    authApiService: AuthApiService, tokenDataSource: TokenDataSource
-): AuthRepository = AuthRepositoryImpl(authApiService, tokenDataSource)
+    authApiService: AuthApiService, logoutApiService: LogoutApiService, userDataSource: UserDataSource, tokenDataSource: TokenDataSource
+): AuthRepository = AuthRepositoryImpl(authApiService, logoutApiService, userDataSource, tokenDataSource)
 
 fun provideMovieRepository(movieApiService: MovieApiService, favoriteMoviesApiService: FavoriteMoviesApiService, userDataSource: UserDataSource): MovieRepository =
     MovieRepositoryImpl(movieApiService, favoriteMoviesApiService, userDataSource)
@@ -55,7 +57,7 @@ fun provideReviewRepository(reviewApiService: ReviewApiService): ReviewRepositor
 
 fun provideDomainModule() = module {
     single {
-        provideAuthRepository(get(), get())
+        provideAuthRepository(get(), get(), get(), get())
     }
 
     single {
@@ -148,5 +150,9 @@ fun provideDomainModule() = module {
 
     factory {
         DeleteReviewUseCase(get())
+    }
+
+    factory {
+        LogoutUseCase(get())
     }
 }

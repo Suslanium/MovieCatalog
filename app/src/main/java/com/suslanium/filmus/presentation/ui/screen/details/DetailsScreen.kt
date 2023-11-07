@@ -14,8 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.suslanium.filmus.presentation.state.DetailsState
+import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.state.ReviewState
 import com.suslanium.filmus.presentation.ui.common.ErrorContent
+import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsContent
 import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsTopBar
 import com.suslanium.filmus.presentation.ui.screen.details.components.reviewdialog.ReviewDialog
@@ -33,6 +36,12 @@ fun DetailsScreen(movieId: UUID, navController: NavController) {
     val reviewData by remember { detailsViewModel.reviewData }
     val canSaveReview by remember { detailsViewModel.canSaveReview }
     val canSetReviewAnonymous by remember { detailsViewModel.reviewIsAnonymousAvailable }
+
+    ObserveAsEvents(flow = detailsViewModel.logoutEvents) {
+        when (it) {
+            LogoutEvent.Logout -> navController.navigate(FilmusDestinations.ONBOARDING)
+        }
+    }
 
     val blurRadius by animateDpAsState(
         targetValue = if (reviewState != ReviewState.DialogClosed && reviewState != ReviewState.Deleting) 3.dp else 0.dp,

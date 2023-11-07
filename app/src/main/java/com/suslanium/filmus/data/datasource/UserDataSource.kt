@@ -37,4 +37,10 @@ class UserDataSource(
         return user.id
     }
 
+    suspend fun removeSavedUserId() {
+        context.userDataStore.edit { dataStore ->
+            dataStore.remove(dataStoreUserIdKey)
+        }
+    }
+
 }

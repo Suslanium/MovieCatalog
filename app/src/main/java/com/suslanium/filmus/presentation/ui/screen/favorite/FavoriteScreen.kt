@@ -23,7 +23,10 @@ import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.state.FavoritesListState
+import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.ui.common.ErrorContent
+import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.FavoritesShimmerList
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.favoritesList
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.noFavoritesPlaceHolder
@@ -47,6 +50,12 @@ fun FavoriteScreen(
             animation = tween(1000)
         ), label = ""
     )
+
+    ObserveAsEvents(flow = favoriteViewModel.logoutEvents) {
+        when (it) {
+            LogoutEvent.Logout -> navController.navigate(FilmusDestinations.ONBOARDING)
+        }
+    }
 
     Crossfade(targetState = favoritesListState, label = "") { state ->
         when (state) {

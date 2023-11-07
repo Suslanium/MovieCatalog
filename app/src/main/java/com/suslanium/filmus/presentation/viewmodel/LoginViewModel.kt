@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class LoginViewModel(
@@ -64,7 +65,9 @@ class LoginViewModel(
                     password = _loginData.value.password
                 )
             )
-            _loginEventChannel.send(AuthEvent.Success)
+            withContext(Dispatchers.Main) {
+                _loginEventChannel.send(AuthEvent.Success)
+            }
         }
     }
 

@@ -29,15 +29,15 @@ fun providePresentationModule() = module {
     }
 
     viewModel {
-        FavoriteViewModel(get())
+        FavoriteViewModel(get(), get())
     }
 
     viewModel {
-        ProfileViewModel(get(), get(), get(), get())
+        ProfileViewModel(get(), get(), get(), get(), get())
     }
 
     viewModel { parametersHolder ->
-        DetailsViewModel(parametersHolder.get(), get(), get(), get(), get(), get(), get())
+        DetailsViewModel(parametersHolder.get(), get(), get(), get(), get(), get(), get(), get())
     }
 
 }

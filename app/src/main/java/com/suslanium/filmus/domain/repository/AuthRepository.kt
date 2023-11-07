@@ -9,6 +9,8 @@ interface AuthRepository {
 
     suspend fun login(loginRequest: LoginRequest)
 
+    suspend fun logout()
+
     suspend fun hasTokens(): Boolean
 
 }

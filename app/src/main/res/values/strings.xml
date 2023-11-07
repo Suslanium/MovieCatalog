@@ -66,4 +66,5 @@
     <string name="post_review">Оставить отзыв</string>
     <string name="write_review">Напишите отзыв</string>
     <string name="anonymous_review">Анонимный отзыв</string>
+    <string name="logout">Выйти из аккаунта</string>
 </resources>

@@ -13,7 +13,6 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,20 +28,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.common.Constants.AUTH_TAG
 import com.suslanium.filmus.presentation.state.AuthEvent
 import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
-import com.suslanium.filmus.presentation.common.Constants.AUTH_TAG
+import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.login.components.LoginContent
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
-import com.suslanium.filmus.presentation.ui.theme.S14_W500
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
+import com.suslanium.filmus.presentation.ui.theme.S14_W500
 import com.suslanium.filmus.presentation.ui.theme.S20_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
@@ -59,12 +59,10 @@ fun LoginScreen(
     var loginErrorMessageId by remember { mutableStateOf<Int?>(null) }
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(true) {
-        loginViewModel.loginEvents.collect { event ->
-            when (event) {
-                AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
-                is AuthEvent.Error -> loginErrorMessageId = event.messageId
-            }
+    ObserveAsEvents(flow = loginViewModel.loginEvents) { event ->
+        when (event) {
+            AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
+            is AuthEvent.Error -> loginErrorMessageId = event.messageId
         }
     }
 

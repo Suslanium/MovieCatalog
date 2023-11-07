@@ -8,6 +8,7 @@ object Constants {
     const val BASE_URL = "https://react-midterm.kreosoft.space/api/"
     const val REGISTER_URL = "account/register"
     const val LOGIN_URL = "account/login"
+    const val LOGOUT_URL = "account/logout"
     const val MOVIE_LIST_URL = "movies/{page}"
     const val MOVIE_DETAILS_URL = "movies/details/{id}"
     const val USER_PROFILE_URL = "account/profile"

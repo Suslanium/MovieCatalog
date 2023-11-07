@@ -26,4 +26,8 @@ class TokenDataSource(context: Context) {
         sharedPreferences.edit().putString(Constants.ACCESS_TOKEN, token).apply()
     }
 
+    fun deleteToken() {
+        sharedPreferences.edit().remove(Constants.ACCESS_TOKEN).apply()
+    }
+
 }

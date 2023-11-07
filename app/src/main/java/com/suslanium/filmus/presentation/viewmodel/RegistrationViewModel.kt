@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.time.Instant
 import java.time.ZoneId
@@ -91,7 +92,9 @@ class RegistrationViewModel(
                     birthDate = birthDate
                 )
             )
-            _registrationEventChannel.send(AuthEvent.Success)
+            withContext(Dispatchers.Main) {
+                _registrationEventChannel.send(AuthEvent.Success)
+            }
         }
     }
 

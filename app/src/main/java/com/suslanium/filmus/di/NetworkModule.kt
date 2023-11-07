@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.suslanium.filmus.data.Constants
 import com.suslanium.filmus.data.remote.api.AuthApiService
 import com.suslanium.filmus.data.remote.api.FavoriteMoviesApiService
+import com.suslanium.filmus.data.remote.api.LogoutApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.data.remote.api.ReviewApiService
 import com.suslanium.filmus.data.remote.api.UserApiService
@@ -58,6 +59,9 @@ private fun provideFavoriteMoviesApi(gson: Gson, okHttpClient: OkHttpClient): Fa
 private fun provideReviewApi(gson: Gson, okHttpClient: OkHttpClient): ReviewApiService =
     provideRetrofit(gson, okHttpClient).create(ReviewApiService::class.java)
 
+private fun provideLogoutApi(gson: Gson, okHttpClient: OkHttpClient): LogoutApiService =
+    provideRetrofit(gson, okHttpClient).create(LogoutApiService::class.java)
+
 fun provideNetworkModule() = module {
 
     factory {
@@ -94,6 +98,10 @@ fun provideNetworkModule() = module {
 
     single {
         provideReviewApi(get(), get(named("AuthOkHttp")))
+    }
+
+    single {
+        provideLogoutApi(get(), get(named("AuthOkHttp")))
     }
 
 }
