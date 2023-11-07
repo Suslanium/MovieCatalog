@@ -30,7 +30,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.Genre
-import com.suslanium.filmus.domain.entity.movie.Review
+import com.suslanium.filmus.domain.entity.review.Review
 import com.suslanium.filmus.domain.entity.user.UserSummary
 import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsExpandableDescription
 import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsGenreList

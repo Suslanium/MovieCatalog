@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
-import com.suslanium.filmus.domain.entity.movie.Review
+import com.suslanium.filmus.domain.entity.review.Review
 import com.suslanium.filmus.presentation.ui.common.UserRating
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import androidx.compose.runtime.getValue

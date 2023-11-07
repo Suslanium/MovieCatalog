@@ -1,5 +1,6 @@
 package com.suslanium.filmus.domain.entity.movie
 
+import com.suslanium.filmus.domain.entity.review.Review
 import java.util.UUID
 
 data class MovieDetails(

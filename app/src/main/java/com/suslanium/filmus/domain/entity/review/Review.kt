@@ -1,4 +1,4 @@
-package com.suslanium.filmus.domain.entity.movie
+package com.suslanium.filmus.domain.entity.review
 
 import com.suslanium.filmus.domain.entity.user.UserSummary
 import java.time.LocalDateTime

@@ -6,6 +6,7 @@ import com.suslanium.filmus.data.Constants
 import com.suslanium.filmus.data.remote.api.AuthApiService
 import com.suslanium.filmus.data.remote.api.FavoriteMoviesApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
+import com.suslanium.filmus.data.remote.api.ReviewApiService
 import com.suslanium.filmus.data.remote.api.UserApiService
 import com.suslanium.filmus.data.remote.interceptor.AuthInterceptor
 import com.suslanium.filmus.data.remote.serialization.LocalDateDeserializer
@@ -54,6 +55,9 @@ private fun provideUserApi(gson: Gson, okHttpClient: OkHttpClient): UserApiServi
 private fun provideFavoriteMoviesApi(gson: Gson, okHttpClient: OkHttpClient): FavoriteMoviesApiService =
     provideRetrofit(gson, okHttpClient).create(FavoriteMoviesApiService::class.java)
 
+private fun provideReviewApi(gson: Gson, okHttpClient: OkHttpClient): ReviewApiService =
+    provideRetrofit(gson, okHttpClient).create(ReviewApiService::class.java)
+
 fun provideNetworkModule() = module {
 
     factory {
@@ -86,6 +90,10 @@ fun provideNetworkModule() = module {
 
     single {
         provideFavoriteMoviesApi(get(), get(named("AuthOkHttp")))
+    }
+
+    single {
+        provideReviewApi(get(), get(named("AuthOkHttp")))
     }
 
 }
