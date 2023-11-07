@@ -36,7 +36,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingUltraSmall
 
 @Composable
-fun MovieCardImage(movieSummary: MovieSummary, shimmerOffset: Float) {
+fun MovieCardImage(movieSummary: MovieSummary, shimmerOffsetProvider: () -> Float) {
     Box(
         modifier = Modifier
             .height(MovieCardImageHeight)
@@ -53,7 +53,7 @@ fun MovieCardImage(movieSummary: MovieSummary, shimmerOffset: Float) {
                     modifier = Modifier
                         .fillMaxSize()
                         .shimmerEffect(
-                            startOffsetX = shimmerOffset,
+                            startOffsetXProvider = shimmerOffsetProvider,
                             backgroundColor = Gray750,
                             shimmerColor = Accent
                         )

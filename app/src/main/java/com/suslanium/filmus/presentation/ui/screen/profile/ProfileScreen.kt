@@ -84,12 +84,12 @@ fun ProfileScreen() {
                 isApplyingChanges = isApplyingChanges,
                 canApplyChanges = profileViewModel.canApplyChanges,
                 dateTimeFormatter = profileViewModel.dateFormat,
-                startOffsetX = startOffsetX,
+                startOffsetXProvider = { startOffsetX },
                 setShouldShowDateDialog = { shouldShowDatePickerDialog = it }
             )
 
             ProfileState.Error -> ErrorContent(onRetry = profileViewModel::loadData)
-            ProfileState.Loading -> ShimmerProfileContent(shimmerOffset = startOffsetX)
+            ProfileState.Loading -> ShimmerProfileContent(shimmerOffsetProvider = { startOffsetX })
         }
     }
 }

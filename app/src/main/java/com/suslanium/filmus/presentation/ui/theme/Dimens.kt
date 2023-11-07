@@ -31,6 +31,7 @@ val ButtonProgressIndicatorSize = 12.dp
 val ButtonPadding = PaddingValues(start = 15.dp, top = 12.dp, end = 15.dp, bottom = 12.dp)
 val TextFieldPadding = PaddingValues(all = 12.dp)
 val GenreElementPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
+val GenreDetailsElementPadding = PaddingValues(horizontal = 10.dp, vertical = 5.dp)
 
 val AuthFieldHeight = 42.dp
 val OnboardingVerticalSpacing = 35.dp

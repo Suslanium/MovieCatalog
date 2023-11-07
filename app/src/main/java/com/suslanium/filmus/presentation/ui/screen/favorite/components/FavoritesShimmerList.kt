@@ -28,7 +28,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 
 @Composable
-fun FavoritesShimmerList(shimmerOffset: Float) {
+fun FavoritesShimmerList(shimmerOffsetProvider: () -> Float) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -46,7 +46,7 @@ fun FavoritesShimmerList(shimmerOffset: Float) {
                         RoundedCornerShape(MovieCardCornerRadiusMedium)
                     )
                     .shimmerEffect(
-                        startOffsetX = shimmerOffset,
+                        startOffsetXProvider = shimmerOffsetProvider,
                         backgroundColor = Gray750,
                         shimmerColor = Accent
                     )
@@ -60,7 +60,7 @@ fun FavoritesShimmerList(shimmerOffset: Float) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = PaddingMedium),
-                    shimmerOffset = shimmerOffset
+                    shimmerOffsetProvider = shimmerOffsetProvider
                 )
             } else {
                 Row(modifier = Modifier.fillMaxWidth()) {
@@ -68,14 +68,14 @@ fun FavoritesShimmerList(shimmerOffset: Float) {
                         modifier = Modifier
                             .weight(DefaultWeight)
                             .padding(start = PaddingMedium),
-                        shimmerOffset = shimmerOffset
+                        shimmerOffsetProvider = shimmerOffsetProvider
                     )
                     Spacer(modifier = Modifier.width(15.dp))
                     ShimmerFavoriteCard(
                         modifier = Modifier
                             .weight(DefaultWeight)
                             .padding(end = PaddingMedium),
-                        shimmerOffset = shimmerOffset
+                        shimmerOffsetProvider = shimmerOffsetProvider
                     )
                 }
             }

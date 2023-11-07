@@ -67,6 +67,12 @@ val S12_W400 = TextStyle(
     fontWeight = FontWeight.Normal
 )
 
+val S12_W500 = TextStyle(
+    fontFamily = Inter,
+    fontSize = 12.sp,
+    fontWeight = FontWeight.Medium
+)
+
 val S13_W400 = TextStyle(
     fontFamily = Inter,
     fontSize = 13.sp,

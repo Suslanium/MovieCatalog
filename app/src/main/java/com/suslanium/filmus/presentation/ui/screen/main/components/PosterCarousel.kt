@@ -45,7 +45,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun PosterCarousel(
     movies: List<MovieSummary>,
-    shimmerOffset: Float
+    shimmerOffsetProvider: () -> Float
 ) {
     val pagerState = rememberPagerState(pageCount = { movies.size })
 
@@ -66,7 +66,7 @@ fun PosterCarousel(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .shimmerEffect(startOffsetX = shimmerOffset, backgroundColor = Gray750, shimmerColor = Accent)
+                            .shimmerEffect(startOffsetXProvider = shimmerOffsetProvider, backgroundColor = Gray750, shimmerColor = Accent)
                     )
                 },
                 failure = {

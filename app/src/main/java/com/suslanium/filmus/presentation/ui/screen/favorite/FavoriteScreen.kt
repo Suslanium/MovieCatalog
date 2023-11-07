@@ -49,7 +49,7 @@ fun FavoriteScreen() {
         when (state) {
             is FavoritesListState.Content -> FavoritesList(state.movies, startOffsetX)
             FavoritesListState.Error -> ErrorContent(onRetry = favoriteViewModel::loadData)
-            FavoritesListState.Loading -> FavoritesShimmerList(startOffsetX)
+            FavoritesListState.Loading -> FavoritesShimmerList { startOffsetX }
         }
     }
 }
@@ -78,7 +78,7 @@ private fun FavoritesList(
             )
         }
         if (moviesList.isNotEmpty()) {
-            favoritesList(moviesList, shimmerOffset)
+            favoritesList(moviesList) { shimmerOffset }
             item {
                 Spacer(modifier = Modifier.height(PaddingMedium))
             }

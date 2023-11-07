@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,39 +20,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
-import com.suslanium.filmus.presentation.mapper.ErrorTypeToStringResource
 import com.suslanium.filmus.presentation.state.AuthEvent
 import com.suslanium.filmus.presentation.state.AuthState
-import com.suslanium.filmus.presentation.state.LoginData
 import com.suslanium.filmus.presentation.ui.common.AccentButton
-import com.suslanium.filmus.presentation.ui.common.FilmusTextField
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
 import com.suslanium.filmus.presentation.common.Constants.AUTH_TAG
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
+import com.suslanium.filmus.presentation.ui.screen.login.components.LoginContent
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.S14_W500
-import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray200
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
-import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
-import com.suslanium.filmus.presentation.ui.theme.Red
-import com.suslanium.filmus.presentation.ui.theme.S15_W400
 import com.suslanium.filmus.presentation.ui.theme.S20_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.ui.theme.WidthFraction
@@ -153,63 +141,3 @@ fun LoginScreen(
     }
 }
 
-@Composable
-private fun LoginContent(
-    loginData: LoginData,
-    setLogin: (String) -> Unit,
-    setPassword: (String) -> Unit,
-    loginState: AuthState,
-    loginErrorMessageId: Int?,
-    resetLoginError: () -> Unit
-) {
-    var isPasswordVisible by remember { mutableStateOf(false) }
-    Spacer(modifier = Modifier.height(VerticalSpacing))
-    FilmusTextField(title = stringResource(id = R.string.login),
-        value = loginData.login,
-        onValueChange = {
-            setLogin(it)
-            resetLoginError()
-        },
-        isError = loginData.loginValidationErrorType != null || loginErrorMessageId != null,
-        errorMessage = if (loginData.loginValidationErrorType != null) ErrorTypeToStringResource.map[loginData.loginValidationErrorType]?.let { it1 ->
-            stringResource(
-                id = it1
-            )
-        } else null,
-        enabled = loginState != AuthState.Loading)
-    Spacer(modifier = Modifier.height(VerticalSpacing))
-
-    FilmusTextField(title = stringResource(id = R.string.password),
-        value = loginData.password,
-        onValueChange = {
-            setPassword(it)
-            resetLoginError()
-        },
-        trailingIcon = {
-            IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.visibility_icon),
-                    contentDescription = null
-                )
-            }
-        },
-        visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        isError = loginData.passwordValidationErrorType != null || loginErrorMessageId != null,
-        errorMessage = if (loginData.passwordValidationErrorType != null) ErrorTypeToStringResource.map[loginData.passwordValidationErrorType]?.let { it1 ->
-            stringResource(
-                id = it1
-            )
-        } else null,
-        enabled = loginState != AuthState.Loading)
-
-    if (loginErrorMessageId != null) {
-        Spacer(modifier = Modifier.height(PaddingSmall))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = loginErrorMessageId),
-            style = S15_W400,
-            textAlign = TextAlign.Start,
-            color = Red
-        )
-    }
-}

@@ -19,7 +19,7 @@ import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusSmall
 import com.suslanium.filmus.presentation.ui.theme.S14_W500
 
 @Composable
-fun ShimmerFavoriteCard(modifier: Modifier, shimmerOffset: Float) {
+fun ShimmerFavoriteCard(modifier: Modifier, shimmerOffsetProvider: () -> Float) {
     Column(modifier = modifier) {
         Box(
             modifier = Modifier
@@ -29,7 +29,7 @@ fun ShimmerFavoriteCard(modifier: Modifier, shimmerOffset: Float) {
                     RoundedCornerShape(MovieCardCornerRadiusSmall)
                 )
                 .shimmerEffect(
-                    startOffsetX = shimmerOffset,
+                    startOffsetXProvider = shimmerOffsetProvider,
                     backgroundColor = Gray750,
                     shimmerColor = Accent
                 )
@@ -43,7 +43,7 @@ fun ShimmerFavoriteCard(modifier: Modifier, shimmerOffset: Float) {
                     RoundedCornerShape(MovieCardCornerRadiusMedium)
                 )
                 .shimmerEffect(
-                    startOffsetX = shimmerOffset,
+                    startOffsetXProvider = shimmerOffsetProvider,
                     backgroundColor = Gray750,
                     shimmerColor = Accent
                 )

@@ -22,7 +22,7 @@ import com.suslanium.filmus.presentation.ui.theme.S15_W500
 import com.suslanium.filmus.presentation.ui.theme.S14_W500
 
 @Composable
-fun ShimmerTextField(shimmerOffset: Float) {
+fun ShimmerTextField(shimmerOffsetProvider: () -> Float) {
     Column(
         modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(
             PaddingSmall + 4.dp
@@ -36,7 +36,7 @@ fun ShimmerTextField(shimmerOffset: Float) {
                     RoundedCornerShape(MovieCardCornerRadiusMedium)
                 )
                 .shimmerEffect(
-                    startOffsetX = shimmerOffset,
+                    startOffsetXProvider = shimmerOffsetProvider,
                     backgroundColor = Gray750,
                     shimmerColor = Accent
                 )
@@ -48,7 +48,7 @@ fun ShimmerTextField(shimmerOffset: Float) {
                 RoundedCornerShape(ButtonCornerRadius)
             )
             .shimmerEffect(
-                startOffsetX = shimmerOffset,
+                startOffsetXProvider = shimmerOffsetProvider,
                 backgroundColor = Gray750,
                 shimmerColor = Accent
             )

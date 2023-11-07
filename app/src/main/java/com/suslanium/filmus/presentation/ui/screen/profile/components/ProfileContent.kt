@@ -60,7 +60,7 @@ fun ProfileContent(
     isApplyingChanges: Boolean,
     canApplyChanges: Boolean,
     dateTimeFormatter: DateTimeFormatter,
-    startOffsetX: Float,
+    startOffsetXProvider: () -> Float,
     setShouldShowDateDialog: (Boolean) -> Unit
 ) {
     Column(
@@ -83,7 +83,7 @@ fun ProfileContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .shimmerEffect(
-                            startOffsetX = startOffsetX,
+                            startOffsetXProvider = startOffsetXProvider,
                             backgroundColor = Gray750,
                             shimmerColor = Accent
                         )
