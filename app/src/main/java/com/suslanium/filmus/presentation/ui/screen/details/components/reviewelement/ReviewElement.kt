@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
-import com.suslanium.filmus.domain.entity.movie.Review
+import com.suslanium.filmus.domain.entity.review.Review
 import com.suslanium.filmus.presentation.ui.common.UserRating
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import androidx.compose.runtime.getValue
@@ -59,7 +59,8 @@ fun ReviewElement(
     dateFormat: DateTimeFormatter,
     isUserReview: Boolean = false,
     onEditUserReview: (() -> Unit)? = null,
-    onRemoveUserReview: (() -> Unit)? = null
+    onRemoveUserReview: (() -> Unit)? = null,
+    isDeletingReview: (() -> Boolean)? = null
 ) {
     Column(
         modifier = Modifier
@@ -141,7 +142,7 @@ fun ReviewElement(
                         contentDescription = null
                     )
                     ReviewContextMenu(
-                        expanded, { expanded = it }, onEditUserReview, onRemoveUserReview
+                        expanded, { expanded = it }, onEditUserReview, onRemoveUserReview, shimmerOffsetProvider, { if (isDeletingReview != null) isDeletingReview() else false }
                     )
                 }
             }
@@ -151,7 +152,7 @@ fun ReviewElement(
             text = review.reviewText.orEmpty(), style = S14_W400, color = White
         )
         Spacer(modifier = Modifier.height(5.dp))
-        Text(text = dateFormat.format(review.creationDateTime), style = S12_W500, color = Gray400)
+        Text(text = dateFormat.format(review.createDateTime), style = S12_W500, color = Gray400)
     }
 }
 

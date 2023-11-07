@@ -32,7 +32,7 @@ private val colorStops = arrayOf(
 
 @Composable
 fun DetailsPoster(
-    posterLink: Any?,
+    posterLinkProvider: () -> Any?,
     startOffsetXProvider: () -> Float,
     firstVisibleItemOffsetProvider: () -> Int
 ) {
@@ -51,7 +51,7 @@ fun DetailsPoster(
             alpha = 1f - scrolledY * 0.001f
             previousOffset = firstVisibleItemOffsetProvider()
         }.fillMaxSize(),
-            imageModel = { posterLink },
+            imageModel = posterLinkProvider,
             imageOptions = ImageOptions(contentScale = ContentScale.Crop),
             loading = {
                 Box(

@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.state.ReviewState
 import com.suslanium.filmus.presentation.ui.common.AccentButton
 import com.suslanium.filmus.presentation.ui.common.SecondaryButton
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
@@ -41,7 +42,8 @@ fun ReviewDialog(
     isAnonymousProvider: () -> Boolean,
     setAnonymous: (Boolean) -> Unit,
     anonymousCheckboxEnabled: Boolean,
-    saveButtonEnabled: () -> Boolean
+    saveButtonEnabled: () -> Boolean,
+    dialogState: () -> ReviewState
 ) {
     AlertDialog(
         onDismissRequest = dismissDialog, properties = DialogProperties(
@@ -58,7 +60,8 @@ fun ReviewDialog(
             isAnonymousProvider,
             setAnonymous,
             anonymousCheckboxEnabled,
-            saveButtonEnabled
+            saveButtonEnabled,
+            dialogState
         )
     }
 }
@@ -74,7 +77,8 @@ fun ReviewDialogContent(
     isAnonymousProvider: () -> Boolean,
     setAnonymous: (Boolean) -> Unit,
     anonymousCheckboxEnabled: Boolean,
-    saveButtonEnabled: () -> Boolean
+    saveButtonEnabled: () -> Boolean,
+    dialogState: () -> ReviewState
 ) {
     Surface(
         modifier = Modifier
@@ -86,20 +90,29 @@ fun ReviewDialogContent(
         Column(modifier = Modifier.padding(PaddingLarge / 2)) {
             Text(text = stringResource(id = R.string.post_review), style = S20_W700, color = White)
             Spacer(modifier = Modifier.height(VerticalSpacing))
-            ReviewRateBar(setRating, ratingProvider)
+            ReviewRateBar(
+                { if (dialogState() != ReviewState.Saving) setRating(it) },
+                ratingProvider
+            )
             Spacer(modifier = Modifier.height(PaddingMedium))
-            ReviewTextField(reviewTextProvider, setReviewText)
+            ReviewTextField(
+                reviewTextProvider,
+                setReviewText,
+                dialogState() == ReviewState.Error,
+                if (dialogState() == ReviewState.Error) stringResource(
+                    id = R.string.unknown_error
+                ) else null,
+                dialogState() != ReviewState.Saving
+            )
             Spacer(modifier = Modifier.height(14.dp))
-            ReviewCheckBox(isAnonymousProvider, setAnonymous, anonymousCheckboxEnabled)
+            ReviewCheckBox(isAnonymousProvider, { if (dialogState() != ReviewState.Saving) setAnonymous(it) }, anonymousCheckboxEnabled)
             Spacer(modifier = Modifier.height(25.dp))
             AccentButton(
-                onClick = {
-                    saveReview()
-                    dismissDialog()
-                },
+                onClick = saveReview,
                 text = stringResource(id = R.string.save),
                 modifier = Modifier.fillMaxWidth(),
-                enabled = saveButtonEnabled()
+                enabled = saveButtonEnabled() && dialogState() != ReviewState.Saving,
+                hasProgressIndicator = dialogState() == ReviewState.Saving
             )
             Spacer(modifier = Modifier.height(PaddingSmall))
             SecondaryButton(
