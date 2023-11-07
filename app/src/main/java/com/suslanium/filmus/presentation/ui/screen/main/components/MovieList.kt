@@ -49,7 +49,7 @@ fun MovieList(
                 moviePagingItems[index]?.let { movieList.add(it) }
             }
             PosterCarousel(
-                movies = movieList, shimmerOffsetProvider = shimmerOffsetProvider
+                movies = movieList, shimmerOffsetProvider = shimmerOffsetProvider, navController = navController
             )
         }
 
@@ -80,7 +80,7 @@ fun MovieList(
                         .clickable(
                             interactionSource = NoRippleInteractionSource(),
                             indication = null,
-                            onClick = { navController.navigate(FilmusDestinations.DETAILS) }),
+                            onClick = { navController.navigate("${FilmusDestinations.DETAILS_NO_ID}/${movie.id}") }),
                     shimmerOffsetProvider = shimmerOffsetProvider
                 )
             }

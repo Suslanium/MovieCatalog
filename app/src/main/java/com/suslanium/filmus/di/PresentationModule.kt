@@ -1,5 +1,6 @@
 package com.suslanium.filmus.di
 
+import com.suslanium.filmus.presentation.viewmodel.DetailsViewModel
 import com.suslanium.filmus.presentation.viewmodel.FavoriteViewModel
 import com.suslanium.filmus.presentation.viewmodel.LaunchViewModel
 import com.suslanium.filmus.presentation.viewmodel.LoginViewModel
@@ -33,6 +34,10 @@ fun providePresentationModule() = module {
 
     viewModel {
         ProfileViewModel(get(), get(), get(), get())
+    }
+
+    viewModel { parametersHolder ->
+        DetailsViewModel(parametersHolder.get(), get(), get(), get(), get(), get(), get())
     }
 
 }

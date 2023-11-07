@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.suslanium.filmus.data.converter.MovieDetailsConverter
 import com.suslanium.filmus.data.datasource.UserDataSource
 import com.suslanium.filmus.data.paging.MoviePagingSource
+import com.suslanium.filmus.data.remote.api.FavoriteMoviesApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.domain.entity.movie.MovieDetails
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
@@ -15,6 +16,7 @@ import java.util.UUID
 
 class MovieRepositoryImpl(
     private val movieApiService: MovieApiService,
+    private val favoriteApiService: FavoriteMoviesApiService,
     private val userDataSource: UserDataSource
 ) : MovieRepository {
 
@@ -24,7 +26,14 @@ class MovieRepositoryImpl(
         }).flow
     }
 
-    override suspend fun getMovieDetails(id: UUID): MovieDetails =
-        MovieDetailsConverter.convert(movieApiService.getMovieDetails(id.toString()))
-
+    override suspend fun getMovieDetails(id: UUID): MovieDetails {
+        val movieInfo = movieApiService.getMovieDetails(id.toString())
+        val userId = userDataSource.fetchUserId()
+        val isFavorite = favoriteApiService.getFavoriteMovies().movies?.any { it.id == id } ?: false
+        return MovieDetailsConverter.convert(
+            movieInfo,
+            isFavorite,
+            movieInfo.reviews?.firstOrNull { it.author?.userId == userId }
+        )
+    }
 }

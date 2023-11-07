@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.R
 import com.suslanium.filmus.presentation.ui.common.colorByRating
+import com.suslanium.filmus.presentation.ui.common.textColorByRating
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
@@ -72,7 +73,7 @@ fun DetailsTitleRow(
                 text = String.format("%.1f", rating),
                 textAlign = TextAlign.Center,
                 style = S15_W500,
-                color = White /*TODO COLOR BY RATING*/
+                color = textColorByRating(rating)
             )
         }
         Text(
@@ -91,9 +92,8 @@ fun DetailsTitleRow(
                 containerColor = Gray750, disabledContainerColor = Gray750
             )
         ) {
-            /*TODO Favorite icon*/
             Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.fav_button_icon),
+                imageVector = if (!isFavorite) ImageVector.vectorResource(R.drawable.fav_button_icon) else ImageVector.vectorResource(R.drawable.fav_button_icon_filled),
                 contentDescription = null,
                 tint = Color.Unspecified
             )

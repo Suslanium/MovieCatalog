@@ -9,6 +9,6 @@ data class Review(
     val rating: Int,
     val reviewText: String?,
     val isAnonymous: Boolean,
-    val creationDateTime: LocalDateTime,
+    val createDateTime: LocalDateTime,
     val author: UserSummary?
 )

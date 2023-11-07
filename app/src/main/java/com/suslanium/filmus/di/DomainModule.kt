@@ -41,8 +41,8 @@ fun provideAuthRepository(
     authApiService: AuthApiService, tokenDataSource: TokenDataSource
 ): AuthRepository = AuthRepositoryImpl(authApiService, tokenDataSource)
 
-fun provideMovieRepository(movieApiService: MovieApiService, userDataSource: UserDataSource): MovieRepository =
-    MovieRepositoryImpl(movieApiService, userDataSource)
+fun provideMovieRepository(movieApiService: MovieApiService, favoriteMoviesApiService: FavoriteMoviesApiService, userDataSource: UserDataSource): MovieRepository =
+    MovieRepositoryImpl(movieApiService, favoriteMoviesApiService, userDataSource)
 
 fun provideUserRepository(userDataSource: UserDataSource): UserRepository =
     UserRepositoryImpl(userDataSource)
@@ -59,7 +59,7 @@ fun provideDomainModule() = module {
     }
 
     single {
-        provideMovieRepository(get(), get())
+        provideMovieRepository(get(), get(), get())
     }
 
     single {
