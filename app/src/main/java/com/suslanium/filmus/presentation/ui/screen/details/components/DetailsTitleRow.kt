@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +45,8 @@ fun DetailsTitleRow(
     rating: Float,
     movieName: String,
     onFavoriteClick: () -> Unit,
-    isFavorite: Boolean
+    isFavorite: Boolean,
+    lazyListStateProvider: () -> LazyListState
 ) {
     Spacer(modifier = Modifier.height(PaddingMedium).fillMaxWidth().background(Background))
     Row(
@@ -77,7 +80,14 @@ fun DetailsTitleRow(
             )
         }
         Text(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).graphicsLayer {
+                if (lazyListStateProvider().firstVisibleItemIndex < 1) {
+                    alpha = 1f
+                }
+                else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
+                    alpha = 1f - lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
+                }
+            },
             text = movieName,
             textAlign = TextAlign.Center,
             style = S24_W700,
@@ -88,7 +98,14 @@ fun DetailsTitleRow(
                 .size(40.dp)
                 .clip(
                     CircleShape
-                ), colors = IconButtonDefaults.iconButtonColors(
+                ).graphicsLayer {
+                    if (lazyListStateProvider().firstVisibleItemIndex < 1) {
+                        alpha = 1f
+                    }
+                    else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
+                        alpha = 1f - lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
+                    }
+                }, colors = IconButtonDefaults.iconButtonColors(
                 containerColor = Gray750, disabledContainerColor = Gray750
             )
         ) {

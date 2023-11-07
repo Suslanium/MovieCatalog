@@ -21,7 +21,7 @@ fun MainNavigation(navHostController: NavHostController, rootNavHostController: 
             MainScreen(rootNavHostController)
         }
         composable(route = MainDestinations.FAVORITES) {
-            FavoriteScreen()
+            FavoriteScreen(rootNavHostController)
         }
         composable(route = MainDestinations.PROFILE) {
             ProfileScreen()

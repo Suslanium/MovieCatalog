@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.state.FavoritesListState
@@ -33,7 +34,9 @@ import com.suslanium.filmus.presentation.viewmodel.FavoriteViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(
+    navController: NavController
+) {
     val favoriteViewModel: FavoriteViewModel = koinViewModel()
     val favoritesListState by remember { favoriteViewModel.favoritesListState }
     val transition = rememberInfiniteTransition(label = "")
@@ -47,7 +50,8 @@ fun FavoriteScreen() {
 
     Crossfade(targetState = favoritesListState, label = "") { state ->
         when (state) {
-            is FavoritesListState.Content -> FavoritesList(state.movies, startOffsetX)
+            is FavoritesListState.Content -> FavoritesList(state.movies,
+                { startOffsetX }, navController)
             FavoritesListState.Error -> ErrorContent(onRetry = favoriteViewModel::loadData)
             FavoritesListState.Loading -> FavoritesShimmerList { startOffsetX }
         }
@@ -57,7 +61,8 @@ fun FavoriteScreen() {
 @Composable
 private fun FavoritesList(
     moviesList: List<MovieSummary>,
-    shimmerOffset: Float
+    shimmerOffset: () -> Float,
+    navController: NavController
 ) {
     LazyColumn(
         modifier = Modifier
@@ -78,7 +83,7 @@ private fun FavoritesList(
             )
         }
         if (moviesList.isNotEmpty()) {
-            favoritesList(moviesList) { shimmerOffset }
+            favoritesList(moviesList, shimmerOffset, navController)
             item {
                 Spacer(modifier = Modifier.height(PaddingMedium))
             }
