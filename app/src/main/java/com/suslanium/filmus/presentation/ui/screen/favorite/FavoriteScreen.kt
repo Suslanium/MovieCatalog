@@ -14,11 +14,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
@@ -35,6 +37,7 @@ import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import com.suslanium.filmus.presentation.viewmodel.FavoriteViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Composable
 fun FavoriteScreen(
@@ -51,6 +54,24 @@ fun FavoriteScreen(
         ), label = ""
     )
 
+    val modifiedMovieState =
+        navController.currentBackStackEntry?.savedStateHandle?.getStateFlow<String?>(
+            "modifiedFilmId", null
+        )?.collectAsStateWithLifecycle()
+    LaunchedEffect(modifiedMovieState?.value) {
+        val movieId = modifiedMovieState?.value
+        if (movieId != null) {
+            val isFavorite =
+                navController.currentBackStackEntry?.savedStateHandle?.get<Boolean?>("isFavorite")
+            if (isFavorite != true) favoriteViewModel.removeMovie(UUID.fromString(movieId))
+            else favoriteViewModel.modifyMovie(
+                UUID.fromString(movieId),
+                navController.currentBackStackEntry?.savedStateHandle?.get("userRating")
+            )
+            navController.currentBackStackEntry?.savedStateHandle?.set("modifiedFilmId", null)
+        }
+    }
+
     ObserveAsEvents(flow = favoriteViewModel.logoutEvents) {
         when (it) {
             LogoutEvent.Logout -> navController.navigate(FilmusDestinations.ONBOARDING)
@@ -60,7 +81,9 @@ fun FavoriteScreen(
     Crossfade(targetState = favoritesListState, label = "") { state ->
         when (state) {
             is FavoritesListState.Content -> FavoritesList(state.movies,
-                { startOffsetX }, navController)
+                { startOffsetX }, navController
+            )
+
             FavoritesListState.Error -> ErrorContent(onRetry = favoriteViewModel::loadData)
             FavoritesListState.Loading -> FavoritesShimmerList { startOffsetX }
         }

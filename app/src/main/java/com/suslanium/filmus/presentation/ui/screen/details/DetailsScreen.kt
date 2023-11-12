@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,22 @@ fun DetailsScreen(movieId: UUID, navController: NavController) {
     val reviewData by remember { detailsViewModel.reviewData }
     val canSaveReview by remember { detailsViewModel.canSaveReview }
     val canSetReviewAnonymous by remember { detailsViewModel.reviewIsAnonymousAvailable }
+
+    LaunchedEffect(detailsData.isFavorite, detailsData.rating, detailsData.userReview) {
+        navController.previousBackStackEntry?.savedStateHandle?.set(
+            "modifiedFilmId",
+            detailsData.id.toString()
+        )
+        navController.previousBackStackEntry?.savedStateHandle?.set(
+            "isFavorite",
+            detailsData.isFavorite
+        )
+        navController.previousBackStackEntry?.savedStateHandle?.set("rating", detailsData.rating)
+        navController.previousBackStackEntry?.savedStateHandle?.set(
+            "userRating",
+            detailsData.userReview?.rating
+        )
+    }
 
     ObserveAsEvents(flow = detailsViewModel.logoutEvents) {
         when (it) {

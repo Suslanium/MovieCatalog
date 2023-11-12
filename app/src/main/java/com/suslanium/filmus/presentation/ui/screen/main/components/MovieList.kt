@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -25,6 +26,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.state.ModifiedMovie
 import com.suslanium.filmus.presentation.ui.common.NoRippleInteractionSource
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.MovieCard
@@ -34,10 +36,12 @@ import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.S15_W500
 import com.suslanium.filmus.presentation.ui.theme.White
+import java.util.UUID
 
 @Composable
 fun MovieList(
     navController: NavController,
+    modifiedMovies: SnapshotStateMap<UUID, ModifiedMovie>,
     moviePagingItems: LazyPagingItems<MovieSummary>,
     shimmerOffsetProvider: () -> Float
 ) {
@@ -49,7 +53,9 @@ fun MovieList(
                 moviePagingItems[index]?.let { movieList.add(it) }
             }
             PosterCarousel(
-                movies = movieList, shimmerOffsetProvider = shimmerOffsetProvider, navController = navController
+                movies = movieList,
+                shimmerOffsetProvider = shimmerOffsetProvider,
+                navController = navController
             )
         }
 
@@ -69,16 +75,19 @@ fun MovieList(
         }
 
         items(count = moviePagingItems.itemCount - 4, key = { moviePagingItems[it]?.id ?: it }) {
-            val movie = moviePagingItems[it + 4]
+            var movie = moviePagingItems[it + 4]
             if (movie != null) {
+                if (modifiedMovies.containsKey(movie.id)) movie = movie.copy(
+                    rating = modifiedMovies[movie.id]?.newRating,
+                    userRating = modifiedMovies[movie.id]?.newUserRating
+                )
                 MovieCard(
                     movieSummary = movie,
                     modifier = Modifier
                         .padding(
                             start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
                         )
-                        .clickable(
-                            interactionSource = NoRippleInteractionSource(),
+                        .clickable(interactionSource = NoRippleInteractionSource(),
                             indication = null,
                             onClick = { navController.navigate("${FilmusDestinations.DETAILS_NO_ID}/${movie.id}") }),
                     shimmerOffsetProvider = shimmerOffsetProvider
