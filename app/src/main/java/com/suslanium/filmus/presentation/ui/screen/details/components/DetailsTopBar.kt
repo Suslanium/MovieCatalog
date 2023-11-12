@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieDetails
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.PaddingSmall
@@ -74,7 +75,8 @@ fun DetailsTopBar(
         },
         actions = {
             IconButton(
-                onClick = detailsViewModel::changeFavoritesState, modifier = Modifier
+                onClick = detailsViewModel::changeFavoritesState,
+                modifier = Modifier
                     .size(40.dp)
                     .clip(
                         CircleShape
@@ -85,7 +87,8 @@ fun DetailsTopBar(
                         } else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
                             alpha = lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
                         }
-                    }, colors = IconButtonDefaults.iconButtonColors(
+                    },
+                colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Gray750, disabledContainerColor = Gray750
                 )
             ) {
@@ -94,15 +97,13 @@ fun DetailsTopBar(
                         R.drawable.fav_button_icon
                     ) else ImageVector.vectorResource(
                         R.drawable.fav_button_icon_filled
-                    ),
-                    contentDescription = null,
-                    tint = Color.Unspecified
+                    ), contentDescription = null, tint = Color.Unspecified
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
         },
         navigationIcon = {
-            IconButton(onClick = navController::navigateUp) {
+            IconButton(onClick = { if (navController.previousBackStackEntry?.destination?.route == FilmusDestinations.MAIN) navController.navigateUp() }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.back_icon),
                     contentDescription = null,

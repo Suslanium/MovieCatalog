@@ -100,7 +100,8 @@ fun RegistrationScreen(
     }, containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = {
             if (registrationState != AuthState.Loading) {
-                if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+                if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart()
+                else if (navController.previousBackStackEntry?.destination?.route == FilmusDestinations.ONBOARDING) navController.navigateUp()
             }
         })
     }) { paddingValues ->

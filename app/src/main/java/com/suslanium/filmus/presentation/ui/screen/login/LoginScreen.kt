@@ -90,7 +90,9 @@ fun LoginScreen(
             focusManager.clearFocus()
         })
     }, containerColor = Background, topBar = {
-        AuthTopBar(onNavigateBackClick = { if (loginState != AuthState.Loading) navController.navigateUp() })
+        AuthTopBar(onNavigateBackClick = {
+            if (loginState != AuthState.Loading && navController.previousBackStackEntry?.destination?.route == FilmusDestinations.ONBOARDING) navController.navigateUp()
+        })
     }) {
         Box(
             modifier = Modifier
