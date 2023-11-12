@@ -25,7 +25,7 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.CarouselIconSize
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 
-private val colorStops = arrayOf(
+val detailsGradientColorStops = arrayOf(
     0.66f to Color(0x001D1D1D),
     0.88f to Color(0xFF1D1D1D)
 )
@@ -84,7 +84,7 @@ fun DetailsPoster(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(colorStops = colorStops))
+                .background(Brush.verticalGradient(colorStops = detailsGradientColorStops))
         )
     }
 }

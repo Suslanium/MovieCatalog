@@ -20,6 +20,7 @@ import com.suslanium.filmus.presentation.ui.common.ErrorContent
 import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsContent
+import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsShimmerContent
 import com.suslanium.filmus.presentation.ui.screen.details.components.DetailsTopBar
 import com.suslanium.filmus.presentation.ui.screen.details.components.reviewdialog.ReviewDialog
 import com.suslanium.filmus.presentation.viewmodel.DetailsViewModel
@@ -84,7 +85,9 @@ fun DetailsScreen(movieId: UUID, navController: NavController) {
                 )
 
                 DetailsState.Error -> ErrorContent(onRetry = detailsViewModel::loadFilmData)
-                DetailsState.Loading -> Unit
+                DetailsState.Loading -> DetailsShimmerContent(
+                    paddingValues = paddingValues
+                ) { startOffsetX }
             }
         }
 
