@@ -176,13 +176,14 @@ fun ProfileContent(
             onClick = applyChanges,
             text = stringResource(id = R.string.save),
             hasProgressIndicator = isApplyingChanges,
-            enabled = canApplyChanges
+            enabled = canApplyChanges && !isApplyingChanges
         )
         Spacer(modifier = Modifier.height(VerticalSpacing))
         SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = revertChanges,
-            text = stringResource(id = R.string.cancel)
+            text = stringResource(id = R.string.cancel),
+            enabled = !isApplyingChanges
         )
         Spacer(modifier = Modifier.height(PaddingMedium))
     }
