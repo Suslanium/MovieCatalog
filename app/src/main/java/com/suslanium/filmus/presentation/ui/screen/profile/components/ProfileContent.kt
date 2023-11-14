@@ -114,7 +114,7 @@ fun ProfileContent(
             color = White,
             textAlign = TextAlign.Center
         )
-        TextButton(contentPadding = ButtonPadding, onClick = logout) {
+        TextButton(modifier = Modifier.fillMaxWidth(), contentPadding = ButtonPadding, onClick = logout) {
             Text(text = stringResource(id = R.string.logout), color = Accent, style = S15_W600, textAlign = TextAlign.Center)
         }
         Spacer(modifier = Modifier.height(PaddingLarge))

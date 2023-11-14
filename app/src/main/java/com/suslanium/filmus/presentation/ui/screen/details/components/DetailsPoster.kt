@@ -36,20 +36,16 @@ fun DetailsPoster(
     startOffsetXProvider: () -> Float,
     firstVisibleItemOffsetProvider: () -> Int
 ) {
-    var scrolledY = 0f
-    var previousOffset = 0
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(497.dp)
     ) {
         GlideImage(modifier = Modifier.graphicsLayer {
-            scrolledY += firstVisibleItemOffsetProvider() - previousOffset
-            translationY = scrolledY * 0.5f
-            scaleX = 1f + scrolledY * 0.0003f
-            scaleY = 1f + scrolledY * 0.0003f
-            alpha = 1f - scrolledY * 0.001f
-            previousOffset = firstVisibleItemOffsetProvider()
+            translationY = firstVisibleItemOffsetProvider() * 0.5f
+            scaleX = 1f + firstVisibleItemOffsetProvider() * 0.0003f
+            scaleY = 1f + firstVisibleItemOffsetProvider() * 0.0003f
+            alpha = 1f - firstVisibleItemOffsetProvider() * 0.001f
         }.fillMaxSize(),
             imageModel = posterLinkProvider,
             imageOptions = ImageOptions(contentScale = ContentScale.Crop),
