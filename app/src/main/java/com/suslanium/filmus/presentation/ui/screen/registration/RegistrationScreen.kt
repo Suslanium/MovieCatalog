@@ -67,7 +67,13 @@ fun RegistrationScreen(
 
     ObserveAsEvents(flow = registrationViewModel.registrationEvents) { event ->
         when (event) {
-            AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
+            AuthEvent.Success -> {
+                navController.navigate(FilmusDestinations.MAIN) {
+                    popUpTo(FilmusDestinations.REGISTRATION) {
+                        inclusive = true
+                    }
+                }
+            }
             is AuthEvent.Error -> registrationErrorMessageId = event.messageId
         }
     }
@@ -89,7 +95,7 @@ fun RegistrationScreen(
 
     BackHandler {
         if (registrationState != AuthState.Loading) {
-            if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+            if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.popBackStack()
         }
     }
 
@@ -101,7 +107,7 @@ fun RegistrationScreen(
         AuthTopBar(onNavigateBackClick = {
             if (registrationState != AuthState.Loading) {
                 if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart()
-                else if (navController.previousBackStackEntry?.destination?.route == FilmusDestinations.ONBOARDING) navController.navigateUp()
+                else navController.popBackStack()
             }
         })
     }) { paddingValues ->

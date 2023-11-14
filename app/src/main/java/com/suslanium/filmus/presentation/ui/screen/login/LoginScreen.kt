@@ -61,7 +61,14 @@ fun LoginScreen(
 
     ObserveAsEvents(flow = loginViewModel.loginEvents) { event ->
         when (event) {
-            AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
+            AuthEvent.Success -> {
+                navController.navigate(FilmusDestinations.MAIN) {
+                    popUpTo(FilmusDestinations.LOGIN) {
+                        inclusive = true
+                    }
+                }
+            }
+
             is AuthEvent.Error -> loginErrorMessageId = event.messageId
         }
     }
@@ -82,7 +89,7 @@ fun LoginScreen(
     }
 
     BackHandler {
-        if (loginState != AuthState.Loading) navController.navigateUp()
+        if (loginState != AuthState.Loading) navController.popBackStack()
     }
 
     Scaffold(modifier = Modifier.pointerInput(Unit) {
@@ -91,7 +98,7 @@ fun LoginScreen(
         })
     }, containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = {
-            if (loginState != AuthState.Loading && navController.previousBackStackEntry?.destination?.route == FilmusDestinations.ONBOARDING) navController.navigateUp()
+            if (loginState != AuthState.Loading) navController.popBackStack()
         })
     }) {
         Box(

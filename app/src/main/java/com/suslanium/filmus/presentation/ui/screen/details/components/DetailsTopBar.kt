@@ -78,7 +78,7 @@ fun DetailsTopBar(
             Spacer(modifier = Modifier.width(12.dp))
         },
         navigationIcon = {
-            IconButton(onClick = { if (navController.previousBackStackEntry?.destination?.route == FilmusDestinations.MAIN) navController.navigateUp() }) {
+            IconButton(onClick = { if (navController.previousBackStackEntry?.destination?.route == FilmusDestinations.MAIN) navController.popBackStack() }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.back_icon),
                     contentDescription = null,

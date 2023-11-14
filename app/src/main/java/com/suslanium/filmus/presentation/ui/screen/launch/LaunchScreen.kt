@@ -27,7 +27,13 @@ fun LaunchScreen(
     ObserveAsEvents(flow = launchViewModel.launchEvents) { event ->
         when (event) {
             LaunchEvent.Unauthorized -> navController.navigate(FilmusDestinations.ONBOARDING)
-            LaunchEvent.Authorized -> navController.navigate(FilmusDestinations.MAIN)
+            LaunchEvent.Authorized -> {
+                navController.navigate(FilmusDestinations.MAIN) {
+                    popUpTo(FilmusDestinations.LAUNCH) {
+                        inclusive = true
+                    }
+                }
+            }
         }
     }
 

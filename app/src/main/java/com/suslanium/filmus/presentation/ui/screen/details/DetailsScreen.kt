@@ -60,7 +60,11 @@ fun DetailsScreen(movieId: UUID, navController: NavController) {
 
     ObserveAsEvents(flow = detailsViewModel.logoutEvents) {
         when (it) {
-            LogoutEvent.Logout -> navController.navigate(FilmusDestinations.ONBOARDING)
+            LogoutEvent.Logout -> navController.navigate(FilmusDestinations.ONBOARDING) {
+                popUpTo(FilmusDestinations.DETAILS) {
+                    inclusive = true
+                }
+            }
         }
     }
 
