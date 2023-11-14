@@ -31,7 +31,7 @@ fun FavoriteButton(
         )
     ) {
         Icon(
-            imageVector = if (isFavorite) ImageVector.vectorResource(
+            imageVector = if (!isFavorite) ImageVector.vectorResource(
                 R.drawable.fav_button_icon
             ) else ImageVector.vectorResource(
                 R.drawable.fav_button_icon_filled
