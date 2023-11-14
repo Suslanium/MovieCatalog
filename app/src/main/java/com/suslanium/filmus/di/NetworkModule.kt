@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.suslanium.filmus.data.Constants
 import com.suslanium.filmus.data.remote.api.AuthApiService
 import com.suslanium.filmus.data.remote.api.FavoriteMoviesApiService
+import com.suslanium.filmus.data.remote.api.LogoutApiService
 import com.suslanium.filmus.data.remote.api.MovieApiService
 import com.suslanium.filmus.data.remote.api.ReviewApiService
 import com.suslanium.filmus.data.remote.api.UserApiService
@@ -32,12 +33,12 @@ private fun provideGson(): Gson = GsonBuilder()
     .create()
 
 private fun provideAuthOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient =
-    OkHttpClient.Builder().addInterceptor(authInterceptor).connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS).writeTimeout(20, TimeUnit.SECONDS).build()
+    OkHttpClient.Builder().addInterceptor(authInterceptor).connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
 
 private fun provideRegularOkHttpClient(): OkHttpClient =
-    OkHttpClient.Builder().connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS).writeTimeout(20, TimeUnit.SECONDS).build()
+    OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
 
 private fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
     Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)
@@ -57,6 +58,9 @@ private fun provideFavoriteMoviesApi(gson: Gson, okHttpClient: OkHttpClient): Fa
 
 private fun provideReviewApi(gson: Gson, okHttpClient: OkHttpClient): ReviewApiService =
     provideRetrofit(gson, okHttpClient).create(ReviewApiService::class.java)
+
+private fun provideLogoutApi(gson: Gson, okHttpClient: OkHttpClient): LogoutApiService =
+    provideRetrofit(gson, okHttpClient).create(LogoutApiService::class.java)
 
 fun provideNetworkModule() = module {
 
@@ -94,6 +98,10 @@ fun provideNetworkModule() = module {
 
     single {
         provideReviewApi(get(), get(named("AuthOkHttp")))
+    }
+
+    single {
+        provideLogoutApi(get(), get(named("AuthOkHttp")))
     }
 
 }

@@ -38,6 +38,7 @@ import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.suslanium.filmus.presentation.ui.theme.Accent
+import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.Gray400
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.GrayAvatarBackground
@@ -104,7 +105,7 @@ fun ReviewElement(
                     }
                 })
             Spacer(modifier = Modifier.width(PaddingLarge / 2))
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(DefaultWeight)) {
                 Text(
                     text = if (review.isAnonymous) stringResource(id = R.string.anonymous_user) else review.author?.nickName.orEmpty(),
                     style = S14_W500,

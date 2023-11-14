@@ -22,6 +22,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.common.Constants.RATING_FORMAT
 import com.suslanium.filmus.presentation.ui.common.colorByRating
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
@@ -92,7 +93,7 @@ fun MovieCardImage(movieSummary: MovieSummary, shimmerOffsetProvider: () -> Floa
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = String.format("%.1f", movieSummary.rating),
+                        text = String.format(RATING_FORMAT, movieSummary.rating),
                         textAlign = TextAlign.Center,
                         style = S13_W700,
                         color = Background

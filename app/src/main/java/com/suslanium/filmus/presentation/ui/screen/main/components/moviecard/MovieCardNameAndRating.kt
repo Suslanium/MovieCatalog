@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.common.UserRating
+import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.S16_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 
@@ -21,7 +22,7 @@ fun MovieCardNameAndRating(
     Row(verticalAlignment = Alignment.Top) {
         if (movieSummary.name != null) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(DefaultWeight),
                 text = movieSummary.name,
                 style = S16_W700,
                 color = White,

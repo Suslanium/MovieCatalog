@@ -25,7 +25,7 @@ import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.CarouselIconSize
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 
-private val colorStops = arrayOf(
+val detailsGradientColorStops = arrayOf(
     0.66f to Color(0x001D1D1D),
     0.88f to Color(0xFF1D1D1D)
 )
@@ -36,20 +36,16 @@ fun DetailsPoster(
     startOffsetXProvider: () -> Float,
     firstVisibleItemOffsetProvider: () -> Int
 ) {
-    var scrolledY = 0f
-    var previousOffset = 0
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(497.dp)
     ) {
         GlideImage(modifier = Modifier.graphicsLayer {
-            scrolledY += firstVisibleItemOffsetProvider() - previousOffset
-            translationY = scrolledY * 0.5f
-            scaleX = 1f + scrolledY * 0.0003f
-            scaleY = 1f + scrolledY * 0.0003f
-            alpha = 1f - scrolledY * 0.001f
-            previousOffset = firstVisibleItemOffsetProvider()
+            translationY = firstVisibleItemOffsetProvider() * 0.5f
+            scaleX = 1f + firstVisibleItemOffsetProvider() * 0.0003f
+            scaleY = 1f + firstVisibleItemOffsetProvider() * 0.0003f
+            alpha = 1f - firstVisibleItemOffsetProvider() * 0.001f
         }.fillMaxSize(),
             imageModel = posterLinkProvider,
             imageOptions = ImageOptions(contentScale = ContentScale.Crop),
@@ -84,7 +80,7 @@ fun DetailsPoster(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(colorStops = colorStops))
+                .background(Brush.verticalGradient(colorStops = detailsGradientColorStops))
         )
     }
 }

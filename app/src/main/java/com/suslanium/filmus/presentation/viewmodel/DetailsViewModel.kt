@@ -12,15 +12,19 @@ import com.suslanium.filmus.domain.usecase.AddReviewUseCase
 import com.suslanium.filmus.domain.usecase.DeleteReviewUseCase
 import com.suslanium.filmus.domain.usecase.EditReviewUseCase
 import com.suslanium.filmus.domain.usecase.GetMovieDetailsUseCase
+import com.suslanium.filmus.domain.usecase.LogoutUseCase
 import com.suslanium.filmus.domain.usecase.RemoveFavoriteUseCase
 import com.suslanium.filmus.presentation.common.Constants
+import com.suslanium.filmus.presentation.common.ErrorCodes
 import com.suslanium.filmus.presentation.state.DetailsState
+import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.state.ReviewState
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.format.DateTimeFormatter
+import retrofit2.HttpException
 import java.util.UUID
 
 class DetailsViewModel(
@@ -30,7 +34,8 @@ class DetailsViewModel(
     private val removeFavoriteUseCase: RemoveFavoriteUseCase,
     private val addReviewUseCase: AddReviewUseCase,
     private val editReviewUseCase: EditReviewUseCase,
-    private val deleteReviewUseCase: DeleteReviewUseCase
+    private val deleteReviewUseCase: DeleteReviewUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     val detailsState: State<DetailsState>
@@ -88,15 +93,8 @@ class DetailsViewModel(
         _detailsData.value.userReview == null || (_detailsData.value.userReview?.isAnonymous ?: false)
     }
 
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-
-    private val reviewSaveExceptionHandler = CoroutineExceptionHandler { _, _ ->
-        _reviewState.value = ReviewState.Error
-    }
-
-    private val reviewDeleteExceptionHandler = CoroutineExceptionHandler { _, _ ->
-        _reviewState.value = ReviewState.DialogClosed
-    }
+    private val _logoutEventChannel = Channel<LogoutEvent>()
+    val logoutEvents = _logoutEventChannel.receiveAsFlow()
 
     init {
         loadFilmData()
@@ -119,10 +117,11 @@ class DetailsViewModel(
                     }
                     _detailsState.value = DetailsState.Content
                 }
-            } catch (_: Exception) {
-                _detailsState.value = DetailsState.Error
+            } catch (e: Exception) {
+                if (e is HttpException && e.code() == ErrorCodes.UNAUTHORIZED) {
+                    logout()
+                } else _detailsState.value = DetailsState.Error
             }
-
         }
     }
 
@@ -157,35 +156,47 @@ class DetailsViewModel(
 
     fun deleteReview() {
         _reviewState.value = ReviewState.Deleting
-        viewModelScope.launch(Dispatchers.IO + reviewDeleteExceptionHandler) {
-            val userReviewId = _detailsData.value.userReview?.id
-            deleteReviewUseCase(
-                _detailsData.value.id,
-                userReviewId ?: _detailsData.value.reviews[0].id
-            )
-            val movie = getMovieDetailsUseCase(_detailsData.value.id)
-            _detailsData.value = movie
-            _reviewState.value = ReviewState.DialogClosed
-            _reviewData.value = ReviewRequest(
-                reviewText = Constants.EMPTY_STRING,
-                rating = 0,
-                isAnonymous = false
-            )
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val userReviewId = _detailsData.value.userReview?.id
+                deleteReviewUseCase(
+                    _detailsData.value.id,
+                    userReviewId ?: _detailsData.value.reviews[0].id
+                )
+                val movie = getMovieDetailsUseCase(_detailsData.value.id)
+                _detailsData.value = movie
+                _reviewState.value = ReviewState.DialogClosed
+                _reviewData.value = ReviewRequest(
+                    reviewText = Constants.EMPTY_STRING,
+                    rating = 0,
+                    isAnonymous = false
+                )
+            } catch (e: Exception) {
+                if (e is HttpException && e.code() == ErrorCodes.UNAUTHORIZED) {
+                    logout()
+                } else _reviewState.value = ReviewState.DialogClosed
+            }
         }
     }
 
     fun saveReview() {
         _reviewState.value = ReviewState.Saving
-        viewModelScope.launch(Dispatchers.IO + reviewSaveExceptionHandler) {
-            val userReview = _detailsData.value.userReview
-            if (userReview != null) {
-                editReviewUseCase(_detailsData.value.id, userReview.id, _reviewData.value)
-            } else {
-                addReviewUseCase(_detailsData.value.id, _reviewData.value)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val userReview = _detailsData.value.userReview
+                if (userReview != null) {
+                    editReviewUseCase(_detailsData.value.id, userReview.id, _reviewData.value)
+                } else {
+                    addReviewUseCase(_detailsData.value.id, _reviewData.value)
+                }
+                val movie = getMovieDetailsUseCase(_detailsData.value.id)
+                _detailsData.value = movie
+                _reviewState.value = ReviewState.DialogClosed
+            } catch (e: Exception) {
+                if (e is HttpException && e.code() == ErrorCodes.UNAUTHORIZED) {
+                    logout()
+                } else _reviewState.value = ReviewState.Error
             }
-            val movie = getMovieDetailsUseCase(_detailsData.value.id)
-            _detailsData.value = movie
-            _reviewState.value = ReviewState.DialogClosed
         }
     }
 
@@ -199,8 +210,20 @@ class DetailsViewModel(
                 } else {
                     addFavoriteUseCase(_detailsData.value.id)
                 }
-            } catch (_: Exception) {
-                _detailsData.value = _detailsData.value.copy(isFavorite = prevFavoriteState)
+            } catch (e: Exception) {
+                if (e is HttpException && e.code() == ErrorCodes.UNAUTHORIZED) {
+                    logout()
+                } else _detailsData.value = _detailsData.value.copy(isFavorite = prevFavoriteState)
+            }
+        }
+    }
+
+    private suspend fun logout() {
+        try {
+            logoutUseCase()
+        } finally {
+            withContext(Dispatchers.Main) {
+                _logoutEventChannel.send(LogoutEvent.Logout)
             }
         }
     }

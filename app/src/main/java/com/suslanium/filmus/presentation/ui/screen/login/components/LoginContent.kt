@@ -46,9 +46,9 @@ fun LoginContent(
             resetLoginError()
         },
         isError = loginData.loginValidationErrorType != null || loginErrorMessageId != null,
-        errorMessage = if (loginData.loginValidationErrorType != null) ErrorTypeToStringResource.map[loginData.loginValidationErrorType]?.let { it1 ->
+        errorMessage = if (loginData.loginValidationErrorType != null) ErrorTypeToStringResource.map[loginData.loginValidationErrorType]?.let {
             stringResource(
-                id = it1
+                id = it
             )
         } else null,
         enabled = loginState != AuthState.Loading)
@@ -70,9 +70,9 @@ fun LoginContent(
         },
         visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         isError = loginData.passwordValidationErrorType != null || loginErrorMessageId != null,
-        errorMessage = if (loginData.passwordValidationErrorType != null) ErrorTypeToStringResource.map[loginData.passwordValidationErrorType]?.let { it1 ->
+        errorMessage = if (loginData.passwordValidationErrorType != null) ErrorTypeToStringResource.map[loginData.passwordValidationErrorType]?.let {
             stringResource(
-                id = it1
+                id = it
             )
         } else null,
         enabled = loginState != AuthState.Loading)

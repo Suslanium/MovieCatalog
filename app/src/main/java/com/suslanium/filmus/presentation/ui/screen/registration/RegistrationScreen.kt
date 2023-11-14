@@ -14,7 +14,6 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +35,7 @@ import com.suslanium.filmus.presentation.state.AuthEvent
 import com.suslanium.filmus.presentation.state.AuthState
 import com.suslanium.filmus.presentation.state.RegistrationPage
 import com.suslanium.filmus.presentation.ui.common.AuthTopBar
+import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.registration.components.RegistrationCredentialsContent
 import com.suslanium.filmus.presentation.ui.screen.registration.components.RegistrationPersonalInfoContent
@@ -65,12 +65,16 @@ fun RegistrationScreen(
     var isRepeatPasswordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(true) {
-        registrationViewModel.registrationEvents.collect { event ->
-            when (event) {
-                AuthEvent.Success -> navController.navigate(FilmusDestinations.MAIN)
-                is AuthEvent.Error -> registrationErrorMessageId = event.messageId
+    ObserveAsEvents(flow = registrationViewModel.registrationEvents) { event ->
+        when (event) {
+            AuthEvent.Success -> {
+                navController.navigate(FilmusDestinations.MAIN) {
+                    popUpTo(FilmusDestinations.REGISTRATION) {
+                        inclusive = true
+                    }
+                }
             }
+            is AuthEvent.Error -> registrationErrorMessageId = event.messageId
         }
     }
 
@@ -91,7 +95,7 @@ fun RegistrationScreen(
 
     BackHandler {
         if (registrationState != AuthState.Loading) {
-            if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+            if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.popBackStack()
         }
     }
 
@@ -102,7 +106,8 @@ fun RegistrationScreen(
     }, containerColor = Background, topBar = {
         AuthTopBar(onNavigateBackClick = {
             if (registrationState != AuthState.Loading) {
-                if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart() else navController.navigateUp()
+                if (registrationPage == RegistrationPage.Credentials) registrationViewModel.openPersonalInfoPart()
+                else navController.popBackStack()
             }
         })
     }) { paddingValues ->
@@ -133,7 +138,7 @@ fun RegistrationScreen(
                             setLogin = registrationViewModel::setLogin,
                             setEmail = registrationViewModel::setEmail,
                             setBirthDate = registrationViewModel::setBirthDate,
-                            dateTimeFormatter = registrationViewModel.dateFormat,
+                            dateTimeFormatter = Constants.DATE_FORMAT,
                             openCredentialsPart = registrationViewModel::openCredentialsPart,
                             continueButtonIsEnabled = registrationViewModel.personalInfoIsCorrectlyFilled,
                             registrationFailed = registrationErrorMessageId != null,

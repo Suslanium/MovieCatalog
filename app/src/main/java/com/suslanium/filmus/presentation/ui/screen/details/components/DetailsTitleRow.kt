@@ -8,30 +8,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.common.Constants.RATING_FORMAT
 import com.suslanium.filmus.presentation.ui.common.colorByRating
 import com.suslanium.filmus.presentation.ui.common.textColorByRating
 import com.suslanium.filmus.presentation.ui.theme.Background
-import com.suslanium.filmus.presentation.ui.theme.Gray750
+import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.MovieCardCornerRadiusMedium
 import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
@@ -48,7 +40,12 @@ fun DetailsTitleRow(
     isFavorite: Boolean,
     lazyListStateProvider: () -> LazyListState
 ) {
-    Spacer(modifier = Modifier.height(PaddingMedium).fillMaxWidth().background(Background))
+    Spacer(
+        modifier = Modifier
+            .height(PaddingMedium)
+            .fillMaxWidth()
+            .background(Background)
+    )
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,47 +70,33 @@ fun DetailsTitleRow(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = String.format("%.1f", rating),
+                text = String.format(RATING_FORMAT, rating),
                 textAlign = TextAlign.Center,
                 style = S15_W500,
                 color = textColorByRating(rating)
             )
         }
         Text(
-            modifier = Modifier.weight(1f).graphicsLayer {
-                if (lazyListStateProvider().firstVisibleItemIndex < 1) {
-                    alpha = 1f
-                }
-                else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
-                    alpha = 1f - lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
-                }
-            },
+            modifier = Modifier
+                .weight(DefaultWeight)
+                .graphicsLayer {
+                    if (lazyListStateProvider().firstVisibleItemIndex < 1) {
+                        alpha = 1f
+                    } else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
+                        alpha = 1f - lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
+                    }
+                },
             text = movieName,
             textAlign = TextAlign.Center,
             style = S24_W700,
             color = White
         )
-        IconButton(
-            onClick = onFavoriteClick, modifier = Modifier
-                .size(40.dp)
-                .clip(
-                    CircleShape
-                ).graphicsLayer {
-                    if (lazyListStateProvider().firstVisibleItemIndex < 1) {
-                        alpha = 1f
-                    }
-                    else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
-                        alpha = 1f - lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
-                    }
-                }, colors = IconButtonDefaults.iconButtonColors(
-                containerColor = Gray750, disabledContainerColor = Gray750
-            )
-        ) {
-            Icon(
-                imageVector = if (!isFavorite) ImageVector.vectorResource(R.drawable.fav_button_icon) else ImageVector.vectorResource(R.drawable.fav_button_icon_filled),
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
-        }
+        FavoriteButton(modifier = Modifier.graphicsLayer {
+            if (lazyListStateProvider().firstVisibleItemIndex < 1) {
+                alpha = 1f
+            } else if (lazyListStateProvider().firstVisibleItemIndex == 1) {
+                alpha = 1f - lazyListStateProvider().firstVisibleItemScrollOffset * 0.008f
+            }
+        }, changeFavoritesState = onFavoriteClick, isFavorite = isFavorite)
     }
 }

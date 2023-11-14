@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,10 +39,12 @@ import com.suslanium.filmus.presentation.ui.common.SecondaryButton
 import com.suslanium.filmus.presentation.ui.common.SegmentedSelectionButton
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
 import com.suslanium.filmus.presentation.ui.theme.Accent
+import com.suslanium.filmus.presentation.ui.theme.ButtonPadding
 import com.suslanium.filmus.presentation.ui.theme.Gray750
 import com.suslanium.filmus.presentation.ui.theme.GrayAvatarBackground
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
+import com.suslanium.filmus.presentation.ui.theme.S15_W600
 import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 import com.suslanium.filmus.presentation.ui.theme.White
@@ -57,6 +60,7 @@ fun ProfileContent(
     setAvatarUri: (String) -> Unit,
     applyChanges: () -> Unit,
     revertChanges: () -> Unit,
+    logout: () -> Unit,
     isApplyingChanges: Boolean,
     canApplyChanges: Boolean,
     dateTimeFormatter: DateTimeFormatter,
@@ -110,6 +114,9 @@ fun ProfileContent(
             color = White,
             textAlign = TextAlign.Center
         )
+        TextButton(modifier = Modifier.fillMaxWidth(), contentPadding = ButtonPadding, onClick = logout) {
+            Text(text = stringResource(id = R.string.logout), color = Accent, style = S15_W600, textAlign = TextAlign.Center)
+        }
         Spacer(modifier = Modifier.height(PaddingLarge))
         FilmusTextField(
             title = stringResource(id = R.string.email),
@@ -169,13 +176,14 @@ fun ProfileContent(
             onClick = applyChanges,
             text = stringResource(id = R.string.save),
             hasProgressIndicator = isApplyingChanges,
-            enabled = canApplyChanges
+            enabled = canApplyChanges && !isApplyingChanges
         )
         Spacer(modifier = Modifier.height(VerticalSpacing))
         SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = revertChanges,
-            text = stringResource(id = R.string.cancel)
+            text = stringResource(id = R.string.cancel),
+            enabled = !isApplyingChanges
         )
         Spacer(modifier = Modifier.height(PaddingMedium))
     }
