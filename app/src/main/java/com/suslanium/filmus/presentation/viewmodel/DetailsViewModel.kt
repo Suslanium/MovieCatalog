@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class DetailsViewModel(
@@ -96,8 +95,6 @@ class DetailsViewModel(
 
     private val _logoutEventChannel = Channel<LogoutEvent>()
     val logoutEvents = _logoutEventChannel.receiveAsFlow()
-
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     init {
         loadFilmData()

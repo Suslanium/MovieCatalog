@@ -33,12 +33,12 @@ private fun provideGson(): Gson = GsonBuilder()
     .create()
 
 private fun provideAuthOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient =
-    OkHttpClient.Builder().addInterceptor(authInterceptor).connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS).writeTimeout(20, TimeUnit.SECONDS).build()
+    OkHttpClient.Builder().addInterceptor(authInterceptor).connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
 
 private fun provideRegularOkHttpClient(): OkHttpClient =
-    OkHttpClient.Builder().connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS).writeTimeout(20, TimeUnit.SECONDS).build()
+    OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
 
 private fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
     Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)

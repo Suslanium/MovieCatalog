@@ -1,10 +1,7 @@
 package com.suslanium.filmus.presentation.ui.screen.profile
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,11 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.common.Constants
 import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.state.ProfileState
 import com.suslanium.filmus.presentation.ui.common.ErrorContent
 import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
 import com.suslanium.filmus.presentation.ui.common.availableBirthDates
+import com.suslanium.filmus.presentation.ui.common.shimmerOffsetAnimation
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.profile.components.ProfileContent
 import com.suslanium.filmus.presentation.ui.screen.profile.components.ShimmerProfileContent
@@ -41,14 +40,8 @@ fun ProfileScreen(navController: NavController) {
     val profileState by remember { profileViewModel.profileState }
     val isApplyingChanges by remember { profileViewModel.isApplyingChanges }
 
-    val transition = rememberInfiniteTransition(label = "")
-    val startOffsetX by transition.animateFloat(
-        initialValue = -2.8f,
-        targetValue = 2.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000)
-        ), label = ""
-    )
+    val transition = rememberInfiniteTransition(label = Constants.EMPTY_STRING)
+    val startOffsetX by shimmerOffsetAnimation(transition)
 
     ObserveAsEvents(flow = profileViewModel.logoutEvents) {
         when (it) {
@@ -80,7 +73,7 @@ fun ProfileScreen(navController: NavController) {
         }
     }
 
-    Crossfade(targetState = profileState, label = "") { state ->
+    Crossfade(targetState = profileState, label = Constants.EMPTY_STRING) { state ->
         when (state) {
             ProfileState.Content -> ProfileContent(
                 profile = profile,
@@ -93,7 +86,7 @@ fun ProfileScreen(navController: NavController) {
                 revertChanges = profileViewModel::cancelChanges,
                 isApplyingChanges = isApplyingChanges,
                 canApplyChanges = profileViewModel.canApplyChanges,
-                dateTimeFormatter = profileViewModel.dateFormat,
+                dateTimeFormatter = Constants.DATE_FORMAT,
                 startOffsetXProvider = { startOffsetX },
                 setShouldShowDateDialog = { shouldShowDatePickerDialog = it },
                 logout = profileViewModel::logout

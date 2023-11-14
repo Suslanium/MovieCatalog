@@ -17,9 +17,7 @@ import com.suslanium.filmus.presentation.ui.theme.DefaultWeight
 import com.suslanium.filmus.presentation.ui.theme.PaddingLarge
 
 fun LazyListScope.favoritesList(
-    moviesList: List<MovieSummary>,
-    shimmerOffsetProvider: () -> Float,
-    navController: NavController
+    moviesList: List<MovieSummary>, shimmerOffsetProvider: () -> Float, navController: NavController
 ) {
     items(count = (moviesList.size / 3) * 2 + if (moviesList.size % 3 == 0) 0 else 1) { rowIndex ->
         Spacer(modifier = Modifier.height(PaddingLarge))

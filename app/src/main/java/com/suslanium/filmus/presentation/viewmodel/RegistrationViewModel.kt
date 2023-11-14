@@ -26,7 +26,6 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.time.Instant
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class RegistrationViewModel(
     private val validateNameUseCase: ValidateNameUseCase,
@@ -43,8 +42,6 @@ class RegistrationViewModel(
     val registrationState: State<AuthState>
         get() = _registrationState
     private val _registrationState = mutableStateOf<AuthState>(AuthState.Content)
-
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     val registrationData: State<RegistrationData>
         get() = _registrationData

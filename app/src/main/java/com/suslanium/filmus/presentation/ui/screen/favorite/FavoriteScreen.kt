@@ -1,10 +1,7 @@
 package com.suslanium.filmus.presentation.ui.screen.favorite
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,10 +21,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
+import com.suslanium.filmus.presentation.common.Constants
+import com.suslanium.filmus.presentation.common.Constants.IS_FAVORITE
+import com.suslanium.filmus.presentation.common.Constants.MODIFIED_FILM_ID
+import com.suslanium.filmus.presentation.common.Constants.NEW_USER_RATING
 import com.suslanium.filmus.presentation.state.FavoritesListState
 import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.ui.common.ErrorContent
 import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
+import com.suslanium.filmus.presentation.ui.common.shimmerOffsetAnimation
 import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.FavoritesShimmerList
 import com.suslanium.filmus.presentation.ui.screen.favorite.components.favoritesList
@@ -45,30 +47,24 @@ fun FavoriteScreen(
 ) {
     val favoriteViewModel: FavoriteViewModel = koinViewModel()
     val favoritesListState by remember { favoriteViewModel.favoritesListState }
-    val transition = rememberInfiniteTransition(label = "")
-    val startOffsetX by transition.animateFloat(
-        initialValue = -2.8f,
-        targetValue = 2.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000)
-        ), label = ""
-    )
+    val transition = rememberInfiniteTransition(label = Constants.EMPTY_STRING)
+    val startOffsetX by shimmerOffsetAnimation(transition)
 
     val modifiedMovieState =
         navController.currentBackStackEntry?.savedStateHandle?.getStateFlow<String?>(
-            "modifiedFilmId", null
+            MODIFIED_FILM_ID, null
         )?.collectAsStateWithLifecycle()
     LaunchedEffect(modifiedMovieState?.value) {
         val movieId = modifiedMovieState?.value
         if (movieId != null) {
             val isFavorite =
-                navController.currentBackStackEntry?.savedStateHandle?.get<Boolean?>("isFavorite")
+                navController.currentBackStackEntry?.savedStateHandle?.get<Boolean?>(IS_FAVORITE)
             if (isFavorite != true) favoriteViewModel.removeMovie(UUID.fromString(movieId))
             else favoriteViewModel.modifyMovie(
                 UUID.fromString(movieId),
-                navController.currentBackStackEntry?.savedStateHandle?.get("userRating")
+                navController.currentBackStackEntry?.savedStateHandle?.get(NEW_USER_RATING)
             )
-            navController.currentBackStackEntry?.savedStateHandle?.set("modifiedFilmId", null)
+            navController.currentBackStackEntry?.savedStateHandle?.set(MODIFIED_FILM_ID, null)
         }
     }
 
@@ -78,7 +74,7 @@ fun FavoriteScreen(
         }
     }
 
-    Crossfade(targetState = favoritesListState, label = "") { state ->
+    Crossfade(targetState = favoritesListState, label = Constants.EMPTY_STRING) { state ->
         when (state) {
             is FavoritesListState.Content -> FavoritesList(state.movies,
                 { startOffsetX }, navController

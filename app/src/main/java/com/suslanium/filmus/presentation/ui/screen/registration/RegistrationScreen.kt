@@ -132,7 +132,7 @@ fun RegistrationScreen(
                             setLogin = registrationViewModel::setLogin,
                             setEmail = registrationViewModel::setEmail,
                             setBirthDate = registrationViewModel::setBirthDate,
-                            dateTimeFormatter = registrationViewModel.dateFormat,
+                            dateTimeFormatter = Constants.DATE_FORMAT,
                             openCredentialsPart = registrationViewModel::openCredentialsPart,
                             continueButtonIsEnabled = registrationViewModel.personalInfoIsCorrectlyFilled,
                             registrationFailed = registrationErrorMessageId != null,

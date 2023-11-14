@@ -10,6 +10,7 @@ import com.suslanium.filmus.domain.usecase.GetUserProfileUseCase
 import com.suslanium.filmus.domain.usecase.LogoutUseCase
 import com.suslanium.filmus.domain.usecase.ValidateEmailUseCase
 import com.suslanium.filmus.domain.usecase.ValidateNameUseCase
+import com.suslanium.filmus.presentation.common.Constants
 import com.suslanium.filmus.presentation.common.ErrorCodes
 import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.state.ProfileData
@@ -28,7 +29,6 @@ import retrofit2.HttpException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @OptIn(FlowPreview::class)
 class ProfileViewModel(
@@ -38,8 +38,6 @@ class ProfileViewModel(
     private val validateNameUseCase: ValidateNameUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
-
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     val profileState: State<ProfileState>
         get() = _profileState
@@ -51,7 +49,7 @@ class ProfileViewModel(
 
     val avatarLink: StateFlow<String>
         get() = _avatarLinkFlow
-    private val _avatarLinkFlow = MutableStateFlow("")
+    private val _avatarLinkFlow = MutableStateFlow(Constants.EMPTY_STRING)
 
     val isApplyingChanges: State<Boolean>
         get() = _isApplyingChanges
