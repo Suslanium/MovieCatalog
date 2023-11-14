@@ -35,7 +35,7 @@ import com.suslanium.filmus.presentation.ui.theme.White
 
 @Composable
 fun FavoriteMovieCard(
-    modifier: Modifier = Modifier, movieSummary: MovieSummary, shimmerOffset: Float
+    modifier: Modifier = Modifier, movieSummary: MovieSummary, shimmerOffsetProvider: () -> Float
 ) {
     Column(modifier = modifier) {
         Box(
@@ -55,7 +55,7 @@ fun FavoriteMovieCard(
                         modifier = Modifier
                             .fillMaxSize()
                             .shimmerEffect(
-                                startOffsetX = shimmerOffset,
+                                startOffsetXProvider = shimmerOffsetProvider,
                                 backgroundColor = Gray750,
                                 shimmerColor = Accent
                             )

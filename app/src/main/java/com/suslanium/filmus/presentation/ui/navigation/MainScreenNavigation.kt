@@ -18,13 +18,13 @@ object MainDestinations {
 fun MainNavigation(navHostController: NavHostController, rootNavHostController: NavHostController) {
     NavHost(navController = navHostController, startDestination = MainDestinations.MAIN) {
         composable(route = MainDestinations.MAIN) {
-            MainScreen()
+            MainScreen(rootNavHostController)
         }
         composable(route = MainDestinations.FAVORITES) {
-            FavoriteScreen()
+            FavoriteScreen(rootNavHostController)
         }
         composable(route = MainDestinations.PROFILE) {
-            ProfileScreen()
+            ProfileScreen(rootNavHostController)
         }
     }
 }

@@ -7,32 +7,37 @@ import androidx.lifecycle.viewModelScope
 import com.suslanium.filmus.domain.entity.user.UserProfile
 import com.suslanium.filmus.domain.usecase.ChangeUserProfileUseCase
 import com.suslanium.filmus.domain.usecase.GetUserProfileUseCase
+import com.suslanium.filmus.domain.usecase.LogoutUseCase
 import com.suslanium.filmus.domain.usecase.ValidateEmailUseCase
 import com.suslanium.filmus.domain.usecase.ValidateNameUseCase
+import com.suslanium.filmus.presentation.common.Constants
+import com.suslanium.filmus.presentation.common.ErrorCodes
+import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.state.ProfileData
 import com.suslanium.filmus.presentation.state.ProfileState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @OptIn(FlowPreview::class)
 class ProfileViewModel(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val changeUserProfileUseCase: ChangeUserProfileUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
-    private val validateNameUseCase: ValidateNameUseCase
+    private val validateNameUseCase: ValidateNameUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
-
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     val profileState: State<ProfileState>
         get() = _profileState
@@ -44,7 +49,7 @@ class ProfileViewModel(
 
     val avatarLink: StateFlow<String>
         get() = _avatarLinkFlow
-    private val _avatarLinkFlow = MutableStateFlow("")
+    private val _avatarLinkFlow = MutableStateFlow(Constants.EMPTY_STRING)
 
     val isApplyingChanges: State<Boolean>
         get() = _isApplyingChanges
@@ -52,22 +57,23 @@ class ProfileViewModel(
 
     private lateinit var unmodifiedProfile: UserProfile
 
-    private val profileEditingExceptionHandler = CoroutineExceptionHandler { _, _ ->
-        _profileState.value = ProfileState.Error
-        _isApplyingChanges.value = false
+    private val profileEditingExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        if (throwable is HttpException && throwable.code() == ErrorCodes.UNAUTHORIZED) {
+            logout()
+        } else {
+            _profileState.value = ProfileState.Error
+            _isApplyingChanges.value = false
+        }
     }
 
+    private val _logoutEventChannel = Channel<LogoutEvent>()
+    val logoutEvents = _logoutEventChannel.receiveAsFlow()
+
     val canApplyChanges: Boolean
-        get() = !profileIsNotModified
-                && _profileData.value.emailValidationErrorType == null
-                && _profileData.value.nameValidationErrorType == null
+        get() = !profileIsNotModified && _profileData.value.emailValidationErrorType == null && _profileData.value.nameValidationErrorType == null
 
     private val profileIsNotModified: Boolean
-        get() = _profileData.value.email == unmodifiedProfile.email
-                && _avatarLinkFlow.value == unmodifiedProfile.avatarLink.orEmpty()
-                && _profileData.value.name == unmodifiedProfile.name
-                && _profileData.value.gender == unmodifiedProfile.gender
-                && _profileData.value.birthDate == unmodifiedProfile.birthDate
+        get() = _profileData.value.email == unmodifiedProfile.email && _avatarLinkFlow.value == unmodifiedProfile.avatarLink.orEmpty() && _profileData.value.name == unmodifiedProfile.name && _profileData.value.gender == unmodifiedProfile.gender && _profileData.value.birthDate == unmodifiedProfile.birthDate
 
     init {
         loadData()
@@ -98,8 +104,10 @@ class ProfileViewModel(
                     _avatarLinkFlow.value = profile.avatarLink.orEmpty()
                     _profileState.value = ProfileState.Content
                 }
-            } catch (_: Exception) {
-                withContext(Dispatchers.Main) {
+            } catch (e: Exception) {
+                if (e is HttpException && e.code() == ErrorCodes.UNAUTHORIZED) {
+                    logout()
+                } else withContext(Dispatchers.Main) {
                     _profileState.value = ProfileState.Error
                 }
             }
@@ -167,6 +175,19 @@ class ProfileViewModel(
             )
             unmodifiedProfile = user
             _isApplyingChanges.value = false
+        }
+    }
+
+    fun logout() {
+        _profileState.value = ProfileState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                logoutUseCase()
+            } finally {
+                withContext(Dispatchers.Main) {
+                    _logoutEventChannel.send(LogoutEvent.Logout)
+                }
+            }
         }
     }
 

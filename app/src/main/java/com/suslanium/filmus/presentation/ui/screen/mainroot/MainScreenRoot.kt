@@ -20,7 +20,7 @@ fun MainScreenRoot(
     val navController = rememberNavController()
     BackHandler {
         if (navController.previousBackStackEntry == null) onAppExit()
-        else navController.navigateUp()
+        else navController.popBackStack()
     }
     Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
         BottomNavigationBar(

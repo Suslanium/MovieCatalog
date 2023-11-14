@@ -1,11 +1,11 @@
 package com.suslanium.filmus.domain.usecase
 
-import com.suslanium.filmus.domain.repository.MovieRepository
+import com.suslanium.filmus.domain.repository.FavoritesRepository
 
 class GetFavoriteMoviesListUseCase(
-    private val movieRepository: MovieRepository
+    private val favoritesRepository: FavoritesRepository
 ) {
 
-    suspend operator fun invoke() = movieRepository.getFavoriteMoviesList()
+    suspend operator fun invoke() = favoritesRepository.getFavoriteMoviesList()
 
 }

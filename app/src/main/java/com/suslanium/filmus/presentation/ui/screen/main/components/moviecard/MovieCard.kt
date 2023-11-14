@@ -14,10 +14,10 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingNormal
 
 @Composable
 fun MovieCard(
-    movieSummary: MovieSummary, modifier: Modifier = Modifier, shimmerOffset: Float
+    movieSummary: MovieSummary, modifier: Modifier = Modifier, shimmerOffsetProvider: () -> Float
 ) {
     Row(modifier = modifier.fillMaxWidth()) {
-        MovieCardImage(movieSummary, shimmerOffset)
+        MovieCardImage(movieSummary, shimmerOffsetProvider)
         Spacer(modifier = Modifier.width(PaddingNormal))
         Column {
             MovieCardNameAndRating(movieSummary)

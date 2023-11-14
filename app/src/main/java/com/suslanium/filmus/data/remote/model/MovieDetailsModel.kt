@@ -1,7 +1,7 @@
 package com.suslanium.filmus.data.remote.model
 
 import com.suslanium.filmus.domain.entity.movie.Genre
-import com.suslanium.filmus.domain.entity.movie.Review
+import com.suslanium.filmus.domain.entity.review.Review
 import java.util.UUID
 
 data class MovieDetailsModel(

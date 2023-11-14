@@ -34,7 +34,7 @@ import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.VerticalSpacing
 
 @Composable
-fun ShimmerProfileContent(shimmerOffset: Float) {
+fun ShimmerProfileContent(shimmerOffsetProvider: () -> Float) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,7 +48,7 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
                 .size(88.dp)
                 .clip(CircleShape)
                 .shimmerEffect(
-                    startOffsetX = shimmerOffset,
+                    startOffsetXProvider = shimmerOffsetProvider,
                     backgroundColor = Gray750,
                     shimmerColor = Accent
                 )
@@ -62,21 +62,35 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
                     RoundedCornerShape(MovieCardCornerRadiusMedium)
                 )
                 .shimmerEffect(
-                    startOffsetX = shimmerOffset,
+                    startOffsetXProvider = shimmerOffsetProvider,
                     backgroundColor = Gray750,
                     shimmerColor = Accent
                 )
         )
         Spacer(modifier = Modifier.height(PaddingLarge + PaddingExtraSmall))
-        ShimmerTextField(shimmerOffset = shimmerOffset)
+        Box(
+            modifier = Modifier
+                .height(with(LocalDensity.current) { S15_W600.fontSize.toDp() })
+                .width(100.dp)
+                .clip(
+                    RoundedCornerShape(MovieCardCornerRadiusMedium)
+                )
+                .shimmerEffect(
+                    startOffsetXProvider = shimmerOffsetProvider,
+                    backgroundColor = Gray750,
+                    shimmerColor = Accent
+                )
+        )
+        Spacer(modifier = Modifier.height(PaddingLarge + PaddingExtraSmall + 12.dp))
+        ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)
         Spacer(modifier = Modifier.height(VerticalSpacing))
-        ShimmerTextField(shimmerOffset = shimmerOffset)
+        ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)
         Spacer(modifier = Modifier.height(VerticalSpacing))
-        ShimmerTextField(shimmerOffset = shimmerOffset)
+        ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)
         Spacer(modifier = Modifier.height(VerticalSpacing))
-        ShimmerTextField(shimmerOffset = shimmerOffset)
+        ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)
         Spacer(modifier = Modifier.height(VerticalSpacing))
-        ShimmerTextField(shimmerOffset = shimmerOffset)
+        ShimmerTextField(shimmerOffsetProvider = shimmerOffsetProvider)
         Spacer(modifier = Modifier.height(PaddingLarge))
         Box(modifier = Modifier
             .height(with(LocalDensity.current) { S15_W600.fontSize.toDp() } + PaddingLarge + PaddingSmall)
@@ -85,7 +99,7 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
                 RoundedCornerShape(ButtonCornerRadius)
             )
             .shimmerEffect(
-                startOffsetX = shimmerOffset,
+                startOffsetXProvider = shimmerOffsetProvider,
                 backgroundColor = Gray750,
                 shimmerColor = Accent
             ))
@@ -97,7 +111,7 @@ fun ShimmerProfileContent(shimmerOffset: Float) {
                 RoundedCornerShape(ButtonCornerRadius)
             )
             .shimmerEffect(
-                startOffsetX = shimmerOffset,
+                startOffsetXProvider = shimmerOffsetProvider,
                 backgroundColor = Gray750,
                 shimmerColor = Accent
             ))

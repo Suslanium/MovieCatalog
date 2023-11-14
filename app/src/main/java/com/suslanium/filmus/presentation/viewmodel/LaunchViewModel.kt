@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LaunchViewModel(
     private val checkTokenExistenceUseCase: CheckTokenExistenceUseCase
@@ -19,10 +20,12 @@ class LaunchViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val hasToken = checkTokenExistenceUseCase()
-            if (hasToken) {
-                _launchEventChannel.send(LaunchEvent.Authorized)
-            } else {
-                _launchEventChannel.send(LaunchEvent.Unauthorized)
+            withContext(Dispatchers.Main) {
+                if (hasToken) {
+                    _launchEventChannel.send(LaunchEvent.Authorized)
+                } else {
+                    _launchEventChannel.send(LaunchEvent.Unauthorized)
+                }
             }
         }
     }

@@ -5,8 +5,11 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.suslanium.filmus.presentation.ui.screen.details.DetailsScreen
 import com.suslanium.filmus.presentation.ui.screen.launch.LaunchScreen
 import com.suslanium.filmus.presentation.ui.screen.login.LoginScreen
 import com.suslanium.filmus.presentation.ui.screen.mainroot.MainScreenRoot
@@ -14,6 +17,7 @@ import com.suslanium.filmus.presentation.ui.screen.onboarding.OnboardingScreen
 import com.suslanium.filmus.presentation.ui.screen.registration.RegistrationScreen
 import com.suslanium.filmus.presentation.ui.theme.Background
 import com.suslanium.filmus.presentation.ui.theme.NavBarBackground
+import java.util.UUID
 
 object FilmusDestinations {
     const val LAUNCH = "launch"
@@ -21,6 +25,8 @@ object FilmusDestinations {
     const val REGISTRATION = "registration"
     const val LOGIN = "login"
     const val MAIN = "main"
+    const val DETAILS = "details/{movieId}"
+    const val DETAILS_NO_ID = "details"
 }
 
 @Composable
@@ -72,6 +78,14 @@ fun FilmusNavigation(
                 )
             )
             MainScreenRoot(onAppExit = onAppExit, rootNavController = navHostController)
+        }
+        composable(route = FilmusDestinations.DETAILS, arguments = listOf(navArgument("movieId") { type = NavType.StringType })) {
+            enableEdgeToEdge(
+                SystemBarStyle.dark(Background.toArgb()), SystemBarStyle.dark(
+                    Background.toArgb()
+                )
+            )
+            DetailsScreen(UUID.fromString(it.arguments?.getString("movieId")), navHostController)
         }
     }
 }

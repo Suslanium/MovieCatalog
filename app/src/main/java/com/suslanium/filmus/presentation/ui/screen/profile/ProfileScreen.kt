@@ -1,10 +1,7 @@
 package com.suslanium.filmus.presentation.ui.screen.profile
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,10 +16,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.suslanium.filmus.R
+import com.suslanium.filmus.presentation.common.Constants
+import com.suslanium.filmus.presentation.state.LogoutEvent
 import com.suslanium.filmus.presentation.state.ProfileState
 import com.suslanium.filmus.presentation.ui.common.ErrorContent
+import com.suslanium.filmus.presentation.ui.common.ObserveAsEvents
 import com.suslanium.filmus.presentation.ui.common.availableBirthDates
+import com.suslanium.filmus.presentation.ui.common.shimmerOffsetAnimation
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.profile.components.ProfileContent
 import com.suslanium.filmus.presentation.ui.screen.profile.components.ShimmerProfileContent
 import com.suslanium.filmus.presentation.viewmodel.ProfileViewModel
@@ -30,21 +33,25 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavController) {
     val profileViewModel: ProfileViewModel = koinViewModel()
     val profile by remember { profileViewModel.profileData }
     val profileAvatarLink by profileViewModel.avatarLink.collectAsState()
     val profileState by remember { profileViewModel.profileState }
     val isApplyingChanges by remember { profileViewModel.isApplyingChanges }
 
-    val transition = rememberInfiniteTransition(label = "")
-    val startOffsetX by transition.animateFloat(
-        initialValue = -2.8f,
-        targetValue = 2.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000)
-        ), label = ""
-    )
+    val transition = rememberInfiniteTransition(label = Constants.EMPTY_STRING)
+    val startOffsetX by shimmerOffsetAnimation(transition)
+
+    ObserveAsEvents(flow = profileViewModel.logoutEvents) {
+        when (it) {
+            LogoutEvent.Logout -> navController.navigate(FilmusDestinations.ONBOARDING) {
+                popUpTo(FilmusDestinations.MAIN) {
+                    inclusive = true
+                }
+            }
+        }
+    }
 
     var shouldShowDatePickerDialog by remember { mutableStateOf(false) }
     if (shouldShowDatePickerDialog) {
@@ -70,7 +77,7 @@ fun ProfileScreen() {
         }
     }
 
-    Crossfade(targetState = profileState, label = "") { state ->
+    Crossfade(targetState = profileState, label = Constants.EMPTY_STRING) { state ->
         when (state) {
             ProfileState.Content -> ProfileContent(
                 profile = profile,
@@ -83,13 +90,14 @@ fun ProfileScreen() {
                 revertChanges = profileViewModel::cancelChanges,
                 isApplyingChanges = isApplyingChanges,
                 canApplyChanges = profileViewModel.canApplyChanges,
-                dateTimeFormatter = profileViewModel.dateFormat,
-                startOffsetX = startOffsetX,
-                setShouldShowDateDialog = { shouldShowDatePickerDialog = it }
+                dateTimeFormatter = Constants.DATE_FORMAT,
+                startOffsetXProvider = { startOffsetX },
+                setShouldShowDateDialog = { shouldShowDatePickerDialog = it },
+                logout = profileViewModel::logout
             )
 
             ProfileState.Error -> ErrorContent(onRetry = profileViewModel::loadData)
-            ProfileState.Loading -> ShimmerProfileContent(shimmerOffset = startOffsetX)
+            ProfileState.Loading -> ShimmerProfileContent(shimmerOffsetProvider = { startOffsetX })
         }
     }
 }

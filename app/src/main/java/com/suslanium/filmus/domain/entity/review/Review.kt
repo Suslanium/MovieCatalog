@@ -1,4 +1,4 @@
-package com.suslanium.filmus.domain.entity.movie
+package com.suslanium.filmus.domain.entity.review
 
 import com.suslanium.filmus.domain.entity.user.UserSummary
 import java.time.LocalDateTime
@@ -9,6 +9,6 @@ data class Review(
     val rating: Int,
     val reviewText: String?,
     val isAnonymous: Boolean,
-    val creationDateTime: LocalDateTime,
+    val createDateTime: LocalDateTime,
     val author: UserSummary?
 )

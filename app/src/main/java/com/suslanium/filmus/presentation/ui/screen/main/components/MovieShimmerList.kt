@@ -26,7 +26,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 
 @Composable
 fun MovieShimmerList(
-    shimmerOffset: Float
+    shimmerOffsetProvider: () -> Float
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -39,7 +39,7 @@ fun MovieShimmerList(
                     .fillMaxWidth()
                     .height(MoviePosterCarouselHeight)
                     .shimmerEffect(
-                        startOffsetX = shimmerOffset,
+                        startOffsetXProvider = shimmerOffsetProvider,
                         backgroundColor = Gray750,
                         shimmerColor = Accent
                     )
@@ -59,7 +59,7 @@ fun MovieShimmerList(
                             RoundedCornerShape(MovieCardCornerRadiusMedium)
                         )
                         .shimmerEffect(
-                            startOffsetX = shimmerOffset,
+                            startOffsetXProvider = shimmerOffsetProvider,
                             backgroundColor = Gray750,
                             shimmerColor = Accent
                         )
@@ -70,7 +70,7 @@ fun MovieShimmerList(
             ShimmerMovieCard(
                 modifier = Modifier.padding(
                     start = PaddingMedium, end = PaddingMedium, bottom = PaddingMedium
-                ), shimmerOffset = shimmerOffset
+                ), shimmerOffsetProvider = shimmerOffsetProvider
             )
         }
     }

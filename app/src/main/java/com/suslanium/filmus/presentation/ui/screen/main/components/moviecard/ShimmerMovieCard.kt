@@ -28,7 +28,7 @@ import com.suslanium.filmus.presentation.ui.theme.PaddingExtraSmall
 import com.suslanium.filmus.presentation.ui.theme.PaddingNormal
 
 @Composable
-fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
+fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffsetProvider: () -> Float) {
     Row(modifier = modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
@@ -36,7 +36,7 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
                 .width(MovieCardImageWidth)
                 .clip(RoundedCornerShape(MovieCardCornerRadiusSmall))
                 .shimmerEffect(
-                    startOffsetX = shimmerOffset,
+                    startOffsetXProvider = shimmerOffsetProvider,
                     backgroundColor = Gray750,
                     shimmerColor = Accent
                 )
@@ -57,7 +57,7 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
                             RoundedCornerShape(MovieCardCornerRadiusMedium)
                         )
                         .shimmerEffect(
-                            startOffsetX = shimmerOffset,
+                            startOffsetXProvider = shimmerOffsetProvider,
                             backgroundColor = Gray750,
                             shimmerColor = Accent
                         )
@@ -72,7 +72,7 @@ fun ShimmerMovieCard(modifier: Modifier = Modifier, shimmerOffset: Float) {
                         RoundedCornerShape(MovieCardCornerRadiusMedium)
                     )
                     .shimmerEffect(
-                        startOffsetX = shimmerOffset,
+                        startOffsetXProvider = shimmerOffsetProvider,
                         backgroundColor = Gray750,
                         shimmerColor = Accent
                     )

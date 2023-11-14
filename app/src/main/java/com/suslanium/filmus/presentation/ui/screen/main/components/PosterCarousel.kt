@@ -4,6 +4,7 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,11 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
+import androidx.navigation.NavController
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.suslanium.filmus.R
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import com.suslanium.filmus.presentation.ui.common.shimmerEffect
+import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.theme.Accent
 import com.suslanium.filmus.presentation.ui.theme.CarouselIconSize
 import com.suslanium.filmus.presentation.ui.theme.CarouselIndicatorCornerRadius
@@ -45,7 +48,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun PosterCarousel(
     movies: List<MovieSummary>,
-    shimmerOffset: Float
+    shimmerOffsetProvider: () -> Float,
+    navController: NavController
 ) {
     val pagerState = rememberPagerState(pageCount = { movies.size })
 
@@ -59,14 +63,16 @@ fun PosterCarousel(
     ) {
         HorizontalPager(state = pagerState) { pageIndex ->
             GlideImage(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().clickable {
+                    navController.navigate("${FilmusDestinations.DETAILS_NO_ID}/${movies[pageIndex].id}")
+                },
                 imageModel = { movies[pageIndex].posterUri },
                 imageOptions = ImageOptions(contentScale = ContentScale.Crop),
                 loading = {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .shimmerEffect(startOffsetX = shimmerOffset, backgroundColor = Gray750, shimmerColor = Accent)
+                            .shimmerEffect(startOffsetXProvider = shimmerOffsetProvider, backgroundColor = Gray750, shimmerColor = Accent)
                     )
                 },
                 failure = {

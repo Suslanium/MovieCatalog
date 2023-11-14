@@ -5,14 +5,13 @@ import androidx.paging.PagingState
 import com.suslanium.filmus.data.converter.MovieSummaryConverter
 import com.suslanium.filmus.data.datasource.UserDataSource
 import com.suslanium.filmus.data.remote.api.MovieApiService
-import com.suslanium.filmus.data.remote.model.MovieElementModel
+import com.suslanium.filmus.data.repository.shared.fetchUserRating
 import com.suslanium.filmus.domain.entity.movie.MovieSummary
 import java.util.UUID
 
 class MoviePagingSource(
     private val movieApiService: MovieApiService,
-    private val userDataSource: UserDataSource,
-    private val fetchUserRating: suspend (MovieApiService, MovieElementModel, UUID) -> Int?
+    private val userDataSource: UserDataSource
 ) : PagingSource<Int, MovieSummary>() {
 
     private lateinit var userId: UUID
