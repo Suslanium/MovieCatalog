@@ -18,7 +18,6 @@ class UserDataSource(
 
     private val dataStoreUserIdKey = stringPreferencesKey(Constants.USER_ID_KEY)
 
-    //TODO add unauthorized exception handling
     suspend fun getUserProfile(): UserProfile = userApiService.getUserProfile()
 
     suspend fun changeUserProfile(userProfile: UserProfile) = userApiService.changeUserProfile(userProfile)

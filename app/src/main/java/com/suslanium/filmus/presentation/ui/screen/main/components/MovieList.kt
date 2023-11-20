@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,9 +33,9 @@ import com.suslanium.filmus.presentation.ui.navigation.FilmusDestinations
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.MovieCard
 import com.suslanium.filmus.presentation.ui.screen.main.components.moviecard.ShimmerMovieCard
 import com.suslanium.filmus.presentation.ui.theme.Accent
-import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.PaddingMedium
 import com.suslanium.filmus.presentation.ui.theme.S15_W500
+import com.suslanium.filmus.presentation.ui.theme.S24_W700
 import com.suslanium.filmus.presentation.ui.theme.White
 import java.util.UUID
 
@@ -45,13 +46,16 @@ fun MovieList(
     moviePagingItems: LazyPagingItems<MovieSummary>,
     shimmerOffsetProvider: () -> Float
 ) {
+    val movieList = remember {
+        val movieList = mutableListOf<MovieSummary>()
+        repeat(4) { index ->
+            moviePagingItems[index]?.let { movieList.add(it) }
+        }
+        movieList
+    }
     LazyColumn(modifier = Modifier.fillMaxSize(), state = rememberLazyListState()) {
 
         item {
-            val movieList = mutableListOf<MovieSummary>()
-            repeat(4) { index ->
-                moviePagingItems[index]?.let { movieList.add(it) }
-            }
             PosterCarousel(
                 movies = movieList,
                 shimmerOffsetProvider = shimmerOffsetProvider,
